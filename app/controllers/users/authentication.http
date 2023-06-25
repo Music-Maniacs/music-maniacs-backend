@@ -1,0 +1,45 @@
+### User Registration ###
+POST http://localhost:3000/users
+content-type: application/json
+
+{  
+    "user": {
+        "email": "testt@gmail.com",
+        "password": "ilovemaristas24A#",
+        "password_confirmation": "ilovemaristas24A#"
+    }
+}
+
+### User Login ###
+POST http://localhost:3000/users/sign_in
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "test@gmail.com",
+    "password": "ilovemaristas24A#"
+  }
+}
+
+### User Logout ###
+DELETE http://localhost:3000/users/sign_out
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY4NzQ3OTM3MiwiZXhwIjoxNjg3NDc5NjcyLCJqdGkiOiJlZTFhZjM5NS04YzQ4LTQxNjEtYmVhZC1hMjRkMzljNDdiNGYifQ.2LfX-YR6zS1yjjjz3NXiMYDwaYN_rJTDcsC3jLlgbMQ
+
+### User Profile ###
+GET http://localhost:3000/users/profile
+Authorization: <replace-with-user-auth-token>
+
+### Update User Profile ###
+PUT http://localhost:3000/users/profile
+Content-Type: application/json
+Authorization: <replace-with-user-auth-token>
+
+{
+  "user": {
+    "email": "newemail@example.com"
+  }
+}
+
+### Delete User Account ###
+DELETE http://localhost:3000/users/profile
+Authorization: <replace-with-user-auth-token>
