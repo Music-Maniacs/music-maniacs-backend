@@ -28,3 +28,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhd
 ### Delete User Account ###
 DELETE http://localhost:3000/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY5MTk2MTQwNywiZXhwIjoxNjkxOTYxNzA3LCJqdGkiOiJiZDM3MzZiMi1mYTE3LTRiYzYtYjZmZS03MWMyMDlhOTdmZDQifQ.WhiAMuPRJNR2C9wr2hZ5Ma5Yc-fbk1iIuaB0cXGLGfc
+
+### Recover password email ###
+POST http://localhost:3000/users/password
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "test@gmail.com"
+  }
+}
+
+### Recover password ###
+PATCH http://localhost:3000/users/password
+Content-Type: application/json
+
+{
+  "user": {
+    "reset_password_token": "CkzYfzUACpnzjnEyvSyo",
+    "password": "1111ilovemaristas24A###",
+    "password_confirmation": "1111ilovemaristas24A###"
+  }
+}
