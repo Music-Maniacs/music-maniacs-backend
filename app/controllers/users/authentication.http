@@ -23,23 +23,8 @@ Content-Type: application/json
 
 ### User Logout ###
 DELETE http://localhost:3000/users/sign_out
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY4NzQ3OTM3MiwiZXhwIjoxNjg3NDc5NjcyLCJqdGkiOiJlZTFhZjM5NS04YzQ4LTQxNjEtYmVhZC1hMjRkMzljNDdiNGYifQ.2LfX-YR6zS1yjjjz3NXiMYDwaYN_rJTDcsC3jLlgbMQ
-
-### User Profile ###
-GET http://localhost:3000/users/profile
-Authorization: <replace-with-user-auth-token>
-
-### Update User Profile ###
-PUT http://localhost:3000/users/profile
-Content-Type: application/json
-Authorization: <replace-with-user-auth-token>
-
-{
-  "user": {
-    "email": "newemail@example.com"
-  }
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY5MTk2MTQwNywiZXhwIjoxNjkxOTYxNzA3LCJqdGkiOiJiZDM3MzZiMi1mYTE3LTRiYzYtYjZmZS03MWMyMDlhOTdmZDQifQ.WhiAMuPRJNR2C9wr2hZ5Ma5Yc-fbk1iIuaB0cXGLGfc
 
 ### Delete User Account ###
-DELETE http://localhost:3000/users/profile
-Authorization: <replace-with-user-auth-token>
+DELETE http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY5MTk2MTQwNywiZXhwIjoxNjkxOTYxNzA3LCJqdGkiOiJiZDM3MzZiMi1mYTE3LTRiYzYtYjZmZS03MWMyMDlhOTdmZDQifQ.WhiAMuPRJNR2C9wr2hZ5Ma5Yc-fbk1iIuaB0cXGLGfc
