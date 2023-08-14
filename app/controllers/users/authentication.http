@@ -4,7 +4,9 @@ content-type: application/json
 
 {  
     "user": {
-        "email": "testt@gmail.com",
+        "email": "teaasteesst@gmail.com",
+        "username": "test",
+        "full_name": "test test",
         "password": "ilovemaristas24A#",
         "password_confirmation": "ilovemaristas24A#"
     }
@@ -16,18 +18,18 @@ Content-Type: application/json
 
 {
   "user": {
-    "email": "test@gmail.com",
+    "login": "test@gmail.com",
     "password": "ilovemaristas24A#"
   }
 }
 
 ### User Logout ###
 DELETE http://localhost:3000/users/sign_out
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY5MTk2MTQwNywiZXhwIjoxNjkxOTYxNzA3LCJqdGkiOiJiZDM3MzZiMi1mYTE3LTRiYzYtYjZmZS03MWMyMDlhOTdmZDQifQ.WhiAMuPRJNR2C9wr2hZ5Ma5Yc-fbk1iIuaB0cXGLGfc
+Authorization: Bearer <token>
 
 ### Delete User Account ###
 DELETE http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY5MTk2MTQwNywiZXhwIjoxNjkxOTYxNzA3LCJqdGkiOiJiZDM3MzZiMi1mYTE3LTRiYzYtYjZmZS03MWMyMDlhOTdmZDQifQ.WhiAMuPRJNR2C9wr2hZ5Ma5Yc-fbk1iIuaB0cXGLGfc
+Authorization: Bearer <token>
 
 ### Recover password email ###
 POST http://localhost:3000/users/password
