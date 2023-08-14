@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+  include RackSessionFixController
   respond_to :json
 
   private
