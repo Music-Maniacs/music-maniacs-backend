@@ -4,11 +4,11 @@ content-type: application/json
 
 {  
     "user": {
-        "email": "teaasteesst@gmail.com",
+        "email": "test@gmail.com",
         "username": "test",
         "full_name": "test test",
-        "password": "ilovemaristas24A#",
-        "password_confirmation": "ilovemaristas24A#"
+        "password": "MusicManiacs21345#",
+        "password_confirmation": "MusicManiacs21345#"
     }
 }
 
@@ -19,17 +19,19 @@ Content-Type: application/json
 {
   "user": {
     "login": "test@gmail.com",
-    "password": "ilovemaristas24A#"
+    "password": "ilovemaristas24A"
   }
 }
 
+### Current User info ###
+GET http://localhost:3000/users/user_info
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIaOiI5ZDlmYmQ3OC04ZTZjLTRiZmMtODY2YS00OTk1MjQwNTM3MGUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTIxMjY2ODMsImV4cCI6MTY5MjEyNjk4MywianRpIjoiOTUxOGFhZmUtNWRkZC00YzcyLTk1ODYtODhiYzQzNGM0NjlhIn0.d5D9NZlbDWk9jvHIokt-tusKuDLa9usWHElVTLYC4Co
+Content-Type: application/json
+
 ### User Logout ###
 DELETE http://localhost:3000/users/sign_out
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5ZDlmYmQ3OC04ZTZjLTRiZmMtODY2YS00OTk1MjQwNTM3MGUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTIxMjY0ODcsImV4cCI6MTY5MjEyNjc4NywianRpIjoiYzRkZDM3OTAtMjQyYS00MWFhLWI1NTYtZWVlMDJiNjMyOGI3In0.o6-ysuclXRYqj9v8_seZHdi0FVpdMHLzRa9DRumB40g
 
-### Delete User Account ###
-DELETE http://localhost:3000/users
-Authorization: Bearer <token>
 
 ### Recover password email ###
 POST http://localhost:3000/users/password
@@ -47,8 +49,8 @@ Content-Type: application/json
 
 {
   "user": {
-    "reset_password_token": "CkzYfzUACpnzjnEyvSyo",
-    "password": "1111ilovemaristas24A###",
-    "password_confirmation": "1111ilovemaristas24A###"
+    "reset_password_token": "PDzxxbWcvdXuowFF2kTP",
+    "password": "MusicManiacs21345",
+    "password_confirmation": "MusicManiacs21345#"
   }
 }

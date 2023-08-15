@@ -9,4 +9,8 @@ Rails.application.routes.draw do
                registrations: 'users/registrations',
                passwords: 'users/passwords'
              }
+
+  resource :users, controller: 'users/users', only: [] do
+    get :user_info
+  end
 end
