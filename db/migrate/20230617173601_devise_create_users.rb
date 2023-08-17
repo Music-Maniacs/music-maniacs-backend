@@ -35,6 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       ## Extras
       t.string :full_name
 
+      t.datetime :deleted_at
       t.timestamps null: false
     end
 

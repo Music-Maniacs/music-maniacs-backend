@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  acts_as_paranoid
   devise :database_authenticatable,
          :validatable,
          :registerable,
