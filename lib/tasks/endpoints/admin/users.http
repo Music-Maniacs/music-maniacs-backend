@@ -1,5 +1,5 @@
 ### INDEX ###
-GET http://localhost:3000/admin/users
+GET http://localhost:3000/admin/users?q[name_or_username_or_email_matches]=test&q[search_by_state]=active&page=10&per_page=1
 content-type: application/json
 
 ### SHOW ###
