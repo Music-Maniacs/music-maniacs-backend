@@ -1,0 +1,35 @@
+### INDEX ###
+GET http://localhost:3000/admin/users
+content-type: application/json
+
+### SHOW ###
+GET http://localhost:3000/admin/users/05dd54d2-d075-4aa9-8b4f-2309e4d7c806
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/admin/users
+content-type: application/json
+
+{  
+    "user": {
+        "email": "test@gmail.com",
+        "username": "testinggg",
+        "full_name": "test test",
+        "password": "MusicManiacs21345#",
+        "password_confirmation": "MusicManiacs21345#"
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/admin/users/227267a3-4870-46ed-912f-6f0ad56014e3
+content-type: application/json
+
+{  
+    "user": {
+        "email": "emailchange@gmail.com"
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/admin/users/05dd54d2-d075-4aa9-8b4f-2309e4d7c806
+content-type: application/json
