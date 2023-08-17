@@ -27,6 +27,6 @@ class User < ApplicationRecord
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: { conditions: -> { with_deleted } }
   validates :full_name, presence: true
 end
