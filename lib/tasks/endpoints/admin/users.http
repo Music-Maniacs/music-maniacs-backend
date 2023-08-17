@@ -20,11 +20,11 @@ content-type: application/json
         "links_attributes": [
             {
                 "url": "https://example.com",
-                "description": "Example website",
+                "title": "Example website",
             },
             {
                 "url": "https://example.org",
-                "description": "Another example website",
+                "title": "Another example website",
             }
         ]
     }
