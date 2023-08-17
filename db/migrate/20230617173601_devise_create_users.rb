@@ -15,6 +15,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       ## Rememberable
       t.datetime :remember_created_at
 
+      ## Blockable
+      t.datetime :blocked_until
+
       ## Confirmable
       t.string   :confirmation_token
       t.datetime :confirmed_at
@@ -34,6 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
 
       ## Extras
       t.string :full_name
+      t.text :biography
 
       t.datetime :deleted_at
       t.timestamps null: false
