@@ -25,6 +25,20 @@ class User < ApplicationRecord
   end
 
   ##############################################################################
+  # SCOPES
+  ##############################################################################
+  scope :deleted, -> { with_deleted.where.not(deleted_at: nil) }
+  scope :blocked, -> { where(blocked_until: nil) }
+  scope :active, -> { where(deleted_at: nil, blocked_until: nil) }
+  scope :search_by_state, lambda { |state|
+    case state
+    when 'deleted' then deleted
+    when 'blocked' then blocked
+    when 'active' then active
+    end
+  }
+
+  ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
   has_many :links, as: :linkeable, dependent: :destroy
@@ -48,5 +62,20 @@ class User < ApplicationRecord
 
   def blocked?
     blocked_until.present?
+  end
+
+  ##############################################################################
+  # CLASS METHODS
+  ##############################################################################
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[username email full_name]
+  end
+
+  def self.ransackable_scopes(_auth_object = nil)
+    %i[search_by_state]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
   end
 end
