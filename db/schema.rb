@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_192348) do
     t.index ["jti"], name: "index_jwt_blacklists_on_jti"
   end
 
-  create_table "links", force: :cascade do |t|
+  create_table "links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "url"
     t.uuid "linkeable_id", null: false
