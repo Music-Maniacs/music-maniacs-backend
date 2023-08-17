@@ -16,7 +16,17 @@ content-type: application/json
         "username": "testinggg",
         "full_name": "test test",
         "password": "MusicManiacs21345#",
-        "password_confirmation": "MusicManiacs21345#"
+        "password_confirmation": "MusicManiacs21345#",
+        "links_attributes": [
+            {
+                "url": "https://example.com",
+                "description": "Example website",
+            },
+            {
+                "url": "https://example.org",
+                "description": "Another example website",
+            }
+        ]
     }
 }
 
@@ -26,7 +36,20 @@ content-type: application/json
 
 {  
     "user": {
-        "email": "emailchange@gmail.com"
+        "email": "emailchange@gmail.com",
+        "links_attributes": [
+            {
+                "id": "uuid de algun link",
+                "url": "https://example.com",
+                "title": "Update Example website",
+            },
+            {
+                "id": "uuid de algun link",
+                "url": "https://example.org",
+                "title": "Another example website",
+                "_destroy": true
+            }
+        ]
     }
 }
 

@@ -25,6 +25,12 @@ class User < ApplicationRecord
   end
 
   ##############################################################################
+  # ASSOCIATIONS
+  ##############################################################################
+  has_many :links, as: :linkeable, dependent: :destroy
+  accepts_nested_attributes_for :links, allow_destroy: true
+
+  ##############################################################################
   # VALIDATIONS
   ##############################################################################
   validates :username, presence: true, uniqueness: { conditions: -> { with_deleted } }

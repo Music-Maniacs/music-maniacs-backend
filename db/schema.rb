@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_205435) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_192348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -21,6 +21,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_205435) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.string "title"
+    t.string "url"
+    t.uuid "linkeable_id", null: false
+    t.string "linkeable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["linkeable_id"], name: "index_links_on_linkeable_id"
+    t.index ["linkeable_type"], name: "index_links_on_linkeable_type"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
