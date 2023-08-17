@@ -29,4 +29,18 @@ class User < ApplicationRecord
   ##############################################################################
   validates :username, presence: true, uniqueness: { conditions: -> { with_deleted } }
   validates :full_name, presence: true
+
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def state
+    return :deleted if deleted?
+    return :blocked if blocked?
+
+    :active
+  end
+
+  def blocked?
+    blocked_until.present?
+  end
 end
