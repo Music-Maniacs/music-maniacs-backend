@@ -10,6 +10,14 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit :sign_in, keys: %i[login password]
   end
 
+  def pagination_info(scope)
+    if params[:per_page].blank? || params[:q].present?
+      { total: scope.total_count }
+    else
+      {}
+    end
+  end
+
   private
 
   def record_not_found

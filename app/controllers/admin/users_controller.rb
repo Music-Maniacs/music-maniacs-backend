@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
     @q = User.ransack(params[:q])
     @users = @q.result(distinct: true).page(params[:page]).per(params[:per_page])
 
-    render json: @users
+    render json: [@users, { pagination: pagination_info(@users) }]
   end
 
   def show
