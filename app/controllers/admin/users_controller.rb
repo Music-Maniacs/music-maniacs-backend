@@ -43,10 +43,10 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params_create
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :full_name, :biography, :links_attributes)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :full_name, :biography, links_attributes: [:url, :title, :_destroy, :id])
   end
 
   def user_params_update
-    params.require(:user).permit(:username, :email, :full_name, :biography, :links_attributes)
+    params.require(:user).permit(:username, :email, :full_name, :biography, links_attributes: [:url, :title, :_destroy, :id])
   end
 end
