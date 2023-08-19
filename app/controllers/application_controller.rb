@@ -11,11 +11,7 @@ class ApplicationController < ActionController::API
   end
 
   def pagination_info(scope)
-    if params[:per_page].blank? || params[:q].present?
-      { total: scope.total_count }
-    else
-      {}
-    end
+    { total: scope.total_count }
   end
 
   private
