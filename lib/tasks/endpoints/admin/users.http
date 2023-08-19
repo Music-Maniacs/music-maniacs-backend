@@ -20,11 +20,11 @@ content-type: application/json
         "links_attributes": [
             {
                 "url": "https://example.com",
-                "title": "Example website",
+                "title": "Example website"
             },
             {
                 "url": "https://example.org",
-                "title": "Another example website",
+                "title": "Another example website"
             }
         ]
     }
@@ -41,13 +41,15 @@ content-type: application/json
             {
                 "id": "uuid de algun link",
                 "url": "https://example.com",
-                "title": "Update Example website",
+                "title": "Update Example website"
             },
             {
-                "id": "uuid de algun link",
-                "url": "https://example.org",
-                "title": "Another example website",
+                "id": "uuid",
                 "_destroy": true
+            },
+            {
+                "url": "https://example.org",
+                "title": "nuevo link"
             }
         ]
     }
