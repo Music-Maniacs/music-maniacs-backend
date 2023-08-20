@@ -30,6 +30,7 @@ class User < ApplicationRecord
   scope :deleted, -> { with_deleted.where.not(deleted_at: nil) }
   scope :blocked, -> { where(blocked_until: nil) }
   scope :active, -> { where(deleted_at: nil, blocked_until: nil) }
+
   scope :search_by_state, lambda { |state|
     case state
     when 'deleted' then deleted
@@ -41,7 +42,7 @@ class User < ApplicationRecord
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_many :links, as: :linkeable, dependent: :destroy
+  has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
 
   ##############################################################################
