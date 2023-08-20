@@ -28,7 +28,7 @@ class User < ApplicationRecord
   # SCOPES
   ##############################################################################
   scope :deleted, -> { with_deleted.where.not(deleted_at: nil) }
-  scope :blocked, -> { where(blocked_until: nil) }
+  scope :blocked, -> { where.not(blocked_until: nil) }
   scope :active, -> { where(deleted_at: nil, blocked_until: nil) }
 
   scope :search_by_state, lambda { |state|
