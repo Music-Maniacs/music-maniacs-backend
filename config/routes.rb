@@ -13,4 +13,8 @@ Rails.application.routes.draw do
   resource :users, controller: 'users/users', only: [] do
     get :user_info
   end
+
+  namespace :admin do
+    resources :genres, only: %i[index create update destroy]
+  end
 end
