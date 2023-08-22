@@ -1,0 +1,27 @@
+### INDEX ###
+GET http://localhost:3000/admin/genres?q[name_cont]=Rock&page=10&per_page=1
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/admin/genres
+content-type: application/json
+
+{
+    "genre": {
+        "name": "Rock"
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/admin/genres/22dba113-7ac0-41b4-820b-a5aac290dd47
+content-type: application/json
+
+{
+    "genre": {
+        "name": "Rock"
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/admin/genres/22dba113-7ac0-41b4-820b-a5aac290dd47
+content-type: application/json
