@@ -17,7 +17,7 @@ class Admin::UsersController < ApplicationController
     if user.save
       render json: user.as_json(methods: :state), status: :ok
     else
-      render json: user.errors.details, status: :unprocessable_entity
+      render json: { errors: user.errors.details }, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +27,7 @@ class Admin::UsersController < ApplicationController
     if user.update(user_params_update)
       render json: user.as_json(include: :links, methods: :state), status: :ok
     else
-      render json: user.errors.details, status: :unprocessable_entity
+      render json: { errors: user.errors.details }, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +36,7 @@ class Admin::UsersController < ApplicationController
     if user.destroy
       head :no_content, status: :ok
     else
-      render json: user.errors.details, status: :unprocessable_entity
+      render json: { errors: user.errors.details }, status: :unprocessable_entity
     end
   end
 

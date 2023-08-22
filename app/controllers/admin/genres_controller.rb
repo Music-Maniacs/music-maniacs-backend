@@ -11,7 +11,7 @@ class Admin::GenresController < ApplicationController
     if genre.save
       render json: genre, status: :ok
     else
-      render json: genre.errors.details, status: :unprocessable_entity
+      render json: { errors: genre.errors.details }, status: :unprocessable_entity
     end
   end
 
@@ -21,7 +21,7 @@ class Admin::GenresController < ApplicationController
     if genre.update(genre_params)
       render json: genre, status: :ok
     else
-      render json: genre.errors.details, status: :unprocessable_entity
+      render json: { errors: genre.errors.details }, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class Admin::GenresController < ApplicationController
     if genre.destroy
       head :no_content, status: :ok
     else
-      render json: genre.errors.details, status: :unprocessable_entity
+      render json: { errors: genre.errors.details }, status: :unprocessable_entity
     end
   end
 
