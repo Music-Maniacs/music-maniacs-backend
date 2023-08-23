@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_225917) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_010914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "artists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "nationality"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genreable_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "genre_id", null: false
+    t.uuid "genreable_id", null: false
+    t.string "genreable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_genreable_associations_on_genre_id"
+    t.index ["genreable_id"], name: "index_genreable_associations_on_genreable_id"
+    t.index ["genreable_type"], name: "index_genreable_associations_on_genreable_type"
+  end
 
   create_table "genres", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -89,5 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_225917) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "genreable_associations", "genres"
   add_foreign_key "users", "roles"
 end

@@ -1,0 +1,55 @@
+### INDEX ###
+GET http://localhost:3000/admin/artists?q[name_cont]=Pasado&page=10&per_page=1
+content-type: application/json
+
+### SHOW ###
+GET http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/admin/artists
+content-type: application/json
+
+{
+    "artist":{
+        "name": "Usted señalemelo",
+        "nationality": "Argentina",
+        "description": "Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el Gabriel Cocó Orozco y el baterista Lucca Beguerie Petrich.",
+        "genre_ids": ["c67eb6fc-d18f-444c-a9fb-013136c17385"],
+        "links_attributes": [
+            {
+                "title": "Instagram",
+                "url": "https://www.instagram.com/ustedsenalemelo/?hl=es"
+            }
+        ]
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
+content-type: application/json
+
+{
+    "id": "2e47206c-5ee3-4ef2-b981-bc7af83ac393",
+    "name": "Usted señalemelo",
+    "nationality": "Argentina",
+    "description": "Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el Gabriel Cocó Orozco y el baterista Lucca Beguerie Petrich.",
+    "created_at": "2023-08-23T20:46:01.764Z",
+    "updated_at": "2023-08-23T20:46:01.764Z",
+    "genre_ids": ["c67eb6fc-d18f-444c-a9fb-013136c17385"],
+    "links_attributes": [
+        {
+            "id": "ab2a5964-df0d-4a3c-93ce-609ae1ef5db5",
+            "title": "Instagram",
+            "url": "https://www.instagram.com/ustedsenalemelo/?hl=es"
+        },
+        {
+            "title": "Nuevo",
+            "url": "Nuevo"
+        }
+    ]
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
+content-type: application/json
