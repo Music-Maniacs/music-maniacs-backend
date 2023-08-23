@@ -1,6 +1,6 @@
 class Admin::RolesController < ApplicationController
   def index
-    roles = Role.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    roles = roles_scope.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
     render json: { data: roles, pagination: pagination_info(roles) }
   end
@@ -16,12 +16,12 @@ class Admin::RolesController < ApplicationController
   end
 
   def show
-    user = Role.find(params[:id])
+    user = roles_scope.find(params[:id])
     render json: user.as_json(methods: :permission_ids)
   end
 
   def update
-    role = Role.find(params[:id])
+    role = roles_scope.find(params[:id])
 
     if role.update(role_params)
       render json: role, status: :ok
@@ -31,7 +31,7 @@ class Admin::RolesController < ApplicationController
   end
 
   def destroy
-    role = Role.find(params[:id])
+    role = roles_scope.find(params[:id])
 
     if role.destroy
       head :no_content, status: :ok
@@ -41,6 +41,11 @@ class Admin::RolesController < ApplicationController
   end
 
   private
+
+  def roles_scope
+    # para que no devuelva TrustLevels, no sé si es la mejor forma pero por ahora lo dejo así
+    Role.where(type: nil)
+  end
 
   def role_params
     params.require(:role).permit(:name, permission_ids: [])
