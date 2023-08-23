@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    user = users_scope.new(user_params_create)
+    user = User.new(user_params_create)
 
     if user.save
       render json: user.as_json(methods: :state), status: :ok
