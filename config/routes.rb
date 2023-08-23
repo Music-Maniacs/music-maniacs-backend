@@ -17,7 +17,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: %i[index show create update destroy]
     resources :genres, only: %i[index create update destroy]
-    resources :roles, only: %i[index show create update destroy]
+    resources :roles, only: %i[index show create update destroy] do
+      collection do
+        get :roles_select
+        get :permissions_select
+      end
+    end
     resources :trust_levels, only: %i[index show create update destroy]
   end
 end
