@@ -1,8 +1,8 @@
 namespace :populate do
   desc "Populate database with roles and permissions"
   task roles_and_permissions: :environment do
-    # por ahora queda así bien tranqui a modo de ejemplo, después se puede mejorar, la idea acá es crear todos los roles 
-    # que van si o si como admin y moderador y los CRUD de todos los controllers
+    # por ahora queda así bien tranqui a modo de ejemplo, después se puede mejorar, la idea acá es crear todos los roles
+    # que van si o si como admin y moderador y los CRUD de todos los controllers para las permissions
     # Create some roles
     admin_role = Role.find_or_create_by!(name: 'admin')
     user_role = Role.find_or_create_by!(name: 'user')
