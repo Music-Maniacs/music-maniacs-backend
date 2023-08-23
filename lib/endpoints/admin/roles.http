@@ -1,0 +1,37 @@
+### INDEX ###
+GET http://localhost:3000/admin/roles?page=1&per_page=1
+content-type: application/json
+
+### SHOW ###
+GET http://localhost:3000/admin/roles/57a9d4bd-aad0-4988-9492-15fdf1b470ba
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/admin/roles
+content-type: application/json
+
+{  
+    "role": {
+        "name": "administrador",
+        "permission_ids": [
+            "f61dd449-ab28-49b8-be07-4569a10f84c2"
+        ]
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/admin/roles/57a9d4bd-aad0-4988-9492-15fdf1b470ba
+content-type: application/json
+
+{  
+    "role": {
+        "name": "administrador update",
+        "permission_ids": [
+            "f61dd449-ab28-49b8-be07-4569a10f84c2"
+        ]
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/admin/roles/930bf16b-0436-4dcf-a5f7-c7d1b1c445bf
+content-type: application/json

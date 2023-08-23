@@ -26,7 +26,8 @@ content-type: application/json
                 "url": "https://example.org",
                 "title": "Another example website"
             }
-        ]
+        ],
+        "role_id": "5153db24-3c0a-401b-9449-a78959e3425a"
     }
 }
 
