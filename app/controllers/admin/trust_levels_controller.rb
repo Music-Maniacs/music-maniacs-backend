@@ -16,8 +16,8 @@ class Admin::TrustLevelsController < ApplicationController
   end
 
   def show
-    user = TrustLevel.find(params[:id])
-    render json: user.as_json(methods: :permission_ids)
+    trust_level = TrustLevel.find(params[:id])
+    render json: trust_level.as_json(methods: :permission_ids)
   end
 
   def update
