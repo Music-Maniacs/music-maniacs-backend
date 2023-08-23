@@ -1,0 +1,2 @@
+class TrustLevel < Role
+end
