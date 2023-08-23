@@ -8,7 +8,6 @@ namespace :populate do
     user_role = Role.find_or_create_by!(name: 'user')
 
     # Create some trust levels
-    self.ignored_columns = %w[order days_visited viewed_events likes_received likes_given comments_count]
     default_trust_level = TrustLevel.find_or_create_by!(name: 'level 1', order: 1, days_visited: 0, viewed_events: 0, likes_received: 0, likes_given: 0, comments_count: 0)
 
     # Create some permissions
