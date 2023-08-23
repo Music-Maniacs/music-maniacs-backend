@@ -40,6 +40,14 @@ class Admin::RolesController < ApplicationController
     end
   end
 
+  def roles_select
+    render json: Role.all.as_json(only: %i[id name]), status: :ok
+  end
+
+  def permissions_select
+    render json: Permission.all.as_json(only: %i[id name action subject_class]), status: :ok
+  end
+
   private
 
   def role_params
