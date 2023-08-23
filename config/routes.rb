@@ -18,5 +18,6 @@ Rails.application.routes.draw do
     resources :users, only: %i[index show create update destroy]
     resources :genres, only: %i[index create update destroy]
     resources :roles, only: %i[index show create update destroy]
+    resources :trust_levels, only: %i[index show create update destroy]
   end
 end
