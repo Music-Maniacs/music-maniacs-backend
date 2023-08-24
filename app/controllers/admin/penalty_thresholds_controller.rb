@@ -1,8 +1,6 @@
 class Admin::PenaltyThresholdsController < ApplicationController
   def index
-    penalty_hresholds = PenaltyThreshold.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-
-    render json: { data: penalty_hresholds, pagination: pagination_info(penalty_hresholds) }
+    render json: { data: PenaltyThreshold.all, pagination: pagination_info(penalty_hresholds) }
   end
 
   def create
