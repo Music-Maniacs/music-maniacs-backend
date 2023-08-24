@@ -2,10 +2,6 @@
 GET http://localhost:3000/admin/penalty_thresholds?page=1&per_page=1
 content-type: application/json
 
-### SHOW ###
-GET http://localhost:3000/admin/penalty_thresholds/d0005a40-6c68-46bc-badf-cca1c536165b
-content-type: application/json
-
 ### CREATE ###
 POST http://localhost:3000/admin/penalty_thresholds
 content-type: application/json
