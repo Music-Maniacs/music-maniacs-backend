@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_225917) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_192613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -87,6 +87,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_225917) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "venues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "description", null: false
+    t.string "venue_name", null: false
+    t.uuid "linkeable_id"
+    t.string "linkeable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["linkeable_id"], name: "index_venues_on_linkeable_id"
+    t.index ["linkeable_type"], name: "index_venues_on_linkeable_type"
   end
 
   add_foreign_key "users", "roles"

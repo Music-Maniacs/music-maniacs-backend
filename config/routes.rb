@@ -14,6 +14,13 @@ Rails.application.routes.draw do
     get :user_info
   end
 
+  resources :venues, only: [:index, :show, :create]
+    get '/venues/:venue_identifier', to: 'venues#show'
+
+    # GET /venues --> index
+    # GET /venues/:venue_identifier --> show
+    # POST /venues --> create
+  
   namespace :admin do
     resources :users, only: %i[index show create update destroy]
     resources :genres, only: %i[index create update destroy]
