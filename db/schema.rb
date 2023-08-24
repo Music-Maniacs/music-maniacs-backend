@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_014012) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_232051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -38,6 +38,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_014012) do
     t.datetime "updated_at", null: false
     t.index ["linkeable_id"], name: "index_links_on_linkeable_id"
     t.index ["linkeable_type"], name: "index_links_on_linkeable_type"
+  end
+
+  create_table "penalty_thresholds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "penalty_score", null: false
+    t.integer "days_blocked", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
