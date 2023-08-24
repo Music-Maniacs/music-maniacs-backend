@@ -1,6 +1,8 @@
 class Admin::PenaltyThresholdsController < ApplicationController
   def index
-    render json: { data: PenaltyThreshold.all, pagination: pagination_info(penalty_hresholds) }
+    penalty_thresholds = PenaltyThreshold.all
+
+    render json: { data: penalty_thresholds.as_json(methods: :permanent_block?) }
   end
 
   def create
@@ -11,11 +13,6 @@ class Admin::PenaltyThresholdsController < ApplicationController
     else
       render json: { errors: penalty_threshold.errors.details }, status: :unprocessable_entity
     end
-  end
-
-  def show
-    penalty_threshold = PenaltyThreshold.find(params[:id])
-    render json: penalty_threshold.as_json
   end
 
   def update
