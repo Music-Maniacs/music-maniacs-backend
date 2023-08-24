@@ -43,7 +43,6 @@ class Admin::PenaltyThresholdsController < ApplicationController
   def penalty_threshold_params
     attrs = params.require(:penalty_threshold).permit(:penalty_score, :days_blocked, :permanent_block).to_h
     attrs[:days_blocked] = PenaltyThreshold.permanent_block_days if attrs.delete(:permanent_block)
-    byebug
     attrs
   end
 end
