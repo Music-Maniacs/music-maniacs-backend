@@ -24,5 +24,6 @@ Rails.application.routes.draw do
         get :permissions_select
       end
     end
+    resources :trust_levels, only: %i[index show create update destroy]
   end
 end
