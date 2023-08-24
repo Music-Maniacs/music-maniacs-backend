@@ -7,7 +7,7 @@ class VenuesController < ApplicationController
     end
     
     def show
-        @venue = Venue.find_by(venue_id: params[:venue_identifier]) ||
+        @venue = Venue.find_by(id: params[:venue_identifier]) ||
         Venue.find_by(venue_name: params[:venue_identifier])
         
         if @venue.present?
@@ -41,7 +41,7 @@ class VenuesController < ApplicationController
     end  
 
     def update_venue
-        venue = Venue.find_by(venue_id: params[:venue_id])
+        venue = Venue.find_by(id: params[:id])
         if venue.present?
             if venue.update(params.permit(:venue_name,:description))
                 render status:200 ,json: {venue: venue}
