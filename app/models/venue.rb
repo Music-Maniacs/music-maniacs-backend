@@ -11,5 +11,4 @@ class Venue < ApplicationRecord
   ##############################################################################
   validates :venue_name, presence: true
 
-  
 end

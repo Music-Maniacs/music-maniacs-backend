@@ -1,5 +1,4 @@
 class Admin::VenuesController < ApplicationController
-  #  before_action :authenticate_user!, only: [:user_info]
     
     def index
         venues = Venue.all
