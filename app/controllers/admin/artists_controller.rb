@@ -72,7 +72,7 @@ class Admin::ArtistsController < ApplicationController
 
   private
 
-  ARTIST_TO_JSON.freeze = { include: {
+  ARTIST_TO_JSON = { include: {
     genres: {
       only: %i[id name]
     },
