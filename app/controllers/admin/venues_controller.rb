@@ -10,7 +10,7 @@ class Admin::VenuesController < ApplicationController
         Venue.find_by(venue_name: params[:venue_identifier])
         
         if venue.present?
-          render status: 200, json: venue.as_json(include: :links)
+          render status: 200, json: venue.as_json(include: [:links, :location])
         else
           render status: 404, json: { message: "No se encuentra el Espacio de eventos"}
         end
@@ -21,8 +21,9 @@ class Admin::VenuesController < ApplicationController
       venue = Venue.new(venue_params)
     
       if venue.save
-            render status:200 ,json: venue.as_json(include: :links)
+            render status:200 ,json: venue.as_json(include: [:links, :location])
         else
+             Rails.logger.error("Error al crear el Venue: #{venue.errors.full_messages}")
             render status:400, json: {message: venue.errors.details}
         end
     end
