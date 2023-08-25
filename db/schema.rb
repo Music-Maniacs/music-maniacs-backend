@@ -96,6 +96,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_195545) do
     t.index ["linkeable_type"], name: "index_links_on_linkeable_type"
   end
 
+  create_table "penalty_thresholds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "penalty_score", null: false
+    t.integer "days_blocked", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "action", null: false

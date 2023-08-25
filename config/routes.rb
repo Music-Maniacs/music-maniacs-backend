@@ -30,5 +30,6 @@ Rails.application.routes.draw do
       end
     end
     resources :trust_levels, only: %i[index show create update destroy]
+    resources :penalty_thresholds, only: %i[index create update destroy]
   end
 end
