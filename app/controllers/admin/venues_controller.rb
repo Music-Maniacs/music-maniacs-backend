@@ -10,7 +10,7 @@ class Admin::VenuesController < ApplicationController
         Venue.find_by(venue_name: params[:venue_identifier])
         
         if venue.present?
-          render status: 200, json: { venue: venue }
+          render status: 200, json: venue.as_json(include: :links)
         else
           render status: 404, json: { message: "No se encuentra el Espacio de eventos"}
         end
@@ -18,21 +18,21 @@ class Admin::VenuesController < ApplicationController
 
 
     def create
-        venue  = Venue.create(venue_params)
-        
-        if venue.persisted?
-            render status:200 ,json: {venue: venue}
+      venue = Venue.new(venue_params)
+    
+      if venue.save
+            render status:200 ,json: venue.as_json(include: :links)
         else
             render status:400, json: {message: venue.errors.details}
         end
     end
 
     def update
-        venue = Venue.find_by(id: params[:id])
+        venue = Venue.find(params[:id])
         
         if venue.present?
           if venue.update(venue_params)
-            render status: 200, json: { venue: venue }
+            render status: 200, json: venue.as_json(include: :links)
           else
             render status: 400, json: { message: venue.errors.details }
           end
@@ -41,8 +41,8 @@ class Admin::VenuesController < ApplicationController
         end
     end
 
-    def destroy 
-      venue = Venue.find_by(id: params[:id])
+    def destroy
+      venue = Venue.find(params[:id])
       if venue.present?
         if venue.destroy
           render status: 200
@@ -57,6 +57,10 @@ class Admin::VenuesController < ApplicationController
     private
 
     def venue_params
-        params.permit(:venue_name,:description)
+      params.require(:venue).permit(:venue_name,:description,
+          location_attributes:
+          [:zip_code, :street, :department, :locality, :latitude, :longitude, :number, :country, :province],
+          links_attributes: [:url, :title, :_destroy, :id]
+        )
     end
 end
