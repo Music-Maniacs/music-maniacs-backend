@@ -15,7 +15,12 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :artists, only: %i[index show create update destroy]
+    resources :artists, only: %i[index show create update destroy] do
+      member do
+        put :upload_image
+        delete :delete_image
+      end
+    end
     resources :users, only: %i[index show create update destroy]
     resources :genres, only: %i[index create update destroy]
     resources :roles, only: %i[index show create update destroy] do
