@@ -8,58 +8,43 @@ content-type: application/json
 
 ### CREATE ###
 POST http://localhost:3000/admin/artists
-content-type: application/json
+content-type: FormData
 
-{
-    "artist":{
-        "name": "Usted señalemelo",
-        "nationality": "Argentina",
-        "description": "Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el Gabriel Cocó Orozco y el baterista Lucca Beguerie Petrich.",
-        "genre_ids": ["c67eb6fc-d18f-444c-a9fb-013136c17385"],
-        "links_attributes": [
-            {
-                "title": "Instagram",
-                "url": "https://www.instagram.com/ustedsenalemelo/?hl=es"
-            }
-        ]
-    }
-}
 
-### UPDATE ###
-PUT http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
-content-type: application/json
-
-{
-    "id": "2e47206c-5ee3-4ef2-b981-bc7af83ac393",
+"artist":{
     "name": "Usted señalemelo",
     "nationality": "Argentina",
     "description": "Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el Gabriel Cocó Orozco y el baterista Lucca Beguerie Petrich.",
     "genre_ids": ["c67eb6fc-d18f-444c-a9fb-013136c17385"],
     "links_attributes": [
         {
-            "id": "ab2a5964-df0d-4a3c-93ce-609ae1ef5db5",
             "title": "Instagram",
             "url": "https://www.instagram.com/ustedsenalemelo/?hl=es"
-        },
-        {
-            "title": "Nuevo",
-            "url": "Nuevo"
         }
     ]
 }
+"image": <File>
+
+
+### UPDATE ###
+PUT http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
+content-type: FormData
+
+
+"artist":{
+    "name": "Usted señalemelo",
+    "nationality": "Argentina",
+    "description": "Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el Gabriel Cocó Orozco y el baterista Lucca Beguerie Petrich.",
+    "genre_ids": ["c67eb6fc-d18f-444c-a9fb-013136c17385"],
+    "links_attributes": [
+        {
+            "title": "Instagram",
+            "url": "https://www.instagram.com/ustedsenalemelo/?hl=es"
+        }
+    ]
+}
+"image": <File>
 
 ### DESTROY ###
 DELETE http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
-content-type: application/json
-
-### UPLOAD IMAGE ###
-PUT http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7/upload_image
-content-type: FormData
-
-{
-    "image": <file>
-}
-
-### DELETE IMAGE ###
-DELETE http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7/delete_image
 content-type: application/json
