@@ -2,7 +2,7 @@ class Admin::ArtistsController < ApplicationController
   def index
     artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
-    render json: { data: artists, pagination: pagination_info(artists) }
+    render json: { data: artists.as_json(ARTIST_TO_JSON), pagination: pagination_info(artists) }
   end
 
   def show
@@ -14,6 +14,8 @@ class Admin::ArtistsController < ApplicationController
   def create
     artist = Artist.new(artist_params)
 
+    artist.image = Image.new(file: params[:image]) if params[:image].present?
+
     if artist.save
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
     else
@@ -23,6 +25,15 @@ class Admin::ArtistsController < ApplicationController
 
   def update
     artist = Artist.find(params[:id])
+
+    if params[:image].present?
+      if artist.image.present?
+        artist.image.file.purge
+        artist.image.file.attach(params[:image])
+      else
+        artist.image = Image.new(file: params[:image])
+      end
+    end
 
     if artist.update(artist_params)
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
@@ -35,35 +46,6 @@ class Admin::ArtistsController < ApplicationController
     artist = Artist.find(params[:id])
 
     if artist.destroy
-      head :no_content, status: :ok
-    else
-      render json: { errors: artist.errors.details }, status: :unprocessable_entity
-    end
-  end
-
-  def upload_image
-    artist = Artist.find(params[:id])
-
-    if params[:image].present?
-      if artist.image.present?
-        artist.image.file.purge
-        artist.image.file.attach(params[:image])
-      else
-        artist.image = Image.new(file: params[:image])
-      end
-    end
-
-    if artist.save
-      render json: artist.as_json(ARTIST_TO_JSON), status: :ok
-    else
-      render json: { errors: artist.errors.details }, status: :unprocessable_entity
-    end
-  end
-
-  def delete_image
-    artist = Artist.find(params[:id])
-
-    if artist.image.destroy
       head :no_content, status: :ok
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
@@ -85,7 +67,6 @@ class Admin::ArtistsController < ApplicationController
   } }
 
   def artist_params
-    params.require(:artist).permit(:name, :description, :nationality, genre_ids: [],
-                                                                      links_attributes: %i[url title _destroy id])
+    JSON.parse(params[:artist]).deep_symbolize_keys.slice(:name, :description, :nationality, :links_attributes, :genre_ids)
   end
 end

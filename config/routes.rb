@@ -14,13 +14,12 @@ Rails.application.routes.draw do
     get :user_info
   end
 
+  resource :genres, only: %i[] do
+    get :genres_select
+  end
+
   namespace :admin do
-    resources :artists, only: %i[index show create update destroy] do
-      member do
-        put :upload_image
-        delete :delete_image
-      end
-    end
+    resources :artists, only: %i[index show create update destroy]
     resources :users, only: %i[index show create update destroy]
     resources :genres, only: %i[index create update destroy]
     resources :roles, only: %i[index show create update destroy] do
