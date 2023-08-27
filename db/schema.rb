@@ -50,8 +50,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_162024) do
     t.integer "number"
     t.string "country"
     t.string "province"
+    t.uuid "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["venue_id"], name: "index_locations_on_venue_id"
   end
 
   create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

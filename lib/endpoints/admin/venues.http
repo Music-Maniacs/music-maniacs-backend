@@ -16,15 +16,15 @@ content-type: application/json
         "created_at": "2023-08-25T13:55:34.697Z",
         "updated_at": "2023-08-25T13:55:34.697Z",
         "links_attributes": [
-      {
-        "url": "https://example.com",
-        "title": "Example website"
-      },
-      {
-        "url": "https://example.org",
-        "title": "Another example website"
-      }
-    ]
+          {
+            "url": "https://example.com",
+            "title": "Example website"
+          },
+          {
+            "url": "https://example.org",
+            "title": "Another example website"
+          }
+        ]
     }
 }
 
@@ -36,6 +36,16 @@ content-type: application/json
   "venue": {
     "venue_name": "Nombre del lugar",
     "description": "Descripción del lugar",
+    "links_attributes": [
+      {
+        "url": "https://example.com",
+        "title": "Example website"
+      },
+      {
+        "url": "https://example.org",
+        "title": "Another example website"
+      }
+    ],
     "location_attributes": {
       "zip_code": "12345",
       "street": "Calle Principal",
@@ -78,10 +88,30 @@ content-type: application/json
         "title": "Example website"
       },
       {
+                "id": "uuid",
+                "_destroy": true
+            },
+      {
         "url": "https://example.org",
         "title": "Another example website"
       }
     ]
+    },
+    "location_attributes":
+        {
+          "id": "e692f532-c482-4b19-88e0-082d7716d250",
+          "zip_code": "12345",
+          "street": "Italia",
+          "department": "Guaymallen",
+          "locality": "Capilla del Rosario",
+          "latitude": "40.7128",
+          "longitude": "-74.0060",
+          "number": 4,
+          "country": "United States",
+          "province": "New York",
+          "venue_id": null,
+          "created_at": "2023-08-27T19:04:22.331Z",
+          "updated_at": "2023-08-27T19:04:22.331Z"
     }
 }
 

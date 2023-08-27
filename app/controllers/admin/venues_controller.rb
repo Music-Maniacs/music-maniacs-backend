@@ -2,7 +2,7 @@ class Admin::VenuesController < ApplicationController
     
     def index
         venues = Venue.all
-            render status:200 ,json: {venues: venues}
+            render status:200 ,json: venues.as_json(include: [:links, :location])
     end
     
     def show
@@ -33,7 +33,7 @@ class Admin::VenuesController < ApplicationController
         
         if venue.present?
           if venue.update(venue_params)
-            render status: 200, json: venue.as_json(include: :links)
+            render status: 200, json: venue.as_json(include: [:links, :location])
           else
             render status: 400, json: { message: venue.errors.details }
           end
@@ -59,8 +59,7 @@ class Admin::VenuesController < ApplicationController
 
     def venue_params
       params.require(:venue).permit(:venue_name,:description,
-          location_attributes:
-          [:zip_code, :street, :department, :locality, :latitude, :longitude, :number, :country, :province],
+          location_attributes: [:zip_code, :street, :department, :locality, :latitude, :longitude, :number, :country, :province, :_destroy],
           links_attributes: [:url, :title, :_destroy, :id]
         )
     end
