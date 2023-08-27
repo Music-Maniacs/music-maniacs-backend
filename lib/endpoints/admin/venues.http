@@ -2,9 +2,6 @@
 GET http://localhost:3000/admin/venues
 content-type: application/json
 
-### CREATE ###
-POST http://localhost:3000/admin/venues
-content-type: application/json
 
 {
     "venue": {
