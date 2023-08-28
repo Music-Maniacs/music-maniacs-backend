@@ -11,7 +11,7 @@ class CreateLocations < ActiveRecord::Migration[7.0]
       t.string :country
       t.string :province
       
-      ## relacion
+      ## relation
       t.uuid :venue_id, foreign_key: true, index: true
 
       t.timestamps null: false

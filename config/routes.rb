@@ -20,6 +20,5 @@ Rails.application.routes.draw do
     resources :genres, only: %i[index create update destroy]
     resources :roles, only: %i[index show create update destroy]
     resources :venues, only: %i[index show create update destroy]
-    resources :locations, only: %i[index show create update destroy]
   end
 end
