@@ -1,15 +1,7 @@
 class Admin::ArtistsController < ApplicationController
-  ARTIST_TO_JSON = { include: {
-    genres: {
-      only: %i[id name]
-    },
-    links: {
-      only: %i[id url title]
-    },
-    image: {
-      methods: %i[url]
-    }
-  } }.freeze
+  ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
+                                links: { only: %i[id url title] },
+                                image: { methods: %i[url] } } }.freeze
 
   def index
     artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
