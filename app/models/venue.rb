@@ -10,7 +10,6 @@ class Venue < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :venue_name, presence: true , uniqueness: true
-  validates :description, presence: true
-  validates :location, presence: true
+  validates :description, :location, presence: true
 
 end
