@@ -1,4 +1,16 @@
 class Admin::ArtistsController < ApplicationController
+  ARTIST_TO_JSON = { include: {
+    genres: {
+      only: %i[id name]
+    },
+    links: {
+      only: %i[id url title]
+    },
+    image: {
+      methods: %i[url]
+    }
+  } }.freeze
+
   def index
     artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
@@ -54,19 +66,7 @@ class Admin::ArtistsController < ApplicationController
 
   private
 
-  ARTIST_TO_JSON = { include: {
-    genres: {
-      only: %i[id name]
-    },
-    links: {
-      only: %i[id url title]
-    },
-    image: {
-      methods: %i[url]
-    }
-  } }
-
   def artist_params
-    JSON.parse(params[:artist]).deep_symbolize_keys.slice(:name, :description, :nationality, :links_attributes, :genre_ids)
+    JSON.parse(params.require(:artist)).deep_symbolize_keys.slice(:name, :description, :nationality, :links_attributes, :genre_ids)
   end
 end
