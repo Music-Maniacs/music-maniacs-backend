@@ -35,6 +35,10 @@ class Admin::GenresController < ApplicationController
     end
   end
 
+  def genres_select
+    render json: Genre.all.as_json(only: %i[id name]), status: :ok
+  end
+
   private
 
   def genre_params
