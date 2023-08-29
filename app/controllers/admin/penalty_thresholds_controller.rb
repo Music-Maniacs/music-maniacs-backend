@@ -2,14 +2,14 @@ class Admin::PenaltyThresholdsController < ApplicationController
   def index
     penalty_thresholds = PenaltyThreshold.all
 
-    render json: { data: penalty_thresholds.as_json(methods: :permanent_block?) }
+    render json: { data: penalty_thresholds.as_json(methods: :permanent_block) }
   end
 
   def create
     penalty_threshold = PenaltyThreshold.new(penalty_threshold_params)
 
     if penalty_threshold.save
-      render json: penalty_threshold, status: :ok
+      render json: penalty_threshold.as_json(methods: :permanent_block), status: :ok
     else
       render json: { errors: penalty_threshold.errors.details }, status: :unprocessable_entity
     end
@@ -19,7 +19,7 @@ class Admin::PenaltyThresholdsController < ApplicationController
     penalty_threshold = PenaltyThreshold.find(params[:id])
 
     if penalty_threshold.update(penalty_threshold_params)
-      render json: penalty_threshold, status: :ok
+      render json: penalty_threshold.as_json(methods: :permanent_block), status: :ok
     else
       render json: { errors: penalty_threshold.errors.details }, status: :unprocessable_entity
     end
