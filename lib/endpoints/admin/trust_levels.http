@@ -1,0 +1,41 @@
+### INDEX ###
+GET http://localhost:3000/admin/trust_levels?page=1&per_page=1
+content-type: application/json
+
+### SHOW ###
+GET http://localhost:3000/admin/trust_levels/f299ea4f-b86e-4e77-8a36-597f5ccabfbe
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/admin/trust_levels
+content-type: application/json
+
+{  
+    "trust_level": {
+        "name": "trust level 2",
+        "order": 2,
+        "days_visited": 10,
+        "likes_received": 10,
+        "viewed_events": 10,
+        "likes_received": 10,
+        "likes_given": 10,
+        "comments_count": 10,
+        "permission_ids": [
+            "31c04ab8-7893-4c87-aee0-cb3313f964f4"
+        ]
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/admin/trust_levels/7e96e2f8-e56a-4f13-bf4a-862c4ea43063
+content-type: application/json
+
+{  
+    "trust_level": {
+        "name": "trust level update"
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/admin/trust_levels/f4ded915-addb-448a-b783-551f0b7bb1c9
+content-type: application/json

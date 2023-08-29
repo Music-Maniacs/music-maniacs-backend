@@ -1,0 +1,29 @@
+### INDEX ###
+GET http://localhost:3000/admin/penalty_thresholdsº
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/admin/penalty_thresholds
+content-type: application/json
+
+{  
+    "penalty_threshold": {
+        "penalty_score": 1000,
+        "days_blocked": 1,
+        "permanent_block": true
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/admin/penalty_thresholds/7e96e2f8-e56a-4f13-bf4a-862c4ea43063
+content-type: application/json
+
+{  
+    "trust_level": {
+        "name": "trust level update"
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/admin/penalty_thresholds/f4ded915-addb-448a-b783-551f0b7bb1c9
+content-type: application/json

@@ -1,21 +1,21 @@
-class Role < ApplicationRecord
-  # estas columnas solo se usan en los trust levels
-  self.ignored_columns = %w[order days_visited viewed_events likes_received likes_given comments_count]
-  ##############################################################################
-  # ASSOCIATIONS
-  ##############################################################################
-  has_and_belongs_to_many :permissions
-  has_many :users, dependent: :restrict_with_error
-
+class PenaltyThreshold < ApplicationRecord
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :name, presence: true, uniqueness: true
+  validates :penalty_score, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :days_blocked, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def permanent_block
+    days_blocked == self.class.permanent_block_days
+  end
 
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[name]
+  def self.permanent_block_days
+    100 * 365 # 100 años, lo que pusismos en la documentacion
   end
 end

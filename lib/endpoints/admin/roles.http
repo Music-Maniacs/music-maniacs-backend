@@ -35,3 +35,13 @@ content-type: application/json
 ### DESTROY ###
 DELETE http://localhost:3000/admin/roles/930bf16b-0436-4dcf-a5f7-c7d1b1c445bf
 content-type: application/json
+
+
+### ROLES SELECT ###
+GET http://localhost:3000/admin/roles/roles_select
+content-type: application/json
+
+
+### PERMISSIONS SELECT ###
+GET http://localhost:3000/admin/roles/permissions_select
+content-type: application/json

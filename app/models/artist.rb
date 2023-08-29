@@ -1,16 +1,21 @@
-class Role < ApplicationRecord
-  # estas columnas solo se usan en los trust levels
-  self.ignored_columns = %w[order days_visited viewed_events likes_received likes_given comments_count]
+class Artist < ApplicationRecord
+  has_paper_trail
+
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_and_belongs_to_many :permissions
-  has_many :users, dependent: :restrict_with_error
+  has_many :genreable_associations, as: :genreable
+  has_many :genres, through: :genreable_associations
 
+  has_one :image, as: :imageable, dependent: :destroy
+
+  has_many :links, as: :linkeable
+  accepts_nested_attributes_for :links, allow_destroy: true
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :name, presence: true, uniqueness: true
+  validates :name, uniqueness: true
+  validates :name, :nationality, :description, presence: true
 
   ##############################################################################
   # CLASS METHODS

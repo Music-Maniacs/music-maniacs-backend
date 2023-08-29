@@ -16,9 +16,21 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    resources :artists, only: %i[index show create update destroy]
     resources :users, only: %i[index show create update destroy]
-    resources :genres, only: %i[index create update destroy]
-    resources :roles, only: %i[index show create update destroy]
     resources :venues, only: %i[index show create update destroy]
+    resources :genres, only: %i[index create update destroy] do
+      collection do
+        get :genres_select
+      end
+    end
+    resources :roles, only: %i[index show create update destroy] do
+      collection do
+        get :roles_select
+        get :permissions_select
+      end
+    end
+    resources :trust_levels, only: %i[index show create update destroy]
+    resources :penalty_thresholds, only: %i[index create update destroy]
   end
 end

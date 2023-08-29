@@ -29,6 +29,15 @@ class User < ApplicationRecord
   end
 
   ##############################################################################
+  # CALLBACKS
+  ##############################################################################
+  after_initialize :set_default_role
+
+  def set_default_role
+    self.role = TrustLevel.default_trust_level if role.blank?
+  end
+
+  ##############################################################################
   # SCOPES
   ##############################################################################
   scope :deleted, -> { with_deleted.where.not(deleted_at: nil) }

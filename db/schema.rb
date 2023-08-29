@@ -10,15 +10,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_25_162024) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_182506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.uuid "record_id", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "artists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "nationality"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genreable_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "genre_id", null: false
+    t.uuid "genreable_id", null: false
+    t.string "genreable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_genreable_associations_on_genre_id"
+    t.index ["genreable_id"], name: "index_genreable_associations_on_genreable_id"
+    t.index ["genreable_type"], name: "index_genreable_associations_on_genreable_type"
+  end
 
   create_table "genres", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "imageable_id", null: false
+    t.string "imageable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_id"], name: "index_images_on_imageable_id"
+    t.index ["imageable_type"], name: "index_images_on_imageable_type"
   end
 
   create_table "jwt_blacklists", force: :cascade do |t|
@@ -40,20 +95,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_162024) do
     t.index ["linkeable_type"], name: "index_links_on_linkeable_type"
   end
 
-  create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "zip_code"
-    t.string "street"
-    t.string "department"
-    t.string "locality"
-    t.string "latitude"
-    t.string "longitude"
-    t.integer "number"
-    t.string "country"
-    t.string "province"
-    t.uuid "venue_id"
+  create_table "penalty_thresholds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "penalty_score", null: false
+    t.integer "days_blocked", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["venue_id"], name: "index_locations_on_venue_id"
   end
 
   create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -78,6 +124,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_162024) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
+    t.integer "order"
+    t.integer "days_visited"
+    t.integer "viewed_events"
+    t.integer "likes_received"
+    t.integer "likes_given"
+    t.integer "comments_count"
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
@@ -105,12 +158,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_162024) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "venues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "description", null: false
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "item_type", null: false
+    t.string "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.text "object_changes"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "genreable_associations", "genres"
   add_foreign_key "users", "roles"
 end
