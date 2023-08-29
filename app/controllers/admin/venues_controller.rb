@@ -14,6 +14,8 @@ class Admin::VenuesController < ApplicationController
   def create
     venue = Venue.new(venue_params)
 
+    artist.image = Image.new(file: params[:image]) if params[:image].present?
+
     if venue.save
       render json: venue.as_json(include: %i[links location]), status: :ok
     else
@@ -44,8 +46,9 @@ class Admin::VenuesController < ApplicationController
   private
 
   def venue_params
-    params.require(:venue).permit(:name, :description,
+    JSON.parse(params.require(:venue)).deep_symbolize_keys.slice(:name, :description,
                                   location_attributes: %i[zip_code street department locality latitude longitude number country province _destroy],
                                   links_attributes: %i[url title _destroy id])
+    
   end
 end
