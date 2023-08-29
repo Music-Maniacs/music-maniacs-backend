@@ -9,7 +9,7 @@ content-type: application/json
 
 {
   "venue": {
-    "venue_name": "Nombre del lugar",
+    "name": "Nombre del lugar",
     "description": "Descripción del lugar",
     "links_attributes": [
       {
@@ -36,7 +36,7 @@ content-type: application/json
 }
 
 ### SHOW ###
-GET http://localhost:3000/admin/venues?id=c474c64f-261a-4337-a28f-10ea415a6807
+GET http://localhost:3000/admin/venues?id=503f2f07-be66-49da-9f23-ea57cce6b620
 content-type: application/json
 
 ### SHOW ###
@@ -45,18 +45,14 @@ content-type: application/json
 
 
 ### UPDATE ###
-PUT http://localhost:3000/admin/venues/c474c64f-261a-4337-a28f-10ea415a6807
+PUT http://localhost:3000/admin/venues/d1c8f115-f908-48f8-9389-f8bc46024b32
 content-type: application/json
 
 {
     "venue": {
-        "id": "c474c64f-261a-4337-a28f-10ea415a6807",
+        "id": "d1c8f115-f908-48f8-9389-f8bc46024b32",
         "description": "Descripcion del lugar de eventos",
-        "venue_name": "Primer Lugar",
-        "linkeable_id": null,
-        "linkeable_type": null,
-        "created_at": "2023-08-25T13:55:34.697Z",
-        "updated_at": "2023-08-25T13:55:34.697Z",
+        "name": "Primer Lugar",
         "links_attributes": [
       {
         "url": "https://example.com",
@@ -74,7 +70,6 @@ content-type: application/json
     },
     "location_attributes":
         {
-          "id": "e692f532-c482-4b19-88e0-082d7716d250",
           "zip_code": "12345",
           "street": "Italia",
           "department": "Guaymallen",
@@ -83,10 +78,7 @@ content-type: application/json
           "longitude": "-74.0060",
           "number": 4,
           "country": "United States",
-          "province": "New York",
-          "venue_id": null,
-          "created_at": "2023-08-27T19:04:22.331Z",
-          "updated_at": "2023-08-27T19:04:22.331Z"
+          "province": "New York"
     }
 }
 

@@ -5,12 +5,11 @@ class Venue < ApplicationRecord
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
   has_one :location, dependent: :destroy
-  accepts_nested_attributes_for :location #con esto se puede crear una ubicacion al crear un lugar
+  accepts_nested_attributes_for :location # con esto se puede crear una ubicacion al crear un lugar
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :venue_name, presence: true , uniqueness: true
+  validates :name, presence: true, uniqueness: true
   validates :description, presence: true
   validates :location, presence: true
-
 end
