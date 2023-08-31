@@ -1,7 +1,11 @@
 class Admin::VenuesController < ApplicationController
+  VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
+                               links: { only: %i[id url title] },
+                               image: { methods: %i[url] } } }.freeze
+
   def index
     venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-    render json: { data: venues.as_json(include: %i[links location]), pagination: pagination_info(venues) }
+    render json: { data: venues.as_json(VENUE_TO_JSON), pagination: pagination_info(venues) }
   end
 
   def show
@@ -14,10 +18,10 @@ class Admin::VenuesController < ApplicationController
   def create
     venue = Venue.new(venue_params)
 
-    artist.image = Image.new(file: params[:image]) if params[:image].present?
+    venue.image = Image.new(file: params[:image]) if params[:image].present?
 
     if venue.save
-      render json: venue.as_json(include: %i[links location]), status: :ok
+      render json: venue.as_json(VENUE_TO_JSON), status: :ok
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity
     end
@@ -26,8 +30,17 @@ class Admin::VenuesController < ApplicationController
   def update
     venue = Venue.find(params[:id])
 
+    if params[:image].present?
+      if venue.image.present?
+        venue.image.file.purge
+        venue.image.file.attach(params[:image])
+      else
+        venue.image = Image.new(file: params[:image])
+      end
+    end
+
     if venue.update(venue_params)
-      render json: venue.as_json(include: %i[links location]), status: :ok
+      render json: venue.as_json(VENUE_TO_JSON), status: :ok
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity
     end
@@ -46,9 +59,6 @@ class Admin::VenuesController < ApplicationController
   private
 
   def venue_params
-    JSON.parse(params.require(:venue)).deep_symbolize_keys.slice(:name, :description,
-                                  location_attributes: %i[zip_code street department locality latitude longitude number country province _destroy],
-                                  links_attributes: %i[url title _destroy id])
-    
+    JSON.parse(params.require(:venue)).deep_symbolize_keys.slice(:name, :description, :location_attributes, :links_attributes, :image_attributes)
   end
 end
