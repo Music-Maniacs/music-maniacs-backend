@@ -1,4 +1,5 @@
 class Venue < ApplicationRecord
+  has_paper_trail # para soporte de versionado
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -12,6 +13,5 @@ class Venue < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :name, presence: true, uniqueness: true
-  validates :description, presence: true
-  #, :location
+  validates :description, :location, presence: true
 end
