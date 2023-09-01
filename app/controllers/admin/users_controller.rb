@@ -40,6 +40,12 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def restore
+    user = User.find(params[:id])
+    user.restore!
+    head :no_content, status: :ok
+  end
+
   private
 
   # en el controller de admin se tienen que poder ver los usuarios borrados
