@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     get :user_info
   end
 
-
   namespace :admin do
     resources :artists, only: %i[index show create update destroy]
     resources :users, only: %i[index show create update destroy]
