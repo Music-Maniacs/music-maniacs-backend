@@ -17,7 +17,7 @@ class Venue < ApplicationRecord
   # INSTANCE METHODS
   ##############################################################################
   def address
-    "#{location.street} #{location.number}, #{location.locality}, #{locationprovince}, #{location.country}"
+    "#{location.street} #{location.number}, #{location.locality}, #{location.province}, #{location.country}"
   end
   ##############################################################################
   # CLASS METHODS
