@@ -13,4 +13,10 @@ class Venue < ApplicationRecord
   ##############################################################################
   validates :name, presence: true, uniqueness: true
   validates :description, :location, presence: true
+  ##############################################################################
+  # CLASS METHODS
+  ##############################################################################
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[name]
+  end
 end
