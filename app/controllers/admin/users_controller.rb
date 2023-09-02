@@ -40,6 +40,12 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def restore
+    user = User.find(params[:id])
+    user.restore!
+    head :no_content, status: :ok
+  end
+
   def block
     user = User.find(params[:id])
     blocked_until = params[:blocked_until] == 'permanent' ? User.permanent_block_date_from_now : params[:blocked_until]
