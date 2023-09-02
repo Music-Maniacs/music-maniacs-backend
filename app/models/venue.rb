@@ -17,9 +17,7 @@ class Venue < ApplicationRecord
   # INSTANCE METHODS
   ##############################################################################
   def address
-    location_info = location.attributes.slice('zip_code', 'street', 'department', 'locality',
-                                              'latitude', 'longitude', 'number', 'country', 'province')
-    "#{location_info['street']} #{location_info['number']}, #{location_info['locality']}, #{location_info['province']}, #{location_info['country']}"
+    "#{location.street} #{location.number}, #{location.locality}, #{locationprovince}, #{location.country}"
   end
   ##############################################################################
   # CLASS METHODS
