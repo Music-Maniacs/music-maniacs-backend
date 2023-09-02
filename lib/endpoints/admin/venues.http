@@ -2,35 +2,21 @@
 GET http://localhost:3000/admin/venues?page=1&per_page=1
 content-type: application/json
 
-
-### CREATE ###
+### CREATE ### Postman code
 POST http://localhost:3000/admin/venues
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Length: 709
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="venue"
 
-{"name":"Nombre del lugar","description":"Descripción del lugar",
-"links_attributes":[{"title":"Example website","url":"https://example.com"},
-{"title":"Another example website","url":"https://example.org"}],
- "location_attributes": {
-    "zip_code": "12345",
-    "street": "Calle Principal",
-    "department": "Departamento",
-    "locality": "Localidad",
-    "latitude": "12.345",
-    "longitude": "-67.890",
-    "number": "123",
-    "country": "País",
-    "province": "Provincia"
-  }
-}
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+{"name":"Nombre del lugar1111","description":"Descripción del lugar","links_attributes":[{"title":"Example website","url":"https://example.com"},{"title":"Another example website","url":"https://example.org"}],"location_attributes": {"zip_code": "12345","street": "Calle Principal","department": "Departamento","locality": "Localidad","latitude": "12.345","longitude": "-67.890","number": "123","country": "País","province": "Provincia"}}
 
-Content-Disposition: form-data; name="image"; filename="imagen2.png"
-Content-Type: image/jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="2.jpg"
+Content-Type: image/jpeg
 
-< lib/endpoints/assets/ArtistCover.jpg >
+lib/endpoints/assets/ArtistCover.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
@@ -42,9 +28,8 @@ content-type: application/json
 GET http://localhost:3000/admin/venues?venue_name=Primer Lugar
 content-type: application/json
 
-
 ### UPDATE ###
-PUT http://localhost:3000/admin/venues/a317bcd4-7b1a-4ac9-8737-de435cfee0f7
+PUT http://localhost:3000/admin/venues/1398e086-b3a9-4187-80b8-2745446afd0a
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -67,10 +52,10 @@ Content-Disposition: form-data; name="venue"
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-Content-Disposition: form-data; name="image"; filename="imagen2.png"
+Content-Disposition: form-data; name="image"; filename="3.png"
 Content-Type: image/jpg
 
-< lib/endpoints/assets/ArtistCover.jpg >
+lib/endpoints/assets/ArtistCover.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### DESTROY ###
