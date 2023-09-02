@@ -9,10 +9,9 @@ class Admin::VenuesController < ApplicationController
   end
 
   def show
-    venue = Venue.find(id: params[:venue_identifier]) ||
-            Venue.find(name: params[:venue_identifier])
+    venue = Venue.find(params[:id])
 
-    render json: venue.as_json(include: %i[links location])
+    render json: venue.as_json(VENUE_TO_JSON)
   end
 
   def create
