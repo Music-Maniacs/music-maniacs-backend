@@ -60,6 +60,10 @@ content-type: application/json
 DELETE http://localhost:3000/admin/users/05dd54d2-d075-4aa9-8b4f-2309e4d7c806
 content-type: application/json
 
+### RESTORE ###
+PUT http://localhost:3000/admin/users/e6af483a-85dd-48c9-b526-2f1c56f497a9/restore
+content-type: application/json
+
 ### BLOCK ###
 PUT http://localhost:3000/admin/users/c8ca27c9-17b0-47d2-9e2a-df683f39d23a/block
 content-type: application/json

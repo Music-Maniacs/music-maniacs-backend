@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :artists, only: %i[index show create update destroy]
     resources :users, only: %i[index show create update destroy] do
       member do
+        put :restore
         put :block
         put :unblock
       end
