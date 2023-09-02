@@ -62,5 +62,5 @@ content-type: application/json
 
 
 ### RESTORE ###
-GET http://localhost:3000/admin/users/e6af483a-85dd-48c9-b526-2f1c56f497a9/restore
+PUT http://localhost:3000/admin/users/e6af483a-85dd-48c9-b526-2f1c56f497a9/restore
 content-type: application/json
