@@ -40,6 +40,27 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def block
+    user = User.find(params[:id])
+    blocked_until = params[:blocked_until] == 'permanent' ? User.permanent_block_date_from_now : params[:blocked_until]
+    if user.blocked?
+      render json: { error: :user_already_blocked }, status: 400
+    else
+      user.block!(blocked_until)
+      head :no_content, status: :ok
+    end
+  end
+
+  def unblock
+    user = User.find(params[:id])
+    if !user.blocked?
+      render json: { error: :user_already_unblocked }, status: 400
+    else
+      user.unblock!
+      head :no_content, status: :ok
+    end
+  end
+
   private
 
   # en el controller de admin se tienen que poder ver los usuarios borrados
