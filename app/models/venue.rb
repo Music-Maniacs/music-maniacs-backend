@@ -14,6 +14,14 @@ class Venue < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :description, :location, presence: true
   ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def address
+    location_info = location.attributes.slice('zip_code', 'street', 'department', 'locality',
+                                              'latitude', 'longitude', 'number', 'country', 'province')
+    "#{location_info['street']} #{location_info['number']}, #{location_info['locality']}, #{location_info['province']}, #{location_info['country']}"
+  end
+  ##############################################################################
   # CLASS METHODS
   ##############################################################################
   def self.ransackable_attributes(_auth_object = nil)

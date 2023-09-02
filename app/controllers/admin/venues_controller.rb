@@ -5,7 +5,8 @@ class Admin::VenuesController < ApplicationController
 
   def index
     venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-    render json: { data: venues.as_json(VENUE_TO_JSON), pagination: pagination_info(venues) }
+    render json: { data: venues.as_json(only: %i[id name description],
+                                        methods: [:address]), pagination: pagination_info(venues) }
   end
 
   def show
