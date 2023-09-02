@@ -16,8 +16,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :artists, only: %i[index show create update destroy]
-    resources :users, only: %i[index show create update destroy]
     resources :venues, only: %i[index show create update destroy]
+    resources :users, only: %i[index show create update destroy] do
+      member do
+        put :restore
+        put :block
+        put :unblock
+      end
+    end
     resources :genres, only: %i[index create update destroy] do
       collection do
         get :genres_select

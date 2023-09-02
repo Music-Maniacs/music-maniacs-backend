@@ -28,6 +28,10 @@ class User < ApplicationRecord
     end
   end
 
+  def active_for_authentication?
+    super && !blocked?
+  end
+
   ##############################################################################
   # CALLBACKS
   ##############################################################################
@@ -76,12 +80,28 @@ class User < ApplicationRecord
   end
 
   def blocked?
-    blocked_until.present?
+    blocked_until && blocked_until > Time.zone.now
+  end
+
+  def block!(blocked_until)
+    update!(blocked_until:)
+  end
+
+  def unblock!
+    update!(blocked_until: nil)
   end
 
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
+  def self.permanent_block_years
+    100
+  end
+
+  def self.permanent_block_date_from_now
+    Date.today + permanent_block_years.years
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[username email full_name]
   end
