@@ -13,7 +13,7 @@ content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="artist"
 
-{"name":"Artista Nuevos","nationality":"generos","description":"aaa","genre_ids":["3ee568cb-6ce3-4967-98cb-5f4e82c9d90e"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
+{"name":"Artista Nuevos","nationality":"generos","description":"aaa","genre_ids":["4b4df81d-9a0d-4bb2-a928-e21b7270daa9"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 
 Content-Disposition: form-data; name="image"; filename="1.png"
