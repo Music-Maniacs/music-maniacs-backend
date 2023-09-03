@@ -75,10 +75,12 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params_create
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :full_name, :biography, :role_id, links_attributes: [:url, :title, :_destroy, :id])
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :full_name, :biography,
+                                 :role_id, links_attributes: %i[url title _destroy id])
   end
 
   def user_params_update
-    params.require(:user).permit(:username, :email, :full_name, :biography, :role_id, links_attributes: [:url, :title, :_destroy, :id])
+    params.require(:user).permit(:username, :email, :full_name, :biography, :role_id,
+                                 links_attributes: %i[url title _destroy id])
   end
 end
