@@ -1,30 +1,5 @@
 class Admin::FollowersController < ApplicationController
-  before_action :authenticate_user!, only: [:user_info]
-
-  # Acción para seguir a un usuario
-  def follow_user
-    user_to_follow = User.find(params[:id])
-
-    puts "Current User: #{current_user.inspect}" # esto da nill
-    puts "user_to_follow: #{user_to_follow.inspect}"
-
-    if current_user.following?(user_to_follow)
-      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
-    else
-      follower = current_user.followers.build(followable: user_to_follow)
-      if follower.save
-        render status: :ok
-      else
-        render json: { errors: follower.errors.details }, status: :unprocessable_entity
-      end
-    end
-  end
-
-  # Acción para dejar de seguir a un usuario
-  # def unfollow_user
-  #   user_to_unfollow = User.find(params[:user_id])
-  #   unfollow_action(current_user, user_to_unfollow)
-  # end
+  before_action :authenticate_user!
 
   # Acción para seguir un evento
   # def follow_event
@@ -51,6 +26,9 @@ class Admin::FollowersController < ApplicationController
   # Acción para seguir un espacio de eventos
   def follow_venue
     venue_to_follow = Venue.find(params[:venue_id])
+
+    puts "Current User: #{current_user.inspect}" # esto da nill
+    puts "user_to_follow: #{user_to_follow.inspect}"
 
     if current_user.following?(venue_to_follow)
       render json: { errors: current_user.errors.details }, status: :unprocessable_entity
