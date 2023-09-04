@@ -62,7 +62,11 @@ class User < ApplicationRecord
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
   belongs_to :role
-
+  has_many :followers, dependent: :destroy
+  has_many :followed_users, through: :followers, source: :followable, source_type: 'User'
+  has_many :followed_events, through: :followers, source: :followable, source_type: 'Event'
+  has_many :followed_venues, through: :followers, source: :followable, source_type: 'Venue'
+  has_many :followed_producers, through: :followers, source: :followable, source_type: 'Producer'
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -89,6 +93,10 @@ class User < ApplicationRecord
 
   def unblock!
     update!(blocked_until: nil)
+  end
+
+  def following?(entity)
+    followers.exists?(followable: entity)
   end
 
   ##############################################################################
