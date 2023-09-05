@@ -50,25 +50,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "followeds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "followed_id"
-    t.uuid "followedable_id", null: false
-    t.string "followedable_type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["followedable_id"], name: "index_followeds_on_followedable_id"
-    t.index ["followedable_type"], name: "index_followeds_on_followedable_type"
-  end
-
   create_table "followers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "follower_id", null: false
+    t.uuid "user_id", null: false
     t.string "followable_type", null: false
     t.bigint "followable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["followable_type", "followable_id"], name: "index_followers_on_followable"
-    t.index ["follower_id", "followable_type", "followable_id"], name: "index_followers_on_follower_and_followable", unique: true
-    t.index ["follower_id"], name: "index_followers_on_follower_id"
+    t.index ["followable_type", "followable_id"], name: "index_followers_on_follower_and_followable", unique: true
+    t.index ["user_id"], name: "index_followers_on_user_id"
   end
 
   create_table "genreable_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

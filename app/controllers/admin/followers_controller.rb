@@ -2,7 +2,9 @@ class Admin::FollowersController < ApplicationController
   before_action :authenticate_user!
 
   def follow_entity(entity)
-    follower = Follower.create(followable: entity, user: current_user)
+    follower = Follower.new
+    follower.user_id = current_user.id
+    follower.followable = entity
     follower.save
   end
 
@@ -10,7 +12,10 @@ class Admin::FollowersController < ApplicationController
   def follow_venue
     venue_to_follow = Venue.find(params[:id])
 
-    if current_user.following?(venue_to_follow)
+    puts "Current User: #{current_user.inspect}" # esto da nill
+    puts "venue_to_follow: #{venue_to_follow.inspect}"
+
+    if current_user.following?(venue_to_follow, current_user)
       render json: { errors: current_user.errors.details }, status: :unprocessable_entity
     else
       if follow_entity(venue_to_follow)
