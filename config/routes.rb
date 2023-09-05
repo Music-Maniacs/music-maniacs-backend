@@ -14,27 +14,26 @@ Rails.application.routes.draw do
     get :user_info
   end
 
+  resources :followers, only: [] do
+    collection do
+      post 'follow_venue', to: 'followers#follow_venue'
+      # get 'follow_venue/:id', to: 'followers#follow_venue_show'
+      delete 'follow_venue/:id', to: 'followers#unfollow_venue'
+
+      post 'follow_producer', to: 'followers#follow_producer'
+      # get 'follow_producer/:id', to: 'followers#follow_producer_show'
+      delete 'follow_producer/:id', to: 'followers#unfollow_producer'
+
+      post 'follow_artist', to: 'followers#follow_artist'
+      # get 'follow_artist/:id', to: 'followers#follow_artist_show'
+      delete 'follow_artist/:id', to: 'followers#unfollow_artist'
+    end
+  end
+
   namespace :admin do
     resources :artists, only: %i[index show create update destroy]
     resources :producers, only: %i[index show create update destroy]
     resources :venues, only: %i[index show create update destroy]
-
-    resources :followers, only: [] do
-      collection do
-        post 'follow_venue', to: 'followers#follow_venue'
-        # get 'follow_venue/:id', to: 'followers#follow_venue_show'
-        delete 'follow_venue/:id', to: 'followers#unfollow_venue'
-
-        post 'follow_producer', to: 'followers#follow_producer'
-        # get 'follow_producer/:id', to: 'followers#follow_producer_show'
-        delete 'follow_producer/:id', to: 'followers#unfollow_producer'
-
-        post 'follow_artist', to: 'followers#follow_artist'
-        # get 'follow_artist/:id', to: 'followers#follow_artist_show'
-        delete 'follow_artist/:id', to: 'followers#unfollow_artist'
-      end
-    end
-
     resources :users, only: %i[index show create update destroy] do
       member do
         put :restore

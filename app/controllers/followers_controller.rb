@@ -1,4 +1,4 @@
-class Admin::FollowersController < ApplicationController
+class FollowersController < ApplicationController
   before_action :authenticate_user!
 
   # Acción para seguir un espacio de eventos
