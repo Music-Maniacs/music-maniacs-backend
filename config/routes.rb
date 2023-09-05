@@ -21,10 +21,6 @@ Rails.application.routes.draw do
 
     resources :followers, only: [] do
       collection do
-        post 'follow_user', to: 'followers#follow_user'
-        # get 'follow_user/:user_id', to: 'followers#follow_user_show'
-        # delete 'follow_user/:user_id', to: 'followers#unfollow_user'
-
         # post 'follow_event', to: 'followers#follow_event'
         # get 'follow_event/:event_id', to: 'followers#follow_event_show'
         # delete 'follow_event/:event_id', to: 'followers#follow_event_destroy'
@@ -33,9 +29,13 @@ Rails.application.routes.draw do
         # get 'follow_venue/:venue_id', to: 'followers#follow_venue_show'
         # delete 'follow_venue/:venue_id', to: 'followers#follow_venue_destroy'
 
-        # post 'follow_producer', to: 'followers#follow_producer_create'
+        post 'follow_producer', to: 'followers#follow_producer'
         # get 'follow_producer/:producer_id', to: 'followers#follow_producer_show'
         # delete 'follow_producer/:producer_id', to: 'followers#follow_producer_destroy'
+
+        post 'follow_artist', to: 'followers#follow_artist'
+        # get 'follow_artist/:artist_id', to: 'followers#follow_artist_show'
+        # delete 'follow_artist/:artist_id', to: 'followers#follow_artist_destroy'
       end
     end
 

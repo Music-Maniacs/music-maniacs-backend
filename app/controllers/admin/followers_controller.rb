@@ -1,6 +1,11 @@
 class Admin::FollowersController < ApplicationController
   before_action :authenticate_user!
 
+  def follow_entity(entity)
+    follower = Follower.create(followable: entity, user: current_user)
+    follower.save
+  end
+
   # Acción para seguir un espacio de eventos
   def follow_venue
     venue_to_follow = Venue.find(params[:id])
@@ -8,9 +13,7 @@ class Admin::FollowersController < ApplicationController
     if current_user.following?(venue_to_follow)
       render json: { errors: current_user.errors.details }, status: :unprocessable_entity
     else
-      follower = Follower.create(followable: user_to_follow, user: current_user)
-
-      if follower.save
+      if follow_entity(venue_to_follow)
         render status: :ok
       else
         render json: { errors: follower.errors.details }, status: :unprocessable_entity
@@ -25,25 +28,45 @@ class Admin::FollowersController < ApplicationController
   # end
 
   # Acción para seguir una productora
-  # def follow_producer
-  #   producer_to_follow = Producer.find(params[:producer_id])
-  #   unless current_user.following?(producer_to_follow)
-  #   follower = current_user.followers.build(followable: producer_to_follow)
+  def follow_producer
+    producer_to_follow = Producer.find(params[:id])
 
-  #   if follower.save
-  #     redirect_to producer_to_follow, notice: 'Has comenzado a seguir esta productora.'
-  #   else
-  #     redirect_to producer_to_follow, alert: 'No se pudo seguir esta productora en este momento.'
-  #   end
-  #   else
-  #     redirect_to producer_to_follow, alert: 'Ya estás siguiendo esta productora.'
-  #   end
-  # end
+    if current_user.following?(producer_to_follow)
+      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
+    else
+      if follow_entity(producer_to_follow)
+        render status: :ok
+      else
+        render json: { errors: follower.errors.details }, status: :unprocessable_entity
+      end
+    end
+  end
 
   # Acción para dejar de seguir una productora
   # def unfollow_producer
   #   producer_to_unfollow = Producer.find(params[:producer_id])
   #   unfollow_action(current_user, producer_to_unfollow)
+  # end
+
+  # Acción para seguir un artista
+  def follow_artist
+    artist_to_follow = Artist.find(params[:id])
+
+    if current_user.following?(artist_to_follow)
+      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
+    else
+      if follow_entity(artist_to_follow)
+        render status: :ok
+      else
+        render json: { errors: follower.errors.details }, status: :unprocessable_entity
+      end
+    end
+  end
+
+  # Acción para dejar de seguir un artista
+  # def unfollow_artist
+  #   artist_to_unfollow = Artist.find(params[:id])
+  #   unfollow_action(current_user, artist_to_unfollow)
   # end
 
   # Acción para seguir un evento
@@ -69,14 +92,13 @@ class Admin::FollowersController < ApplicationController
   # end
 
   # private
-
-  # # def unfollow_action(user, target)
-  # #   follower = user.followers.find_by(followable: target)
-  # #   if follower
-  # #     follower.destroy
-  # #     redirect_to target, notice: "Has dejado de seguir #{target.class.name.titleize}."
-  # #   else
-  # #     redirect_to target, alert: "No estás siguiendo #{target.class.name.titleize}."
-  # #   end
+  #   # # def unfollow_action(user, target)
+  #   # #   follower = user.followers.find_by(followable: target)
+  #   # #   if follower
+  #   # #     follower.destroy
+  #   # #     redirect_to target, notice: "Has dejado de seguir #{target.class.name.titleize}."
+  #   # #   else
+  #   # #     redirect_to target, alert: "No estás siguiendo #{target.class.name.titleize}."
+  #   # #   end
   # end
 end
