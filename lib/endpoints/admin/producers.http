@@ -13,7 +13,7 @@ content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="producer"
 
-{"name":"Productora Nuevos","nationality":"generos","description":"aaa","genre_ids":["d03e00e0-c458-4fb7-a4b6-40f865db38f6"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
+{"name":"Productora Nuevos","nationality":"generos","description":"aaa","genre_ids":["4b4df81d-9a0d-4bb2-a928-e21b7270daa9"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 
 Content-Disposition: form-data; name="image"; filename="losinso.png"

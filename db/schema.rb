@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_182506) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_31_144832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -95,6 +95,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_182506) do
     t.index ["linkeable_type"], name: "index_links_on_linkeable_type"
   end
 
+  create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "zip_code"
+    t.string "street"
+    t.string "department"
+    t.string "locality"
+    t.string "latitude"
+    t.string "longitude"
+    t.integer "number"
+    t.string "country"
+    t.string "province"
+    t.uuid "venue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["venue_id"], name: "index_locations_on_venue_id"
+  end
+
   create_table "penalty_thresholds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "penalty_score", null: false
     t.integer "days_blocked", null: false
@@ -118,6 +134,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_182506) do
     t.datetime "updated_at", null: false
     t.index ["permission_id"], name: "index_permissions_roles_on_permission_id"
     t.index ["role_id"], name: "index_permissions_roles_on_role_id"
+  end
+
+  create_table "producers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "nationality"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -156,6 +180,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_182506) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "venues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "description", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
