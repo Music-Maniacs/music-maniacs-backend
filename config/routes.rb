@@ -21,21 +21,17 @@ Rails.application.routes.draw do
 
     resources :followers, only: [] do
       collection do
-        # post 'follow_event', to: 'followers#follow_event'
-        # get 'follow_event/:event_id', to: 'followers#follow_event_show'
-        # delete 'follow_event/:event_id', to: 'followers#follow_event_destroy'
-
         post 'follow_venue', to: 'followers#follow_venue'
-        # get 'follow_venue/:venue_id', to: 'followers#follow_venue_show'
-        # delete 'follow_venue/:venue_id', to: 'followers#follow_venue_destroy'
+        # get 'follow_venue/:id', to: 'followers#follow_venue_show'
+        delete 'follow_venue/:id', to: 'followers#unfollow_venue'
 
         post 'follow_producer', to: 'followers#follow_producer'
-        # get 'follow_producer/:producer_id', to: 'followers#follow_producer_show'
-        # delete 'follow_producer/:producer_id', to: 'followers#follow_producer_destroy'
+        # get 'follow_producer/:id', to: 'followers#follow_producer_show'
+        delete 'follow_producer/:id', to: 'followers#unfollow_producer'
 
         post 'follow_artist', to: 'followers#follow_artist'
-        # get 'follow_artist/:artist_id', to: 'followers#follow_artist_show'
-        # delete 'follow_artist/:artist_id', to: 'followers#follow_artist_destroy'
+        # get 'follow_artist/:id', to: 'followers#follow_artist_show'
+        delete 'follow_artist/:id', to: 'followers#unfollow_artist'
       end
     end
 

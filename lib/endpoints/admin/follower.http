@@ -1,70 +1,43 @@
-POST http://localhost:3000/users/sign_in
+###### SHOW ######
+GET http://localhost:3000/admin/followers/05dd54d2-d075-4aa9-8b4f-2309e4d7c806
 content-type: application/json
 
-{ "user":
-    { "login": "ninonauriofeliz",
-      "password": "root12"
-    }
-}
+###### FOLLOW ######
 
-### INDEX ###
-GET http://localhost:3000/admin/users?q[name_or_username_or_email_matches]=test&q[search_by_state]=active&page=10&per_page=1
-content-type: application/json
-
-### SHOW ###
-GET http://localhost:3000/admin/users/05dd54d2-d075-4aa9-8b4f-2309e4d7c806
-content-type: application/json
-
-### FOLLOW_VENUE ###
+### VENUE ###
 POST http://localhost:3000/admin/followers/follow_venue
 content-type: application/json
-Authorization: Bearer {{"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNzVhNGQxYi0wMzQwLTQxY2ItOTU1My02NzQwOTg3ODQ3YmQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTM4NjQ2OTcsImV4cCI6MTY5Mzg2NDk5NywianRpIjoiZmYzYTgzNWItMDE3"}}
 
 {
-  "venue_to_follow_id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
+  "id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
 }
 
-### UPDATE ###
-PUT http://localhost:3000/admin/users/227267a3-4870-46ed-912f-6f0ad56014e3
-content-type: application/json
-
-{  
-    "user": {
-        "email": "emailchange@gmail.com",
-        "links_attributes": [
-            {
-                "id": "uuid de algun link",
-                "url": "https://example.com",
-                "title": "Update Example website"
-            },
-            {
-                "id": "uuid",
-                "_destroy": true
-            },
-            {
-                "url": "https://example.org",
-                "title": "nuevo link"
-            }
-        ]
-    }
-}
-
-### DESTROY ###
-DELETE http://localhost:3000/admin/users/05dd54d2-d075-4aa9-8b4f-2309e4d7c806
-content-type: application/json
-
-### RESTORE ###
-PUT http://localhost:3000/admin/users/e6af483a-85dd-48c9-b526-2f1c56f497a9/restore
-content-type: application/json
-
-### BLOCK ###
-PUT http://localhost:3000/admin/users/c8ca27c9-17b0-47d2-9e2a-df683f39d23a/block
+### PRODUCER ###
+POST http://localhost:3000/admin/followers/follow_producer
 content-type: application/json
 
 {
-    "blocked_until": "2023-09-31"
+  "id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
 }
 
-### UNBLOCK ###
-PUT http://localhost:3000/admin/users/c8ca27c9-17b0-47d2-9e2a-df683f39d23a/unblock
+### ARTIST ###
+POST http://localhost:3000/admin/followers/follow_artist
+content-type: application/json
+
+{
+  "id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
+}
+
+###### DESTROY ######
+
+### VENUE ###
+DELETE http://localhost:3000/admin/followers/follow_venue/a9eac9f5-6127-4a91-84c5-b10d51a07e56
+content-type: application/json
+
+### PRODUCER ###
+DELETE http://localhost:3000/admin/followers/follow_producer/a9eac9f5-6127-4a91-84c5-b10d51a07e56
+content-type: application/json
+
+### ARTIST ###
+DELETE http://localhost:3000/admin/followers/follow_artist/a9eac9f5-6127-4a91-84c5-b10d51a07e56
 content-type: application/json

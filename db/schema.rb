@@ -52,12 +52,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
 
   create_table "followers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
+    t.uuid "followable_id", null: false
     t.string "followable_type", null: false
-    t.bigint "followable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["followable_type", "followable_id"], name: "index_followers_on_followable"
-    t.index ["followable_type", "followable_id"], name: "index_followers_on_follower_and_followable", unique: true
+    t.index ["followable_id"], name: "index_followers_on_followable_id"
+    t.index ["followable_type"], name: "index_followers_on_followable_type"
     t.index ["user_id"], name: "index_followers_on_user_id"
   end
 
