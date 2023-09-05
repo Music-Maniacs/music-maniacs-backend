@@ -15,9 +15,21 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :artists, only: %i[index show create update destroy]
-    resources :producers, only: %i[index show create update destroy]
-    resources :venues, only: %i[index show create update destroy]
+    resources :artists, only: %i[index show create update destroy] do
+      collection do
+        get :search_typeahead
+      end
+    end
+    resources :producers, only: %i[index show create update destroy] do
+      collection do
+        get :search_typeahead
+      end
+    end
+    resources :venues, only: %i[index show create update destroy] do
+      collection do
+        get :search_typeahead
+      end
+    end
     resources :users, only: %i[index show create update destroy] do
       member do
         put :restore
