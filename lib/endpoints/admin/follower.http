@@ -9,7 +9,9 @@ POST http://localhost:3000/admin/followers/follow_venue
 content-type: application/json
 
 {
-  "id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
+  "venue": {
+    "id": "c90baaba-d19a-4e53-a152-08f10554af00"
+  }
 }
 
 ### PRODUCER ###
@@ -17,7 +19,9 @@ POST http://localhost:3000/admin/followers/follow_producer
 content-type: application/json
 
 {
-  "id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
+  "producer": {
+    "id":"be724a65-9c33-4ea6-bd1e-fe23aa0f1349"
+  }
 }
 
 ### ARTIST ###
@@ -25,13 +29,15 @@ POST http://localhost:3000/admin/followers/follow_artist
 content-type: application/json
 
 {
-  "id": "a9eac9f5-6127-4a91-84c5-b10d51a07e56"
+  "artist": {
+        "id":"3ea621e1-1907-4e20-9c93-4ce72644e13f"
+  }
 }
 
-###### DESTROY ######
+###### UNFOLLOW ######
 
 ### VENUE ###
-DELETE http://localhost:3000/admin/followers/follow_venue/a9eac9f5-6127-4a91-84c5-b10d51a07e56
+DELETE http://localhost:3000/admin/followers/follow_venue/be724a65-9c33-4ea6-bd1e-fe23aa0f1349
 content-type: application/json
 
 ### PRODUCER ###
@@ -39,5 +45,5 @@ DELETE http://localhost:3000/admin/followers/follow_producer/a9eac9f5-6127-4a91-
 content-type: application/json
 
 ### ARTIST ###
-DELETE http://localhost:3000/admin/followers/follow_artist/a9eac9f5-6127-4a91-84c5-b10d51a07e56
+DELETE http://localhost:3000/admin/followers/follow_artist/3ea621e1-1907-4e20-9c93-4ce72644e13f
 content-type: application/json
