@@ -94,6 +94,6 @@ class Admin::FollowersController < ApplicationController
   end
 
   def handle_unfollow(entity_to_unfollow)
-    unfollow_action(current_user,entity_to_unfollow)
+    unfollow_action(current_user, entity_to_unfollow)
   end
 end
