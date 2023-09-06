@@ -1,3 +1,3 @@
 class VenuesController < ApplicationController
-  include FollowableController
+  include FollowableActions
 end

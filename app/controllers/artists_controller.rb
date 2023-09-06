@@ -1,3 +1,3 @@
 class ArtistsController < ApplicationController
-  include FollowableController
+  include FollowableActions
 end

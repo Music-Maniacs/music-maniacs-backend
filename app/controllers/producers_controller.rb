@@ -1,3 +1,3 @@
 class ProducersController < ApplicationController
-  include FollowableController
+  include FollowableActions
 end

@@ -1,4 +1,4 @@
-module FollowableController
+module FollowableActions
   extend ActiveSupport::Concern
 
   included do
