@@ -1,4 +1,5 @@
 class Admin::ArtistsController < ApplicationController
+  include Search
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[url] } } }.freeze

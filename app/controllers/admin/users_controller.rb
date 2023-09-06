@@ -41,13 +41,13 @@ class Admin::UsersController < ApplicationController
   end
 
   def restore
-    user = User.find(params[:id])
+    user = User.deleted.find(params[:id])
     user.restore!
     head :no_content, status: :ok
   end
 
   def block
-    user = User.find(params[:id])
+    user = users_scope.find(params[:id])
     blocked_until = params[:blocked_until] == 'permanent' ? User.permanent_block_date_from_now : params[:blocked_until]
     if user.blocked?
       render json: { error: :user_already_blocked }, status: 400
@@ -58,7 +58,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def unblock
-    user = User.find(params[:id])
+    user = users_scope.find(params[:id])
     if !user.blocked?
       render json: { error: :user_already_unblocked }, status: 400
     else

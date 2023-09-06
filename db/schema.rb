@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_02_021910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -62,16 +62,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
     t.index ["artist_id"], name: "index_events_on_artist_id"
     t.index ["producer_id"], name: "index_events_on_producer_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
-  end
-
-  create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id", null: false
-    t.string "followable_type", null: false
-    t.uuid "followable_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["followable_type", "followable_id"], name: "index_follows_on_followable"
-    t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "genreable_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -229,7 +219,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
   add_foreign_key "events", "artists"
   add_foreign_key "events", "producers"
   add_foreign_key "events", "venues"
-  add_foreign_key "follows", "users"
   add_foreign_key "genreable_associations", "genres"
   add_foreign_key "users", "roles"
 end

@@ -1,29 +1,33 @@
-class Artist < ApplicationRecord
-  include Followable
+class Event < ApplicationRecord
   has_paper_trail
-
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_many :genreable_associations, as: :genreable
-  has_many :genres, through: :genreable_associations
-
   has_one :image, as: :imageable, dependent: :destroy
+
+  belongs_to :artist
+  belongs_to :producer
+  belongs_to :venue
 
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
-
-  has_many :events
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :name, uniqueness: true
-  validates :name, :nationality, :description, presence: true
+  validates :name, :datetime, presence: true
+
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
 
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
   def self.ransackable_attributes(_auth_object = nil)
-    %w[name]
+    %w[name datetime artist_id venue_id producer_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
   end
 end
