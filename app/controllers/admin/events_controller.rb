@@ -1,5 +1,9 @@
 class Admin::EventsController < ApplicationController
-  EVENT_TO_JSON = { include: { image: { methods: %i[url] } } }.freeze
+  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+                               links: { only: %i[id url title] },
+                               artist: { only: %i[id name] },
+                               producer: { only: %i[id name] },
+                               venue: { only: %i[id name] } } }.freeze
 
   def index
     events = Event.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
@@ -57,6 +61,6 @@ class Admin::EventsController < ApplicationController
   private
 
   def event_params
-    JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name, :description, :datetime, :artist_id, :producer_id, :venue_id)
+    JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name, :description, :datetime, :artist_id, :producer_id, :venue_id, :links_attributes)
   end
 end
