@@ -56,3 +56,7 @@ lib/endpoints/assets/ArtistCover.jpg
 ### DESTROY ###
 DELETE http://localhost:3000/admin/venues/11308bd3-2148-4d89-8f1e-767061fc140f
 content-type: application/json
+
+### TYPEAHEAD ###
+GET http://localhost:3000/admin/venues/search_typeahead?q[name_cont]=nombre
+content-type: application/json

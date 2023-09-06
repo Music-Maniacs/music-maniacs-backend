@@ -23,5 +23,7 @@ module MusicManiacsBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    ActiveRecord::Base.time_zone_aware_types = [:datetime]
   end
 end
