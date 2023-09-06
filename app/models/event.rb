@@ -11,6 +11,8 @@ class Event < ApplicationRecord
 
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
+
+  has_many :comments, dependent: :destroy
   ##############################################################################
   # VALIDATIONS
   ##############################################################################

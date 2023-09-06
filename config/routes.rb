@@ -50,9 +50,12 @@ Rails.application.routes.draw do
     end
     resources :trust_levels, only: %i[index show create update destroy]
     resources :penalty_thresholds, only: %i[index create update destroy]
-    resources :events, only: %i[] do
-      post :add_comment, to: 'comments#create'
-    end
-    resources :comments, only: %i[update destroy]
+    resources :events, only: %i[index show create update destroy]
   end
+
+  resources :events, only: %i[] do
+    post :add_comment, to: 'comments#create'
+  end
+
+  resources :comments, only: %i[update destroy]
 end

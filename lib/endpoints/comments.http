@@ -1,0 +1,27 @@
+### ADD COMMENT ###
+POST http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/add_comment
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwNDM3NzYsImV4cCI6MTY5NzA2Nzc3NiwianRpIjoiNTc1ZTY5MjQtZDc4ZC00NWE0LWExNmYtZWFmNmMzY2RjNjc5In0.dbt2KUyHQKDbfnBfrwfRjwW3zUcioA5_WosBlSePTR0
+content-type: application/json
+
+{  
+    "comment": {
+        "body": "This is a comment"
+    }
+}
+
+
+### UPDATE ###
+PUT http://localhost:3000/comments/225ece68-93ff-4d47-94b1-f747c6d1661f
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwNDM3NzYsImV4cCI6MTY5NzA2Nzc3NiwianRpIjoiNTc1ZTY5MjQtZDc4ZC00NWE0LWExNmYtZWFmNmMzY2RjNjc5In0.dbt2KUyHQKDbfnBfrwfRjwW3zUcioA5_WosBlSePTR0
+content-type: application/json
+
+{  
+    "comment": {
+        "body": "This is a comment updated"
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/comments/225ece68-93ff-4d47-94b1-f747c6d1661f
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwNDM3NzYsImV4cCI6MTY5NzA2Nzc3NiwianRpIjoiNTc1ZTY5MjQtZDc4ZC00NWE0LWExNmYtZWFmNmMzY2RjNjc5In0.dbt2KUyHQKDbfnBfrwfRjwW3zUcioA5_WosBlSePTR0
+content-type: application/json

@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     comment = event.comments.create(comment_params)
     comment.user = current_user
 
-    if @comment.save
+    if comment.save
       render json: comment.as_json, status: :ok
     else
       render json: { errors: comment.errors.details }, status: :unprocessable_entity
@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
   def update
     comment = current_user.comments.find(params[:id])
     if comment.update(comment_params)
-      render json: @comment.as_json, status: :ok
+      render json: comment.as_json, status: :ok
     else
       render json: { errors: @comment.errors.details }, status: :unprocessable_entity
     end
@@ -36,6 +36,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:body)
   end
 end
