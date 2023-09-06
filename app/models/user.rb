@@ -62,10 +62,12 @@ class User < ApplicationRecord
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
   belongs_to :role
-  has_many :followers, dependent: :destroy
-  has_many :followed_events, -> { where(followers: { followable_type: 'Event' }) }, through: :followers, source: :followable
-  has_many :followed_venues, -> { where(followers: { followable_type: 'Venue' }) }, through: :followers, source: :followable
-  has_many :followed_producers, -> { where(followers: { followable_type: 'Producer' }) }, through: :followers, source: :followable
+
+  has_many :follows, dependent: :destroy
+
+  has_many :followed_artists, through: :follows, source: :followable, source_type: 'Artist'
+  has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
+  has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
