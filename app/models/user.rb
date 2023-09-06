@@ -96,8 +96,8 @@ class User < ApplicationRecord
     update!(blocked_until: nil)
   end
 
-  def following?(entity, user)
-    user.followers.exists?(followable: entity)
+  def follows?(entity)
+    follows.exists?(followable: entity)
   end
 
   ##############################################################################

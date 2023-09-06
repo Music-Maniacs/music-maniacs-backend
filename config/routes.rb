@@ -58,4 +58,25 @@ Rails.application.routes.draw do
     resources :trust_levels, only: %i[index show create update destroy]
     resources :penalty_thresholds, only: %i[index create update destroy]
   end
+
+  resources :artists, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
+  resources :venues, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
+  resources :producers, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
 end
