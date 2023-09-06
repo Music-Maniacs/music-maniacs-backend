@@ -50,6 +50,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "datetime", null: false
+    t.uuid "artist_id", null: false
+    t.uuid "producer_id", null: false
+    t.uuid "venue_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_events_on_artist_id"
+    t.index ["producer_id"], name: "index_events_on_producer_id"
+    t.index ["venue_id"], name: "index_events_on_venue_id"
+  end
+
   create_table "followers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "followable_id", null: false
@@ -213,6 +227,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_153740) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "events", "artists"
+  add_foreign_key "events", "producers"
+  add_foreign_key "events", "venues"
   add_foreign_key "genreable_associations", "genres"
   add_foreign_key "users", "roles"
 end
