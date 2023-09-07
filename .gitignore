@@ -29,6 +29,3 @@
 /config/master.key
 
 .byebug_history
-
-config/initializers/devise.rb
-.gitignore
