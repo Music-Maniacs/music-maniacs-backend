@@ -41,19 +41,53 @@ Rails.application.routes.draw do
         put :unblock
       end
     end
+
     resources :genres, only: %i[index create update destroy] do
       collection do
         get :genres_select
       end
     end
+
     resources :roles, only: %i[index show create update destroy] do
       collection do
         get :roles_select
         get :permissions_select
       end
     end
+
     resources :trust_levels, only: %i[index show create update destroy]
     resources :penalty_thresholds, only: %i[index create update destroy]
     resources :events, only: %i[index show create update destroy]
+  end
+
+  resources :reviews, only: %i[update destroy]
+
+  resources :events, only: %i[] do
+    post 'add_review/:reviewable_klass', to: 'reviews#create'
+    post :add_comment, to: 'comments#create'
+    get :comments, to: 'comments#index'
+  end
+
+  resources :comments, only: %i[update destroy]
+
+  resources :artists, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
+  resources :venues, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
+  resources :producers, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
   end
 end

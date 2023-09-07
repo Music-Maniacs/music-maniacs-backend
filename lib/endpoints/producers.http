@@ -1,0 +1,10 @@
+### FOLLOW ###
+POST http://localhost:3000/producers/c77e7e52-c520-4841-ae21-52fc2b213314/follow
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwMzc2MTcsImV4cCI6MTY5NzA2MTYxNywianRpIjoiMjAxMmQ1ZWYtMDQ1My00MDEzLThmYmQtZTllODY3NDVlNzk1In0.7GKbaHZuEu7Och5uzjeuJwET6TH2zUtNjSZMm6HtQ1E
+content-type: application/json
+
+### UNFOLLOW ###
+POST http://localhost:3000/producers/c77e7e52-c520-4841-ae21-52fc2b213314/unfollow
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwMzc2MTcsImV4cCI6MTY5NzA2MTYxNywianRpIjoiMjAxMmQ1ZWYtMDQ1My00MDEzLThmYmQtZTllODY3NDVlNzk1In0.7GKbaHZuEu7Och5uzjeuJwET6TH2zUtNjSZMm6HtQ1E
+content-type: application/json
+

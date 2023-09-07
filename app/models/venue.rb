@@ -1,4 +1,6 @@
 class Venue < ApplicationRecord
+  include Reviewable
+  include Followable
   has_paper_trail # para soporte de versionado
 
   ##############################################################################
