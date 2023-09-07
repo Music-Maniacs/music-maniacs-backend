@@ -56,6 +56,13 @@ Rails.application.routes.draw do
     resources :events, only: %i[index show create update destroy]
   end
 
+  resources :events, only: %i[] do
+    post :add_comment, to: 'comments#create'
+    get :comments, to: 'comments#index'
+  end
+
+  resources :comments, only: %i[update destroy]
+
   resources :artists, only: %i[] do
     member do
       post :follow
