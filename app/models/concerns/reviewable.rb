@@ -6,7 +6,7 @@ module Reviewable
   end
 
   def rating
-    reviews.average(:rating) || 0
+    reviews.average(:rating).to_f || 0
   end
 
   def reviews_count

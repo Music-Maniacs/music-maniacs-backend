@@ -25,7 +25,7 @@ class Event < ApplicationRecord
   # INSTANCE METHODS
   ##############################################################################
   def rating
-    reviews.average(:rating) || 0
+    reviews.average(:rating).to_f || 0
   end
 
   %w[artist producer venue].each do |reviewable|
