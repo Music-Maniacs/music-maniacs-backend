@@ -19,9 +19,21 @@ Rails.application.routes.draw do
   resources :venues, only: %i[index show create update destroy]
 
   namespace :admin do
-    resources :artists, only: %i[index show create update destroy]
-    resources :producers, only: %i[index show create update destroy]
-    resources :venues, only: %i[index show create update destroy]
+    resources :artists, only: %i[index show create update destroy] do
+      collection do
+        get :search_typeahead
+      end
+    end
+    resources :producers, only: %i[index show create update destroy] do
+      collection do
+        get :search_typeahead
+      end
+    end
+    resources :venues, only: %i[index show create update destroy] do
+      collection do
+        get :search_typeahead
+      end
+    end
     resources :users, only: %i[index show create update destroy] do
       member do
         put :restore
@@ -42,5 +54,6 @@ Rails.application.routes.draw do
     end
     resources :trust_levels, only: %i[index show create update destroy]
     resources :penalty_thresholds, only: %i[index create update destroy]
+    resources :events, only: %i[index show create update destroy]
   end
 end

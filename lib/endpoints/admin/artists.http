@@ -43,3 +43,8 @@ Content-Type: image/jpg
 ### DESTROY ###
 DELETE http://localhost:3000/admin/artists/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
 content-type: application/json
+
+
+### TYPEAHEAD ###
+GET http://localhost:3000/admin/artists/search_typeahead?q[name_cont]=testingg
+content-type: application/json
