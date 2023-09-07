@@ -3,12 +3,6 @@ class Users::ProducersController < ApplicationController
                                   links: { only: %i[id url title] },
                                   image: { methods: %i[url] } } }.freeze
 
-  def index
-    producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-
-    render json: { data: producers.as_json(PRODUCER_TO_JSON), pagination: pagination_info(producers) }
-  end
-
   def show
     producer = Producer.find(params[:id])
 
@@ -41,16 +35,6 @@ class Users::ProducersController < ApplicationController
 
     if producer.update(producer_params)
       render json: producer.as_json(PRODUCER_TO_JSON), status: :ok
-    else
-      render json: { errors: producer.errors.details }, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    producer = Producer.find(params[:id])
-
-    if producer.destroy
-      head :no_content, status: :ok
     else
       render json: { errors: producer.errors.details }, status: :unprocessable_entity
     end
