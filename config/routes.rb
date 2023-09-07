@@ -37,17 +37,20 @@ Rails.application.routes.draw do
         put :unblock
       end
     end
+
     resources :genres, only: %i[index create update destroy] do
       collection do
         get :genres_select
       end
     end
+
     resources :roles, only: %i[index show create update destroy] do
       collection do
         get :roles_select
         get :permissions_select
       end
     end
+
     resources :trust_levels, only: %i[index show create update destroy]
     resources :penalty_thresholds, only: %i[index create update destroy]
     resources :events, only: %i[index show create update destroy]
@@ -59,4 +62,25 @@ Rails.application.routes.draw do
   end
 
   resources :comments, only: %i[update destroy]
+
+  resources :artists, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
+  resources :venues, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
+  resources :producers, only: %i[] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
 end
