@@ -6,7 +6,7 @@ class Review < ApplicationRecord
   validate :one_review_per_user_per_reviewable
 
   def one_review_per_user_per_reviewable
-    return unless Review.where(user_id: user_id, reviewable_id: reviewable_id, reviewable_type: reviewable_type).exists?
+    return unless Review.where(user_id:, reviewable_id:, reviewable_type:).exists?
 
     errors.add(:base, :already_reviewed)
   end
