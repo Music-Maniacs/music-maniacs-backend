@@ -10,8 +10,10 @@ class ProducersController < ApplicationController
     versions = producer.versions
 
     render json: { producer: producer.as_json(PRODUCER_TO_JSON),
-                   past_events: past_events,
-                   future_events: future_events,
+                   events: {
+                     past_events: past_events,
+                     future_events: future_events
+                   },
                    versions: versions.map { |version| version.as_json } }
   end
 
@@ -49,6 +51,10 @@ class ProducersController < ApplicationController
   private
 
   def producer_params
-    JSON.parse(params.require(:producer)).deep_symbolize_keys.slice(:name, :description, :nationality, :links_attributes, :genre_ids)
+    JSON.parse(params.require(:producer)).deep_symbolize_keys.slice(:name,
+                                                                    :description,
+                                                                    :nationality,
+                                                                    :links_attributes,
+                                                                    :genre_ids)
   end
 end

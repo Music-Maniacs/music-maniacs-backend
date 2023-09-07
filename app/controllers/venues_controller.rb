@@ -9,9 +9,11 @@ class VenuesController < ApplicationController
     future_events = venue.events.furute_events
     versions = venue.versions
 
-    render json: { producer: producer.as_json(VENUE_TO_JSON),
-                   past_events: past_events,
-                   future_events: future_events,
+    render json: { venue: venue.as_json(VENUE_TO_JSON),
+                   events: {
+                     past_events: past_events,
+                     future_events: future_events
+                   },
                    versions: versions.map { |version| version.as_json } }
   end
 
@@ -49,6 +51,10 @@ class VenuesController < ApplicationController
   private
 
   def venue_params
-    JSON.parse(params.require(:venue)).deep_symbolize_keys.slice(:name, :description, :location_attributes, :links_attributes, :image_attributes)
+    JSON.parse(params.require(:venue)).deep_symbolize_keys.slice(:name,
+                                                                 :description,
+                                                                 :location_attributes,
+                                                                 :links_attributes,
+                                                                 :image_attributes)
   end
 end
