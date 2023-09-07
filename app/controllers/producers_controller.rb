@@ -3,18 +3,17 @@ class ProducersController < ApplicationController
                                   links: { only: %i[id url title] },
                                   image: { methods: %i[url] } } }.freeze
 
+  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+                               links: { only: %i[id url title] },
+                               artist: { only: %i[id name] },
+                               producer: { only: %i[id name] },
+                               venue: { only: %i[id name] } } }.freeze
   def show
     producer = Producer.find(params[:id])
-    past_events = producer.events.past_events
-    future_events = producer.events.furute_events
-    versions = producer.versions
 
-    render json: { producer: producer.as_json(PRODUCER_TO_JSON),
-                   events: {
-                     past_events: past_events,
-                     future_events: future_events
-                   },
-                   versions: versions.map { |version| version.as_json } }
+    render json: { venue: venue.as_json(VENUE_TO_JSON),
+                   events: handle_events(producer),
+                   versions: producer.versions }
   end
 
   def create
@@ -56,5 +55,14 @@ class ProducersController < ApplicationController
                                                                     :nationality,
                                                                     :links_attributes,
                                                                     :genre_ids)
+  end
+
+  def handle_events(producer)
+    past_events = producer.events.past_events
+    future_events = producer.events.furute_events
+    {
+      past_events: past_events.as_json(EVENT_TO_JSON),
+      future_events: future_events.as_json(EVENT_TO_JSON)
+    }
   end
 end

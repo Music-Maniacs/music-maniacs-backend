@@ -3,18 +3,18 @@ class VenuesController < ApplicationController
                                links: { only: %i[id url title] },
                                image: { methods: %i[url] } } }.freeze
 
+  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+                               links: { only: %i[id url title] },
+                               artist: { only: %i[id name] },
+                               producer: { only: %i[id name] },
+                               venue: { only: %i[id name] } } }.freeze
+
   def show
     venue = Venue.find(params[:id])
-    past_events = venue.events.past_events
-    future_events = venue.events.furute_events
-    versions = venue.versions
 
     render json: { venue: venue.as_json(VENUE_TO_JSON),
-                   events: {
-                     past_events: past_events,
-                     future_events: future_events
-                   },
-                   versions: versions.map { |version| version.as_json } }
+                   events: handle_events(venue),
+                   versions: venue.versions }
   end
 
   def create
@@ -56,5 +56,14 @@ class VenuesController < ApplicationController
                                                                  :location_attributes,
                                                                  :links_attributes,
                                                                  :image_attributes)
+  end
+
+  def handle_events(venue)
+    past_events = venue.events.past_events
+    future_events = venue.events.furute_events
+    {
+      past_events: past_events.as_json(EVENT_TO_JSON),
+      future_events: future_events.as_json(EVENT_TO_JSON)
+    }
   end
 end
