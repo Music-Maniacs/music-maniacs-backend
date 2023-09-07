@@ -5,8 +5,14 @@ class VenuesController < ApplicationController
 
   def show
     venue = Venue.find(params[:id])
+    past_events = venue.events.past_events
+    future_events = venue.events.furute_events
+    versions = venue.versions
 
-    render json: venue.as_json(VENUE_TO_JSON)
+    render json: { producer: producer.as_json(VENUE_TO_JSON),
+                   past_events: past_events,
+                   future_events: future_events,
+                   versions: versions.map { |version| version.as_json } }
   end
 
   def create

@@ -1,5 +1,11 @@
 class Event < ApplicationRecord
   has_paper_trail
+
+  ##############################################################################
+  # SCOPES
+  ##############################################################################
+  scope :past_events, -> { where('datetime < ?', Time.now).order(datetime: :desc).limit(5) }
+  scope :furute_events, -> { where('datetime >= ?', Time.now).order(:datetime).limit(5) }
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################

@@ -5,8 +5,14 @@ class ArtistsController < ApplicationController
 
   def show
     artist = Artist.find(params[:id])
+    past_events = artist.events.past_events
+    future_events = artist.events.furute_events
+    versions = artist.versions
 
-    render json: artist.as_json(ARTIST_TO_JSON)
+    render json: { artist: artist.as_json(ARTIST_TO_JSON),
+                   past_events: past_events,
+                   future_events: future_events,
+                   versions: versions.map { |version| version.as_json } }
   end
 
   def create

@@ -15,10 +15,10 @@ Content-Disposition: form-data; name="event"
 
 {
     "name":"Digweed, Metropolitano 2023",
-    "datetime": "2023-09-05 19:30:10",
-    "artist_id": "f68d289b-a5df-4296-8859-a14a51690460",
-    "producer_id": "c77e7e52-c520-4841-ae21-52fc2b213314",
-    "venue_id": "ea2ec6e2-a3d6-47ca-b009-299cf183b605",
+    "datetime": "2023-09-13 19:30:10",
+    "artist_id": "feb601ed-3161-46e9-90de-386183272428",
+    "producer_id": "f5aeea44-b41b-44f2-aa5c-2fc7356966be",
+    "venue_id": "35f823b9-70a0-4cd2-9e51-b926ad532976",
     "description": "description"
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
