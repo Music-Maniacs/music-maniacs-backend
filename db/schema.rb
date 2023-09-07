@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_06_224925) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_011451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -178,6 +178,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_224925) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "rating", null: false
+    t.text "description"
+    t.uuid "user_id", null: false
+    t.uuid "event_id", null: false
+    t.string "reviewable_type", null: false
+    t.uuid "reviewable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_reviews_on_event_id"
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -243,5 +257,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_224925) do
   add_foreign_key "events", "venues"
   add_foreign_key "follows", "users"
   add_foreign_key "genreable_associations", "genres"
+  add_foreign_key "reviews", "events"
+  add_foreign_key "reviews", "users"
   add_foreign_key "users", "roles"
 end

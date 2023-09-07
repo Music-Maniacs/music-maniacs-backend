@@ -1,24 +1,22 @@
-class Producer < ApplicationRecord
-  include Reviewable
-  include Followable
-  has_paper_trail
-  ##############################################################################
-  # ASSOCIATIONS
-  ##############################################################################
-  has_many :genreable_associations, as: :genreable
-  has_many :genres, through: :genreable_associations
-
-  has_one :image, as: :imageable, dependent: :destroy
-
-  has_many :links, as: :linkeable
-  accepts_nested_attributes_for :links, allow_destroy: true
-
-  has_many :events
+class Review < ApplicationRecord
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :name, uniqueness: true
-  validates :name, :nationality, :description, presence: true
+  validates :rating, presence: true, inclusion: { in: 1..5 }
+  validate :one_review_per_user_per_reviewable
+
+  def one_review_per_user_per_reviewable
+    return unless Review.where(user_id:, reviewable_id:, reviewable_type:).exists?
+
+    errors.add(:base, :already_reviewed)
+  end
+
+  ##############################################################################
+  # ASSOCIATIONS
+  ##############################################################################
+  belongs_to :user
+  belongs_to :reviewable, polymorphic: true
+  belongs_to :event
 
   ##############################################################################
   # CLASS METHODS
