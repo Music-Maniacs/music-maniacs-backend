@@ -52,4 +52,8 @@ Rails.application.routes.draw do
     resources :penalty_thresholds, only: %i[index create update destroy]
     resources :events, only: %i[index show create update destroy]
   end
+  resources :events, only: %i[] do
+    post 'add_review/:reviewable_klass', to: 'reviews#create'
+  end
+  resources :reviews, only: %i[update destroy]
 end

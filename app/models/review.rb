@@ -1,24 +1,15 @@
-class Artist < ApplicationRecord
-  include Reviewable
-  has_paper_trail
+class Review < ApplicationRecord
+  ##############################################################################
+  # VALIDATIONS
+  ##############################################################################
+  validates :rating, presence: true, inclusion: { in: 1..5 }
 
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_many :genreable_associations, as: :genreable
-  has_many :genres, through: :genreable_associations
-
-  has_one :image, as: :imageable, dependent: :destroy
-
-  has_many :links, as: :linkeable
-  accepts_nested_attributes_for :links, allow_destroy: true
-
-  has_many :events
-  ##############################################################################
-  # VALIDATIONS
-  ##############################################################################
-  validates :name, uniqueness: true
-  validates :name, :nationality, :description, presence: true
+  belongs_to :user
+  belongs_to :reviewable, polymorphic: true
+  belongs_to :event
 
   ##############################################################################
   # CLASS METHODS

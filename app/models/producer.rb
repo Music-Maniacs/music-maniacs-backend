@@ -1,4 +1,5 @@
 class Producer < ApplicationRecord
+  include Reviewable
   has_paper_trail
   ##############################################################################
   # ASSOCIATIONS
