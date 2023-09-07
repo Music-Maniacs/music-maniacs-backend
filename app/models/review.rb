@@ -3,6 +3,13 @@ class Review < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :rating, presence: true, inclusion: { in: 1..5 }
+  validate :one_review_per_user_per_reviewable
+
+  def one_review_per_user_per_reviewable
+    return unless Review.where(user_id: user_id, reviewable_id: reviewable_id, reviewable_type: reviewable_type).exists?
+
+    errors.add(:base, :already_reviewed)
+  end
 
   ##############################################################################
   # ASSOCIATIONS

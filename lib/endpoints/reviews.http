@@ -1,0 +1,52 @@
+### ADD ARTIST REVIEW ###
+POST http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/add_review/artist
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQxMTQwODYsImV4cCI6MTY5NDExNDM4NiwianRpIjoiODJkZDk3YWYtZjEzYi00YjgyLWI2MzctZTE3N2Y2NDljNzkzIn0.60v1jgeXhvHisQUl4b_UKnHuvqPsk2Ts4ylmS-Tj3UU
+content-type: application/json
+
+{
+    "review": {
+        "rating": 5,
+        "description": "This is a comment"
+    }
+}
+
+### ADD VENUE REVIEW ###
+POST http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/add_review/venue
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQxMTQwODYsImV4cCI6MTY5NDExNDM4NiwianRpIjoiODJkZDk3YWYtZjEzYi00YjgyLWI2MzctZTE3N2Y2NDljNzkzIn0.60v1jgeXhvHisQUl4b_UKnHuvqPsk2Ts4ylmS-Tj3UU
+content-type: application/json
+
+{
+    "review": {
+        "rating": 5,
+        "description": "This is a comment"
+    }
+}
+
+### ADD PRODUCER REVIEW ###
+POST http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/add_review/producer
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQxMTQwODYsImV4cCI6MTY5NDExNDM4NiwianRpIjoiODJkZDk3YWYtZjEzYi00YjgyLWI2MzctZTE3N2Y2NDljNzkzIn0.60v1jgeXhvHisQUl4b_UKnHuvqPsk2Ts4ylmS-Tj3UU
+content-type: application/json
+
+{
+    "review": {
+        "rating": 5,
+        "description": "This is a comment"
+    }
+}
+
+### UPDATE ###
+PUT http://localhost:3000/reviews/8070d01e-1553-4823-8916-136d52c0d138
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQxMTQwODYsImV4cCI6MTY5NDExNDM4NiwianRpIjoiODJkZDk3YWYtZjEzYi00YjgyLWI2MzctZTE3N2Y2NDljNzkzIn0.60v1jgeXhvHisQUl4b_UKnHuvqPsk2Ts4ylmS-Tj3UU
+content-type: application/json
+
+{
+    "review": {
+        "rating": 5,
+        "description": "This is a comment"
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/reviews/8070d01e-1553-4823-8916-136d52c0d138
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQxMTM2NzAsImV4cCI6MTY5NDExMzk3MCwianRpIjoiZmM2Yzc4ZTQtYjgzNC00M2VlLWE2YTktMGI2N2I5MDVjOTFkIn0.LsgwwotBzLjAw8ZTJ_x0GUAdj9lt2A8llFWxc6fnr7o
+content-type: application/json

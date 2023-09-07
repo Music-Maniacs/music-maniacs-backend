@@ -1,10 +1,11 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: %i[add_review update_review destroy_review]
+  before_action :authenticate_user!
 
   def create
     event = Event.find(params[:event_id])
-    reviewable = params[:rewviewable_klass].find(params[:reviewable_id])
-    review = event.reviews.create(review_params.merge(user: current_user, reviewable:))
+    review = event.reviews.build(review_params)
+    review.user = current_user
+    review.reviewable = event.send(params[:reviewable_klass])
 
     if review.save
       render json: review.as_json, status: :ok
