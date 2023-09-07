@@ -1,4 +1,4 @@
-class Users::ProducersController < ApplicationController
+class ProducersController < ApplicationController
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
                                   image: { methods: %i[url] } } }.freeze
