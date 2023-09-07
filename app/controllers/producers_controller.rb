@@ -11,7 +11,7 @@ class ProducersController < ApplicationController
   def show
     producer = Producer.find(params[:id])
 
-    render json: { venue: venue.as_json(VENUE_TO_JSON),
+    render json: { venue: producer.as_json(PRODUCER_TO_JSON),
                    events: handle_events(producer),
                    versions: producer.versions }
   end
