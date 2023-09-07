@@ -8,8 +8,8 @@ class CreateVersions < ActiveRecord::Migration[7.0]
       t.string   :event,     null: false
       t.string   :whodunnit
 
-      t.text     :object, limit: TEXT_BYTES
-      t.text     :object_changes, limit: TEXT_BYTES
+      t.json     :object
+      t.json     :object_changes
 
       t.datetime :created_at
     end
