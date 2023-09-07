@@ -1,5 +1,6 @@
 class Artist < ApplicationRecord
   include Reviewable
+  include Followable
   has_paper_trail
 
   ##############################################################################

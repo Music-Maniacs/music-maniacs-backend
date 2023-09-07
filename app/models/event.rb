@@ -16,6 +16,8 @@ class Event < ApplicationRecord
   has_many :artists_reviews, through: :reviews, source: :reviewable, source_type: 'Artist'
   has_many :producers_reviews, through: :reviews, source: :reviewable, source_type: 'Producer'
   has_many :venues_reviews, through: :reviews, source: :reviewable, source_type: 'Venue'
+
+  has_many :comments, dependent: :destroy
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
