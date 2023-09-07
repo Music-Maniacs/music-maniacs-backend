@@ -3,11 +3,8 @@ class ArtistsController < ApplicationController
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[url] } } }.freeze
 
-  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
-                               links: { only: %i[id url title] },
-                               artist: { only: %i[id name] },
-                               producer: { only: %i[id name] },
-                               venue: { only: %i[id name] } } }.freeze
+  EVENT_TO_JSON = { include: { venue: { methods: %i[location] } } }.freeze
+
   def show
     artist = Artist.find(params[:id])
 
@@ -58,11 +55,11 @@ class ArtistsController < ApplicationController
   end
 
   def handle_events(artist)
-    past_events = artist.events.past_events
-    future_events = artist.events.furute_events
+    past_events = artist.events.past_events.as_json(EVENT_TO_JSON)
+    future_events = artist.events.furute_events.as_json(EVENT_TO_JSON)
     {
-      past_events: past_events.as_json(EVENT_TO_JSON),
-      future_events: future_events.as_json(EVENT_TO_JSON)
+      past_events: past_events,
+      future_events: future_events
     }
   end
 end

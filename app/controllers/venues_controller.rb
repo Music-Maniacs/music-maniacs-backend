@@ -3,11 +3,7 @@ class VenuesController < ApplicationController
                                links: { only: %i[id url title] },
                                image: { methods: %i[url] } } }.freeze
 
-  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
-                               links: { only: %i[id url title] },
-                               artist: { only: %i[id name] },
-                               producer: { only: %i[id name] },
-                               venue: { only: %i[id name] } } }.freeze
+  EVENT_TO_JSON = { include: { venue: { methods: %i[location] } } }.freeze
 
   def show
     venue = Venue.find(params[:id])
