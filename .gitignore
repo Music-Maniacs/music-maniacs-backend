@@ -30,4 +30,4 @@
 
 .byebug_history
 
-devise.rb
+config/initializers/devise.rb
