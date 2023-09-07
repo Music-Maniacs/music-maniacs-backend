@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
   resources :events, only: %i[] do
     post :add_comment, to: 'comments#create'
+    get :comments, to: 'comments#index'
   end
 
   resources :comments, only: %i[update destroy]

@@ -1,5 +1,12 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[index]
+
+  def index
+    event = Event.find(params[:event_id])
+    comments = event.comments.page(params[:page]).per(params[:per_page]).order(created_at: :asc)
+
+    render json: { data: comments.as_json, pagination: pagination_info(comments) }
+  end
 
   def create
     event = Event.find(params[:event_id])
