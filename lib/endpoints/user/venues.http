@@ -1,9 +1,5 @@
-### INDEX ###
-GET http://localhost:3000/admin/venues?page=1&per_page=1
-content-type: application/json
-
-### CREATE ### Postman code
-POST http://localhost:3000/admin/venues
+### CREATE ###
+POST http://localhost:3000/venues
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Length: 709
 
@@ -20,11 +16,11 @@ lib/endpoints/assets/ArtistCover.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### SHOW ###
-GET http://localhost:3000/admin/venues/11308bd3-2148-4d89-8f1e-767061fc140f
+GET http://localhost:3000/venues/11308bd3-2148-4d89-8f1e-767061fc140f
 content-type: application/json
 
 ### UPDATE ###
-PUT http://localhost:3000/admin/venues/11308bd3-2148-4d89-8f1e-767061fc140f
+PUT http://localhost:3000/venues/11308bd3-2148-4d89-8f1e-767061fc140f
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -52,7 +48,3 @@ Content-Type: image/jpg
 
 lib/endpoints/assets/ArtistCover.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-### DESTROY ###
-DELETE http://localhost:3000/admin/venues/11308bd3-2148-4d89-8f1e-767061fc140f
-content-type: application/json
