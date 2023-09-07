@@ -13,10 +13,6 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :links, allow_destroy: true
 
   has_many :reviews
-  has_many :artists_reviews, through: :reviews, source: :reviewable, source_type: 'Artist'
-  has_many :producers_reviews, through: :reviews, source: :reviewable, source_type: 'Producer'
-  has_many :venues_reviews, through: :reviews, source: :reviewable, source_type: 'Venue'
-
   has_many :comments, dependent: :destroy
   ##############################################################################
   # VALIDATIONS
@@ -31,9 +27,29 @@ class Event < ApplicationRecord
   end
 
   %w[artist producer venue].each do |reviewable|
-    define_method "#{reviewable}_rating" do
-      reviews.where(reviewable_type: reviewable.capitalize).average(:rating) || 0
+    define_method "#{reviewable}_reviews" do
+      reviews.where(reviewable_type: reviewable.capitalize)
     end
+
+    define_method "#{reviewable}_rating" do
+      send("#{reviewable}_reviews").average(:rating) || 0
+    end
+
+    define_method "#{reviewable}_reviews_info" do
+      {
+        rating: send("#{reviewable}_rating"),
+        reviews_count: send("#{reviewable}_reviews").count,
+        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json(only: %i[id rating description user_id])
+      }
+    end
+  end
+
+  def reviews_info
+    {
+      artist: artist_reviews_info,
+      producer: producer_reviews_info,
+      venue: venue_reviews_info
+    }
   end
 
   ##############################################################################
