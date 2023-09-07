@@ -55,11 +55,11 @@ class ArtistsController < ApplicationController
   end
 
   def handle_events(artist)
-    past_events = artist.events.past_events.as_json(EVENT_TO_JSON)
-    future_events = artist.events.furute_events.as_json(EVENT_TO_JSON)
+    past_events = artist.events.past_events
+    future_events = artist.events.furute_events
     {
-      past_events: past_events,
-      future_events: future_events
+      past_events: past_events.as_json(EVENT_TO_JSON),
+      future_events: future_events.as_json(EVENT_TO_JSON)
     }
   end
 end
