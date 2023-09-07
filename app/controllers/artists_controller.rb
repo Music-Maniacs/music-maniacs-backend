@@ -2,16 +2,22 @@ class ArtistsController < ApplicationController
   include FollowableActions
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
-                                image: { methods: %i[url] } } }.freeze
+                                image: { methods: %i[url] } },
+                     methods: %i[versions]}.freeze
 
-  EVENT_TO_JSON = { include: { venue: { methods: %i[location] } } }.freeze
+  EVENT_TO_JSON = { only: %i[name datetime],
+                    include: { 
+                      venue: { 
+                        only: %i[name id],
+                        include: {
+                          location: {
+                            only: %i[country province] } } } } }.freeze
 
   def show
     artist = Artist.find(params[:id])
 
     render json: { artist: artist.as_json(ARTIST_TO_JSON),
-                   events: handle_events(artist),
-                   versions: artist.versions }
+                   events: handle_events(artist)}
   end
 
   def create

@@ -2,9 +2,16 @@ class ProducersController < ApplicationController
   include FollowableActions
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
-                                  image: { methods: %i[url] } } }.freeze
-
-  EVENT_TO_JSON = { include: { venue: { methods: %i[location] } } }.freeze
+                                  image: { methods: %i[url] } } ,
+                                  methods: %i[versions] }.freeze
+                               
+  EVENT_TO_JSON = { only: %i[name datetime],
+                    include: { 
+                      venue: { 
+                        only: %i[name id],
+                        include: {
+                          location: {
+                            only: %i[country province] } } } } }.freeze
 
   def show
     producer = Producer.find(params[:id])
