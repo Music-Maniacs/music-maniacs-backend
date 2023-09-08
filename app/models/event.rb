@@ -17,7 +17,6 @@ class Event < ApplicationRecord
   has_many :reviews
   has_many :comments, dependent: :destroy
 
-  belongs_to :eventable, polymorphic: true
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
