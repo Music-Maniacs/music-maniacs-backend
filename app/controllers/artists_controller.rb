@@ -2,8 +2,9 @@ class ArtistsController < ApplicationController
   include FollowableActions
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
-                                image: { methods: %i[url] } },
-                     methods: %i[versions near_events] }.freeze
+                                image: { methods: %i[url] },
+                                reviews_last: { only: %i[id rating description] } },
+                    methods: %i[versions near_events rating] }.freeze
 
   def show
     artist = Artist.find(params[:id])

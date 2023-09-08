@@ -2,13 +2,14 @@ class ProducersController < ApplicationController
   include FollowableActions
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
-                                  image: { methods: %i[url] } },
-                        methods: %i[versions near_events] }.freeze
+                                  image: { methods: %i[url] },
+                                  reviews_last: { only: %i[id rating description] } },
+                        methods: %i[versions near_events rating] }.freeze
 
   def show
     producer = Producer.find(params[:id])
 
-    render json: { producer: producer.as_json(PRODUCER_TO_JSON)}
+    render json: { producer: producer.as_json(PRODUCER_TO_JSON) }
   end
 
   def create

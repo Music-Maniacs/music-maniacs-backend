@@ -2,8 +2,9 @@ class VenuesController < ApplicationController
   include FollowableActions
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },
-                               image: { methods: %i[url] } },
-                    methods: %i[versions near_events] }.freeze
+                               image: { methods: %i[url] },
+                               reviews_last: { only: %i[id rating description] } },
+                    methods: %i[versions near_events rating] }.freeze
 
   def show
     venue = Venue.find(params[:id])
