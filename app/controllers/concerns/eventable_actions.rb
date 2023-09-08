@@ -15,10 +15,14 @@ module EventableActions
     events.where('datetime >= ?', Time.now).order(:datetime).limit(5)
   end
 
+  def events_to_json(events)
+    events.as_json(EVENT_TO_JSON)
+  end
+
   def near_events
     {
-      past_events: past_events.as_json(EVENT_TO_JSON),
-      next_events: next_events.as_json(EVENT_TO_JSON)
+      past_events: events_to_json(past_events),
+      next_events: events_to_json(next_events)
     }
   end
 end
