@@ -1,6 +1,7 @@
 class Venue < ApplicationRecord
   include Reviewable
   include Followable
+  include EventableActions
   has_paper_trail # para soporte de versionado
 
   ##############################################################################

@@ -1,11 +1,7 @@
 class Event < ApplicationRecord
   has_paper_trail
+  include EventableActions
 
-  ##############################################################################
-  # SCOPES
-  ##############################################################################
-  scope :past_events, -> { where('datetime < ?', Time.now).order(datetime: :desc).limit(5) }
-  scope :furute_events, -> { where('datetime >= ?', Time.now).order(:datetime).limit(5) }
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -24,6 +20,8 @@ class Event < ApplicationRecord
   has_many :venues_reviews, through: :reviews, source: :reviewable, source_type: 'Venue'
 
   has_many :comments, dependent: :destroy
+
+  belongs_to :eventable, polymorphic: true
   ##############################################################################
   # VALIDATIONS
   ##############################################################################

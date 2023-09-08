@@ -3,21 +3,12 @@ class ArtistsController < ApplicationController
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[url] } },
-                     methods: %i[versions]}.freeze
-
-  EVENT_TO_JSON = { only: %i[name datetime],
-                    include: { 
-                      venue: { 
-                        only: %i[name id],
-                        include: {
-                          location: {
-                            only: %i[country province] } } } } }.freeze
+                     methods: %i[versions near_events] }.freeze
 
   def show
     artist = Artist.find(params[:id])
 
-    render json: { artist: artist.as_json(ARTIST_TO_JSON),
-                   events: handle_events(artist)}
+    render json: { artist: artist.as_json(ARTIST_TO_JSON) }
   end
 
   def create
@@ -59,14 +50,5 @@ class ArtistsController < ApplicationController
                                                                   :nationality,
                                                                   :links_attributes,
                                                                   :genre_ids)
-  end
-
-  def handle_events(artist)
-    past_events = artist.events.past_events
-    future_events = artist.events.furute_events
-    {
-      past_events: past_events.as_json(EVENT_TO_JSON),
-      future_events: future_events.as_json(EVENT_TO_JSON)
-    }
   end
 end

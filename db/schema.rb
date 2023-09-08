@@ -74,15 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_011451) do
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end
 
-  create_table "followers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.uuid "followable_id", null: false
     t.string "followable_type", null: false
+    t.uuid "followable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["followable_id"], name: "index_followers_on_followable_id"
-    t.index ["followable_type"], name: "index_followers_on_followable_type"
-    t.index ["user_id"], name: "index_followers_on_user_id"
+    t.index ["followable_type", "followable_id"], name: "index_follows_on_followable"
+    t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "genreable_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -256,6 +255,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_011451) do
   add_foreign_key "events", "artists"
   add_foreign_key "events", "producers"
   add_foreign_key "events", "venues"
+  add_foreign_key "follows", "users"
   add_foreign_key "genreable_associations", "genres"
   add_foreign_key "reviews", "events"
   add_foreign_key "reviews", "users"

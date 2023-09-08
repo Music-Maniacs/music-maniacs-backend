@@ -2,24 +2,13 @@ class VenuesController < ApplicationController
   include FollowableActions
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },
-                               image: { methods: %i[url] },
-                               versions: venue.versions} ,
-                               methods: %i[versions] }.freeze
-
-  EVENT_TO_JSON = { only: %i[name datetime],
-                    include: { 
-                      venue: { 
-                        only: %i[name id],
-                        include: {
-                          location: {
-                            only: %i[country province] } } } } }.freeze
+                               image: { methods: %i[url] } },
+                    methods: %i[versions near_events] }.freeze
 
   def show
     venue = Venue.find(params[:id])
 
-    render json: { venue: venue.as_json(VENUE_TO_JSON),
-                   events: handle_events(venue),
-                   versions: venue.versions }
+    render json: { venue: venue.as_json(VENUE_TO_JSON) }
   end
 
   def create
@@ -61,14 +50,5 @@ class VenuesController < ApplicationController
                                                                  :location_attributes,
                                                                  :links_attributes,
                                                                  :image_attributes)
-  end
-
-  def handle_events(venue)
-    past_events = venue.events.past_events
-    future_events = venue.events.furute_events
-    {
-      past_events: past_events.as_json(EVENT_TO_JSON),
-      future_events: future_events.as_json(EVENT_TO_JSON)
-    }
   end
 end
