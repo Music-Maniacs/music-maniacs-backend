@@ -62,10 +62,13 @@ Rails.application.routes.draw do
 
   resources :reviews, only: %i[update destroy]
 
-  resources :events, only: %i[] do
+  resources :events, only: %i[show] do
     post 'add_review/:reviewable_klass', to: 'reviews#create'
     post :add_comment, to: 'comments#create'
     get :comments, to: 'comments#index'
+    collection do
+      get :search
+    end
   end
 
   resources :comments, only: %i[update destroy]

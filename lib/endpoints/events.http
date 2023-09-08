@@ -1,0 +1,7 @@
+### SHOW ###
+GET http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d
+content-type: application/json
+
+### SEARCH ###
+GET http://localhost:3000/events/search
+content-type: application/json

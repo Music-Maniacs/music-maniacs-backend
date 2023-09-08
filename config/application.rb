@@ -24,6 +24,8 @@ module MusicManiacsBackend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    config.active_job.queue_adapter = :sidekiq
+
     ActiveRecord::Base.time_zone_aware_types = [:datetime]
   end
 end
