@@ -1,11 +1,11 @@
 module EventableActions
   EVENT_TO_JSON = { only: %i[name datetime],
-    include: {
-      venue: {
-        only: %i[name id],
-        include: {
-          location: {
-            only: %i[country province] } } } } }.freeze
+                    include: {
+                      venue: {
+                        only: %i[name id],
+                        include: {
+                          location: {
+                            only: %i[country province] } } } } }.freeze
 
   def past_events
     events.where('datetime < ?', Time.now).order(datetime: :desc).limit(5)
