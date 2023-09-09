@@ -5,3 +5,45 @@ content-type: application/json
 ### SEARCH ###
 GET http://localhost:3000/events/search
 content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/events
+content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="event"
+
+{
+    "name":"Digweed, Metropolitano 2023",
+    "datetime": "2023-09-05 19:30:10",
+    "artist_id": "73cf157a-0e70-4f35-960b-2e44c023a502",
+    "producer_id": "ee1abc73-31a7-44d4-b45b-19242b09c7fc",
+    "venue_id": "94209a94-03e3-4977-86c0-e7932b8b45f4",
+    "description": "description"
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+
+Content-Disposition: form-data; name="image"; filename="1.png"
+Content-Type: image/jpg
+
+< lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### UPDATE ###
+PUT http://localhost:3000/events/21c21362-70f4-40a7-863d-e43cc2cc4cb2
+content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="event"
+
+{
+    "name":"Digweed Update"
+}------WebKitFormBoundary7MA4YWxkTrZu0gW
+
+Content-Disposition: form-data; name="image"; filename="1.png"
+Content-Type: image/jpg
+
+< /lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
