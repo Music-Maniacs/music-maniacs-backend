@@ -65,6 +65,10 @@ Rails.application.routes.draw do
     collection do
       get :search
     end
+    member do
+      post :follow
+      post :unfollow
+    end
   end
 
   resources :comments, only: %i[update destroy]
