@@ -44,6 +44,10 @@ Content-Disposition: form-data; name="event"
 
 {
     "name":"Digweed, Modified",
+    "videos_attributes":{
+        "id":"uuid",
+        "_destroy": true
+    }
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="image"; filename="LOSINSO.jpg"
