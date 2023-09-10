@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   # ASSOCIATIONS
   ##############################################################################
   has_one :image, as: :imageable, dependent: :destroy
+  has_many :videos, as: :videable, dependent: :destroy
 
   belongs_to :artist
   belongs_to :producer

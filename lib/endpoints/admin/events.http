@@ -3,12 +3,12 @@ GET http://localhost:3000/admin/events?q[name_cont]=Pasado&page=10&per_page=1
 content-type: application/json
 
 ### SHOW ###
-GET http://localhost:3000/admin/events/68a2ea25-b8b2-4e73-ac0c-51bc34f73caa
+GET http://localhost:3000/admin/events/1e0b6c21-da00-4f1a-8e54-71e0607d54ba
 content-type: application/json
 
 ### CREATE ###
 POST http://localhost:3000/admin/events
-content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="event"
@@ -16,38 +16,47 @@ Content-Disposition: form-data; name="event"
 {
     "name":"Digweed, Metropolitano 2023",
     "datetime": "2023-09-05 19:30:10",
-    "artist_id": "b349595f-8ac1-4c11-84c0-cd4f49a1ff39",
-    "producer_id": "f4316ac9-c409-4511-a38d-dbe0ecb239b4",
-    "venue_id": "80fd7393-e487-4294-94d0-bdf480c2a6df",
+    "artist_id": "73cf157a-0e70-4f35-960b-2e44c023a502",
+    "producer_id": "ee1abc73-31a7-44d4-b45b-19242b09c7fc",
+    "venue_id": "94209a94-03e3-4977-86c0-e7932b8b45f4",
     "description": "description"
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="LOSINSO.jpg"
+Content-Type: image/jpeg
 
-Content-Disposition: form-data; name="image"; filename="1.png"
-Content-Type: image/jpg
+/lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="RetratoFamiliar.mp4"
+Content-Type: video/mp4
 
-< lib/endpoints/assets/ArtistCover.jpg
+lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
-### UPDATE ###
-PUT http://localhost:3000/admin/events/3e47fcce-194c-4f62-88b4-0dd083c6c88c
-content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
+### UPDATE ###
+PUT http://localhost:3000/admin/events/1e0b6c21-da00-4f1a-8e54-71e0607d54ba
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="event"
 
 {
-    "name":"Digweed Update"
-}------WebKitFormBoundary7MA4YWxkTrZu0gW
+    "name":"Digweed, Modified",
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="LOSINSO.jpg"
+Content-Type: image/jpeg
 
-Content-Disposition: form-data; name="image"; filename="1.png"
-Content-Type: image/jpg
+/lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="RetratoFamiliar.mp4"
+Content-Type: video/mp4
 
-< /lib/endpoints/assets/ArtistCover.jpg
+lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
+
 ### DESTROY ###
-DELETE http://localhost:3000/admin/events/3e47fcce-194c-4f62-88b4-0dd083c6c88c
-content-type: application/json
+DELETE http://localhost:3000/admin/events/1e0b6c21-da00-4f1a-8e54-71e0607d54ba

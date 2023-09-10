@@ -1,5 +1,6 @@
 class Admin::EventsController < ApplicationController
   EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+                               videos: { methods: %i[url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
@@ -21,6 +22,8 @@ class Admin::EventsController < ApplicationController
     event = Event.new(event_params)
 
     event.image = Image.new(file: params[:image]) if params[:image].present?
+
+    event.videos.new(file: params[:video]) if params[:video].present?
 
     if event.save
       render json: event.as_json(EVENT_TO_JSON), status: :ok
