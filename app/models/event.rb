@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  include Followable
   has_paper_trail
   ##############################################################################
   # ASSOCIATIONS
