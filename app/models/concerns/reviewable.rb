@@ -13,7 +13,7 @@ module Reviewable
     reviews.count
   end
 
-  def reviews_last
+  def last_reviews
     reviews.order(updated_at: :desc).limit(5)
   end
 end

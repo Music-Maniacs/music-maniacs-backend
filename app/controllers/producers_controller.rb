@@ -1,10 +1,9 @@
 class ProducersController < ApplicationController
-  include FollowableActions
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
                                   image: { methods: %i[url] },
-                                  reviews_last: { only: %i[id rating description] } },
-                        methods: %i[versions near_events rating] }.freeze
+                                  last_reviews: { only: %i[id rating description] } },
+                       methods: %i[versions rating past_events next_events] }.freeze
 
   def show
     producer = Producer.find(params[:id])
@@ -51,14 +50,5 @@ class ProducersController < ApplicationController
                                                                     :nationality,
                                                                     :links_attributes,
                                                                     :genre_ids)
-  end
-
-  def handle_events(producer)
-    past_events = producer.events.past_events
-    future_events = producer.events.furute_events
-    {
-      past_events: past_events.as_json(EVENT_TO_JSON),
-      future_events: future_events.as_json(EVENT_TO_JSON)
-    }
   end
 end
