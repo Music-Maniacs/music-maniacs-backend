@@ -1,6 +1,6 @@
 class Admin::EventsController < ApplicationController
   EVENT_TO_JSON = { include: { image: { methods: %i[url] },
-                               videos: { methods: %i[url] },
+                               videos: { methods: %i[url] }, # quitar en la ultima version
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
@@ -66,6 +66,13 @@ class Admin::EventsController < ApplicationController
   private
 
   def event_params
-    JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name, :description, :datetime, :artist_id, :producer_id, :venue_id, :links_attributes)
+    JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name,
+                                                                 :description,
+                                                                 :datetime,
+                                                                 :artist_id,
+                                                                 :producer_id,
+                                                                 :venue_id,
+                                                                 :links_attributes,
+                                                                 :videos_attributes)
   end
 end

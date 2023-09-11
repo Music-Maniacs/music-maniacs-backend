@@ -16,6 +16,7 @@ class EventsController < ApplicationController
 
   EVENT_TO_JSON = { include: { image: { methods: %i[url] },
                                links: { only: %i[id url title] },
+                               videos: { methods: %i[url] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
                                venue: { only: %i[id name] } } }.freeze
@@ -36,6 +37,8 @@ class EventsController < ApplicationController
 
     event.image = Image.new(file: params[:image]) if params[:image].present?
 
+    event.videos.new(file: params[:video]) if params[:video].present?
+
     if event.save
       render json: event.as_json(EVENT_TO_JSON), status: :ok
     else
@@ -55,6 +58,8 @@ class EventsController < ApplicationController
       end
     end
 
+    event.videos.new(file: params[:video]) if params[:video].present?
+
     if event.update(event_edit_params)
       render json: event.as_json(EVENT_TO_JSON), status: :ok
     else
@@ -71,13 +76,15 @@ class EventsController < ApplicationController
                                                                  :artist_id,
                                                                  :producer_id,
                                                                  :venue_id,
-                                                                 :links_attributes)
+                                                                 :links_attributes,
+                                                                 :videos_attributes)
   end
 
   def event_edit_params
     JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name,
                                                                  :description,
                                                                  :datetime,
-                                                                 :links_attributes)
+                                                                 :links_attributes,
+                                                                 :videos_attributes)
   end
 end
