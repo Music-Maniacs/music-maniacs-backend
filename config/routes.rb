@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     get :user_info
   end
 
+  resources :artists, only: %i[show create update]
+  resources :producers, only: %i[show create update]
+  resources :venues, only: %i[show create update]
+
   namespace :admin do
     resources :artists, only: %i[index show create update destroy] do
       collection do

@@ -1,19 +1,15 @@
-### INDEX ###
-GET http://localhost:3000/admin/producers?q[name_cont]=Pasado&page=10&per_page=1
-content-type: application/json
-
 ### SHOW ###
-GET http://localhost:3000/admin/producers/90efa702-f1bd-46f2-aa15-e4fcb6def60e
+GET http://localhost:3000/producers/90efa702-f1bd-46f2-aa15-e4fcb6def60e
 content-type: application/json
 
 ### CREATE ###
-POST http://localhost:3000/admin/producers
+POST http://localhost:3000/producers
 content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="producer"
 
-{"name":"Productora Nuevos","nationality":"generos","description":"aaa","genre_ids":["458f7e12-2690-4173-af69-a7129d367bec"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
+{"name":"Productora Nuevos","nationality":"generos","description":"aaa","genre_ids":["4b4df81d-9a0d-4bb2-a928-e21b7270daa9"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 
 Content-Disposition: form-data; name="image"; filename="losinso.png"
@@ -24,7 +20,7 @@ Content-Type: image/jpg
 
 
 ### UPDATE ###
-PUT http://localhost:3000/admin/producers/64ba21a4-3ead-4ff6-b0ff-029f30f09aa2
+PUT http://localhost:3000/producers/64ba21a4-3ead-4ff6-b0ff-029f30f09aa2
 content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 
@@ -39,11 +35,3 @@ Content-Type: image/jpg
 
 < /lib/endpoints/assets/ArtistCover.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-### DESTROY ###
-DELETE http://localhost:3000/admin/producers/2a77c024-44fc-46c0-8daa-7a42b7deb3a7
-content-type: application/json
-
-### TYPEAHEAD ###
-GET http://localhost:3000/admin/producers/search_typeahead?q[name_cont]=Productora
-content-type: application/json

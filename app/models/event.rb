@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
   include Followable
   has_paper_trail
+  include ProfileCommonMethods
+
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -15,6 +17,7 @@ class Event < ApplicationRecord
 
   has_many :reviews
   has_many :comments, dependent: :destroy
+
   ##############################################################################
   # VALIDATIONS
   ##############################################################################

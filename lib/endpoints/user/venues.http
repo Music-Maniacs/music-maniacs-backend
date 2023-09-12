@@ -1,0 +1,50 @@
+### CREATE ###
+POST http://localhost:3000/venues
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Length: 709
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="venue"
+
+{"name":"Nombre del lugar","description":"Descripción del lugar","links_attributes":[{"title":"Example website","url":"https://example.com"},{"title":"Another example website","url":"https://example.org"}],"location_attributes": {"zip_code": "12345","street": "Calle Principal","department": "Departamento","locality": "Localidad","latitude": "12.345","longitude": "-67.890","number": "123","country": "País","province": "Provincia"}}
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="2.jpg"
+Content-Type: image/jpeg
+
+lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### SHOW ###
+GET http://localhost:3000/venues/11308bd3-2148-4d89-8f1e-767061fc140f
+content-type: application/json
+
+### UPDATE ###
+PUT http://localhost:3000/venues/11308bd3-2148-4d89-8f1e-767061fc140f
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="venue"
+
+{"name":"Nombre del lugar mod","description":"Descripción del lugar mod",
+"links_attributes":[{"title":"Example website mod","url":"https://example.com"},
+{"id":"uuid_image","_destroy":true}],
+ "location_attributes": {
+    "zip_code": "12345",
+    "street": "Calle Principal mod",
+    "department": "Departamento mod",
+    "locality": "Localidad",
+    "latitude": "12.345",
+    "longitude": "-67.890",
+    "number": "123",
+    "country": "País mod",
+    "province": "Provincia mod"
+  }
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+Content-Disposition: form-data; name="image"; filename="3.png"
+Content-Type: image/jpg
+
+lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
