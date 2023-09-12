@@ -1,5 +1,5 @@
 ### SHOW ###
-GET http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86
+GET http://localhost:3000/admin/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86
 content-type: application/json
 
 ### SEARCH ###
