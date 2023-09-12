@@ -1,5 +1,5 @@
 ### SHOW ###
-GET http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d
+GET http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86
 content-type: application/json
 
 ### SEARCH ###
@@ -16,9 +16,9 @@ Content-Disposition: form-data; name="event"
 {
     "name":"Digweed, Metropolitano 2023",
     "datetime": "2023-09-05 19:30:10",
-    "artist_id": "73cf157a-0e70-4f35-960b-2e44c023a502",
-    "producer_id": "ee1abc73-31a7-44d4-b45b-19242b09c7fc",
-    "venue_id": "94209a94-03e3-4977-86c0-e7932b8b45f4",
+    "artist_id": "c91da1e7-16a2-43ee-8d1d-849fee5f4064",
+    "producer_id": "55d5f4e2-c769-456e-88f9-bbd54f07da0b",
+    "venue_id": "ba1a582b-a59b-41b1-9803-79f261658dd9",
     "description": "description"
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -69,4 +69,28 @@ content-type: application/json
 POST http://localhost:3000/events/5760f2d7-60c8-456f-bf5e-7e92c7877736/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE5NjUsImV4cCI6MTY5NzMyNTk2NSwianRpIjoiOGVlMmRmNjAtMjgxYS00ZGZhLTg5MjYtNWI1OTU1Njc4NTMyIn0.0DR-fqgl2S_OvfL3Hk5j0LCbV-66YsmXXfBhnthmiGI
 content-type: application/json
+
+### Add_video ###
+POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/add_video
+Authorization: Bearer Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE2ODMsImV4cCI6MTY5NzMyNTY4MywianRpIjoiZDc5NjkxMzgtNWUwMy00Yzk4LTk3YzktZjdjMTg4MTQ3NzNlIn0.sq09JTTH26ptKzrMI2DqQvF5ESJdDLC6vC-K3f6__8o
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="Retrato Familiar.mp4"
+Content-Type: video/mp4
+
+lib/endpoints/assets/RetratoFamiliar.mp4
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Delete_video ###
+POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/delete_video/9129d781-51f5-406f-808c-5cfb95950f55
+Authorization: Bearer Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE2ODMsImV4cCI6MTY5NzMyNTY4MywianRpIjoiZDc5NjkxMzgtNWUwMy00Yzk4LTk3YzktZjdjMTg4MTQ3NzNlIn0.sq09JTTH26ptKzrMI2DqQvF5ESJdDLC6vC-K3f6__8o
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="Retrato Familiar.mp4"
+Content-Type: video/mp4
+
+lib/endpoints/assets/RetratoFamiliar.mp4
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 

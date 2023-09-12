@@ -68,6 +68,8 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      post 'add_video', to: 'videos#create'
+      post 'delete_video/:video_id', to: 'videos#destroy'
     end
   end
 

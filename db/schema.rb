@@ -249,13 +249,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_235104) do
   end
 
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "videable_id", null: false
-    t.string "videable_type", null: false
     t.datetime "recorded_at"
+    t.uuid "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["videable_id"], name: "index_videos_on_videable_id"
-    t.index ["videable_type"], name: "index_videos_on_videable_type"
+    t.index ["event_id"], name: "index_videos_on_event_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -270,4 +268,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_235104) do
   add_foreign_key "reviews", "events"
   add_foreign_key "reviews", "users"
   add_foreign_key "users", "roles"
+  add_foreign_key "videos", "events"
 end

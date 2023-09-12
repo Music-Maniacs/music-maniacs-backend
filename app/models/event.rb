@@ -6,8 +6,7 @@ class Event < ApplicationRecord
   ##############################################################################
   has_one :image, as: :imageable, dependent: :destroy
 
-  has_many :videos, as: :videable, dependent: :destroy
-  accepts_nested_attributes_for :videos, allow_destroy: true
+  has_many :videos
 
   belongs_to :artist
   belongs_to :producer
