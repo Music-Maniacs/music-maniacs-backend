@@ -94,6 +94,8 @@ GEM
     devise-jwt (0.11.0)
       devise (~> 4.0)
       warden-jwt_auth (~> 0.8)
+    down (5.4.1)
+      addressable (~> 2.8)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
       zeitwerk (~> 2.6)
@@ -251,6 +253,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  down
   image_processing (~> 1.2)
   kaminari
   letter_opener
@@ -262,7 +265,7 @@ DEPENDENCIES
   rails (~> 7.0.5)
   ransack
   sidekiq
-  streamio-ffmpeg (~> 3.0, >= 3.0.2)
+  streamio-ffmpeg
   tzinfo-data
 
 RUBY VERSION
