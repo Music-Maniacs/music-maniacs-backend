@@ -1,12 +1,9 @@
 class VideosController < ApplicationController
   def create
     event = Event.find(params[:id])
-
     video = Video.new # Crear una nueva instancia de Video
 
-    # Asignar el archivo cargado a la instancia de Video
-    video.file.attach(params[:video])
-
+    video.file.attach(params[:video]) # Asignar el archivo cargado a la instancia de Video
     event.videos << video
 
     if video.save
