@@ -3,10 +3,10 @@ class Review < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :rating, presence: true, inclusion: { in: 1..5 }
-  validate :one_review_per_user_per_reviewable
+  validate :one_review_per_user_per_reviewable, on: :create
 
   def one_review_per_user_per_reviewable
-    return unless Review.where(user_id:, reviewable_id:, reviewable_type:).exists?
+    return unless Review.where(user_id:, event_id:, reviewable_id:, reviewable_type:).exists?
 
     errors.add(:base, :already_reviewed)
   end

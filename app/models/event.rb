@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
   include Followable
   has_paper_trail
+  include ProfileCommonMethods
+
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -17,6 +19,7 @@ class Event < ApplicationRecord
 
   has_many :reviews
   has_many :comments, dependent: :destroy
+
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -42,7 +45,8 @@ class Event < ApplicationRecord
       {
         rating: send("#{reviewable}_rating"),
         reviews_count: send("#{reviewable}_reviews").count,
-        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json(only: %i[id rating description user_id])
+        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json({only: %i[id rating description created_at reviewable_type],
+                                                                                               include: { user: { only: %i[id full_name] } } }),
       }
     end
   end
