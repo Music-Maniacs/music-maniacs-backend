@@ -23,8 +23,6 @@ class Admin::EventsController < ApplicationController
 
     event.image = Image.new(file: params[:image]) if params[:image].present?
 
-    event.videos.new(file: params[:video]) if params[:video].present?
-
     if event.save
       render json: event.as_json(EVENT_TO_JSON), status: :ok
     else
@@ -43,8 +41,6 @@ class Admin::EventsController < ApplicationController
         event.image = Image.new(file: params[:image])
       end
     end
-
-    event.videos.new(file: params[:video]) if params[:video].present?
 
     if event.update(event_params)
       render json: event.as_json(EVENT_TO_JSON), status: :ok
