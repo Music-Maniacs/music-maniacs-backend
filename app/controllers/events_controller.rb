@@ -9,8 +9,8 @@ class EventsController < ApplicationController
                          methods: %i[versions reviews_info] }.freeze
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
-                           include: {
-                             image: { methods: %i[url] },
+                           include:
+                           { image: { methods: %i[url] },
                              artist: { only: :name },
                              producer: { only: :name },
                              venue: { only: :name } } }.freeze

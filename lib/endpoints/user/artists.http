@@ -1,0 +1,37 @@
+### SHOW ###
+GET http://localhost:3000/artists/feb601ed-3161-46e9-90de-386183272428
+content-type: application/json
+
+### CREATE ###
+POST http://localhost:3000/artists
+content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="artist"
+
+{"name":"Artista Nuevo-User","nationality":"generos","description":"aaa","genre_ids":["d0d9e6e3-7da4-453d-846f-1e5c8187e3cb"],"links_attributes":[{"title":"aaaaaa","url":"aaaaaa"},{"title":"vvvv","url":"vvvv"}]}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+
+Content-Disposition: form-data; name="image"; filename="1.png"
+Content-Type: image/jpg
+
+< lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### UPDATE ###
+PUT http://localhost:3000/artists/feb601ed-3161-46e9-90de-386183272428
+content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="artist"
+
+{"name":"Artista Nuevos- Cambio de Nombre","nationality":"generos","description":"aaaa","genre_ids":["d0d9e6e3-7da4-453d-846f-1e5c8187e3cb"],"links_attributes":[{"id":"46df7ea6-7118-437c-ae87-1bc1be5ab508","title":"aaaaaa","url":"aaaaaa"},{"id":"b0ed9b16-dcd7-48dd-92fc-56be95b16d78","title":"vvvv","url":"vvvv"}]}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+
+Content-Disposition: form-data; name="image"; filename="1.png"
+Content-Type: image/jpg
+
+< /lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
