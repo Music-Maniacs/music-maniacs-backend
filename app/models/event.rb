@@ -26,9 +26,9 @@ class Event < ApplicationRecord
   ##############################################################################
   # CALLBACKS
   ##############################################################################
-  after_commit :notify_followers, on: :create
+  after_commit :notify_profiles_followers, on: :create
 
-  def notify_followers
+  def notify_profiles_followers
     NewEventsNotificationsJob.perform_later(id)
   end
 
