@@ -1,4 +1,6 @@
 class ArtistsController < ApplicationController
+  include FollowableActions
+
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[url] },
