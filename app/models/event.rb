@@ -24,6 +24,15 @@ class Event < ApplicationRecord
   validates :name, :datetime, presence: true
 
   ##############################################################################
+  # CALLBACKS
+  ##############################################################################
+  after_commit :notify_followers, on: :create
+
+  def notify_followers
+    NewEventsNotificationsJob.perform_later(id)
+  end
+
+  ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
   def rating
