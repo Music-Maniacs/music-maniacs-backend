@@ -58,13 +58,13 @@ POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
 content-type: application/json
 
-### LIKE ###
-POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/like
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
-content-type: application/json
+# ### LIKE ###
+# POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/like
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+# content-type: application/json
 
-### DISLIKE ###
-POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/dislike
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
-content-type: application/json
+# ### DISLIKE ###
+# POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/dislike
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+# content-type: application/json
 
