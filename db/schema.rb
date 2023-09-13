@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_13_162419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -116,6 +116,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+  end
+
+  create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "likeable_type", null: false
+    t.uuid "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -248,17 +258,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "videable_id", null: false
-    t.string "videable_type", null: false
-    t.datetime "recorded_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "file"
-    t.index ["videable_id"], name: "index_videos_on_videable_id"
-    t.index ["videable_type"], name: "index_videos_on_videable_type"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "events"
@@ -268,6 +267,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
   add_foreign_key "events", "venues"
   add_foreign_key "follows", "users"
   add_foreign_key "genreable_associations", "genres"
+  add_foreign_key "likes", "users"
   add_foreign_key "reviews", "events"
   add_foreign_key "reviews", "users"
   add_foreign_key "users", "roles"

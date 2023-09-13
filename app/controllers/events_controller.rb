@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include LikeableActions
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },

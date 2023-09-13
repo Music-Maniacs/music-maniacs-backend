@@ -68,6 +68,9 @@ class User < ApplicationRecord
   has_many :followed_artists, through: :follows, source: :followable, source_type: 'Artist'
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
+  has_many :likes, dependent: :destroy
+  has_many :liked_events, through: :likes, source: :likeable, source_type: 'Event'
+  # has_many :liked_videos, through: :likes, source: :likeable, source_type: 'Video'
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -98,6 +101,10 @@ class User < ApplicationRecord
 
   def follows?(entity)
     follows.exists?(followable: entity)
+  end
+
+  def likes?(entity)
+    likes.exists?(likeable: entity)
   end
 
   ##############################################################################
