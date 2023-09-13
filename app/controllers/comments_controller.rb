@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include LikeableActions
   before_action :authenticate_user!, except: %i[index]
 
   def index

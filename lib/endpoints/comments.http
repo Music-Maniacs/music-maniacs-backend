@@ -1,11 +1,11 @@
 ### INDEX ###
-GET http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/comments
+GET http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments
 content-type: application/json
 
 
 ### ADD COMMENT ###
-POST http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/add_comment
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwNDM3NzYsImV4cCI6MTY5NzA2Nzc3NiwianRpIjoiNTc1ZTY5MjQtZDc4ZC00NWE0LWExNmYtZWFmNmMzY2RjNjc5In0.dbt2KUyHQKDbfnBfrwfRjwW3zUcioA5_WosBlSePTR0
+POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/add_comment
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
 content-type: application/json
 
 {  
@@ -29,4 +29,14 @@ content-type: application/json
 ### DESTROY ###
 DELETE http://localhost:3000/comments/225ece68-93ff-4d47-94b1-f747c6d1661f
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwNDM3NzYsImV4cCI6MTY5NzA2Nzc3NiwianRpIjoiNTc1ZTY5MjQtZDc4ZC00NWE0LWExNmYtZWFmNmMzY2RjNjc5In0.dbt2KUyHQKDbfnBfrwfRjwW3zUcioA5_WosBlSePTR0
+content-type: application/json
+
+### LIKE ###
+POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments/8d6fc1b5-aff1-41fe-a6d0-642c6ad8b2a1/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### DISLIKE ###
+POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments/8d6fc1b5-aff1-41fe-a6d0-642c6ad8b2a1/dislike
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
 content-type: application/json
