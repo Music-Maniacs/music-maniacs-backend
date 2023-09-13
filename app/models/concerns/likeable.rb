@@ -13,4 +13,8 @@ module Likeable
   def remove_like(user)
     liking_users.delete(user)
   end
+
+  def likes_count
+    likes.count
+  end
 end

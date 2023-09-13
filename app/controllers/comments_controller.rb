@@ -2,11 +2,13 @@ class CommentsController < ApplicationController
   include LikeableActions
   before_action :authenticate_user!, except: %i[index]
 
+  COMMENT_TO_JSON = { methods: %i[likes_count] }.freeze
+
   def index
     event = Event.find(params[:event_id])
     comments = event.comments.page(params[:page]).per(params[:per_page]).order(created_at: :asc)
 
-    render json: { data: comments.as_json, pagination: pagination_info(comments) }
+    render json: { data: comments.as_json(COMMENT_TO_JSON), pagination: pagination_info(comments) }
   end
 
   def create
