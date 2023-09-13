@@ -72,18 +72,22 @@ content-type: application/json
 
 ### Add_video ###
 POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/add_video
-Authorization: Bearer Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE2ODMsImV4cCI6MTY5NzMyNTY4MywianRpIjoiZDc5NjkxMzgtNWUwMy00Yzk4LTk3YzktZjdjMTg4MTQ3NzNlIn0.sq09JTTH26ptKzrMI2DqQvF5ESJdDLC6vC-K3f6__8o
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="video"; filename="Retrato Familiar.mp4"
+Content-Disposition: form-data; name="video"; filename="RetratoFamiliar.mp4"
 Content-Type: video/mp4
 
 lib/endpoints/assets/RetratoFamiliar.mp4
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="recorded_at"
+
+2022-09-12 14:35:03 -0300
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
+
 ### Delete_video ###
-POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/delete_video/9129d781-51f5-406f-808c-5cfb95950f55
+POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/delete_video/03d51507-b96c-4b09-b020-bf6cd5df5ca3
 Authorization: Bearer Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE2ODMsImV4cCI6MTY5NzMyNTY4MywianRpIjoiZDc5NjkxMzgtNWUwMy00Yzk4LTk3YzktZjdjMTg4MTQ3NzNlIn0.sq09JTTH26ptKzrMI2DqQvF5ESJdDLC6vC-K3f6__8o
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 

@@ -5,8 +5,6 @@ application up and running.
 
 Things you may want to cover:
 
-* require exiftool --> sudo apt-get update && sudo apt-get install libimage-exiftool-perl
-
 * Ruby version
 
 * System dependencies
