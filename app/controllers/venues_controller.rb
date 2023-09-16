@@ -3,7 +3,7 @@ class VenuesController < ApplicationController
 
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },
-                               image: { methods: %i[url] },
+                               image: { methods: %i[full_url] },
                                last_reviews: { only: %i[id rating description] } },
                     methods: %i[versions rating past_events next_events] }.freeze
 
