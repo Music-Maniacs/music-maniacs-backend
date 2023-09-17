@@ -10,7 +10,7 @@ class VenuesController < ApplicationController
   def show
     venue = Venue.find(params[:id])
 
-    render json: { venue: venue.as_json(VENUE_TO_JSON) }
+    render json: venue.as_json(VENUE_TO_JSON)
   end
 
   def create

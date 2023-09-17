@@ -10,7 +10,7 @@ class ProducersController < ApplicationController
   def show
     producer = Producer.find(params[:id])
 
-    render json: { producer: producer.as_json(PRODUCER_TO_JSON) }
+    render json: producer.as_json(PRODUCER_TO_JSON)
   end
 
   def create

@@ -10,7 +10,7 @@ class ArtistsController < ApplicationController
   def show
     artist = Artist.find(params[:id])
 
-    render json: { artist: artist.as_json(ARTIST_TO_JSON) }
+    render json: artist.as_json(ARTIST_TO_JSON)
   end
 
   def create
