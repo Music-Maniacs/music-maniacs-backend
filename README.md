@@ -24,9 +24,13 @@ Things you may want to cover:
 * ...
 
 bundle install
+
 rails db:drop
+
 rails db:create
+
 rails db:migrate
+
 rails populate:roles_and_permissions
 
 
