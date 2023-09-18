@@ -32,6 +32,3 @@ rails db:create
 rails db:migrate
 
 rails populate:roles_and_permissions
-
-
-rails populate:roles_and_permissions
