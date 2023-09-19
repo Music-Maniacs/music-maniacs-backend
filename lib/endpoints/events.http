@@ -58,3 +58,6 @@ POST http://localhost:3000/events/5760f2d7-60c8-456f-bf5e-7e92c7877736/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE5NjUsImV4cCI6MTY5NzMyNTk2NSwianRpIjoiOGVlMmRmNjAtMjgxYS00ZGZhLTg5MjYtNWI1OTU1Njc4NTMyIn0.0DR-fqgl2S_OvfL3Hk5j0LCbV-66YsmXXfBhnthmiGI
 content-type: application/json
 
+### REVIEWS ###
+GET http://localhost:3000/events/f5852279-73de-49da-b8a5-e31f875da009/reviews?reviewable_klass=artist
+content-type: application/json

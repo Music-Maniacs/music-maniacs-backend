@@ -1,6 +1,4 @@
 class EventsController < ApplicationController
-  include ReviewableActions
-
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
@@ -61,6 +59,14 @@ class EventsController < ApplicationController
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
     end
+  end
+
+  def reviews
+    event = Event.find(params[:id])
+    reviews = event.reviews.where(reviewable_type: params[:reviewable_klass].capitalize)
+                   .page(params[:page]).per(params[:per_page])
+
+    render json: { data: reviews.as_json, pagination: pagination_info(reviews) }
   end
 
   private
