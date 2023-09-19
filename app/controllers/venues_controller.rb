@@ -10,7 +10,7 @@ class VenuesController < ApplicationController
 
   def show
     venue = Venue.find(params[:id])
-    venue_json = venue.as_json(ARTIST_TO_JSON)
+    venue_json = venue.as_json(VENUE_TO_JSON)
 
     if current_user.present?
       venue_json['followed_by_current_user'] = current_user.follows?(venue)

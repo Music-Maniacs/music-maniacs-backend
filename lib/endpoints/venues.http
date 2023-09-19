@@ -1,10 +1,10 @@
 ### SHOW ###
-GET http://localhost:3000/venues/ea2ec6e2-a3d6-47ca-b009-299cf183b605
+GET http://localhost:3000/venues/dee0ea33-f363-49ec-816c-f6f6261ce64c
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
 ### FOLLOW ###
-POST http://localhost:3000/venues/ea2ec6e2-a3d6-47ca-b009-299cf183b605/follow
+POST http://localhost:3000/venues/dee0ea33-f363-49ec-816c-f6f6261ce64c/follow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
