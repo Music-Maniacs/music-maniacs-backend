@@ -10,8 +10,14 @@ class ProducersController < ApplicationController
 
   def show
     producer = Producer.find(params[:id])
+    producer_json = producer.as_json(PRODUCER_TO_JSON)
 
-    render json: producer.as_json(PRODUCER_TO_JSON)
+    if current_user.present?
+      producer_json['followed_by_current_user'] = current_user.follows?(producer)
+    else
+      producer_json['followed_by_current_user'] = false
+    end
+    render json: producer_json, status: :ok
   end
 
   def create

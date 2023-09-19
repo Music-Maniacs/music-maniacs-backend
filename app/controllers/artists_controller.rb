@@ -10,9 +10,16 @@ class ArtistsController < ApplicationController
 
   def show
     artist = Artist.find(params[:id])
+    artist_json = artist.as_json(ARTIST_TO_JSON)
 
-    render json: artist.as_json(ARTIST_TO_JSON)
+    if current_user.present?
+      artist_json['followed_by_current_user'] = current_user.follows?(artist)
+    else
+      artist_json['followed_by_current_user'] = false
+    end
+    render json: artist_json, status: :ok
   end
+                  
 
   def create
     artist = Artist.new(artist_params)
