@@ -2,7 +2,7 @@ class Admin::ProducersController < ApplicationController
   include Search
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
-                                  image: { methods: %i[url] } } }.freeze
+                                  image: { methods: %i[full_url] } } }.freeze
 
   def index
     producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])

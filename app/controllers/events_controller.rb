@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   include FollowableActions
- 
-  SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+
+  SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
@@ -10,12 +10,12 @@ class EventsController < ApplicationController
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
                            include:
-                           { image: { methods: %i[url] },
+                           { image: { methods: %i[full_url] },
                              artist: { only: :name },
                              producer: { only: :name },
                              venue: { only: :name } } }.freeze
 
-  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+  EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
