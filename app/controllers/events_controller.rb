@@ -71,6 +71,14 @@ class EventsController < ApplicationController
     end
   end
 
+  def reviews
+    event = Event.find(params[:id])
+    reviews = event.reviews.where(reviewable_type: params[:reviewable_klass].capitalize)
+                   .page(params[:page]).per(params[:per_page])
+
+    render json: { data: reviews.as_json, pagination: pagination_info(reviews) }
+  end
+
   private
 
   def event_params
