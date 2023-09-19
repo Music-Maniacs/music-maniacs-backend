@@ -26,6 +26,11 @@ class Event < ApplicationRecord
   # CALLBACKS
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
+  after_commit :notify_changes_to_followers, on: :update
+
+  def notify_changes_to_followers
+    EventUpdateNotificationsJob.perform_later(id, versions.last.id)
+  end
 
   def notify_profiles_followers
     NewEventsNotificationsJob.perform_later(id)
