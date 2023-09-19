@@ -20,7 +20,8 @@ class EventsController < ApplicationController
                                venue: { only: %i[id name] } } }.freeze
 
   REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
-                     include: { user: { only: %i[id full_name] } } }.freeze
+                     include: { user: { only: %i[id full_name] } },
+                     methods: :anonymous }.freeze
 
   def show
     event = Event.find(params[:id])
