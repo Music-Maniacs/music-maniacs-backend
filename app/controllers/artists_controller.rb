@@ -1,5 +1,6 @@
 class ArtistsController < ApplicationController
   include FollowableActions
+  include ReviewableActions
 
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
