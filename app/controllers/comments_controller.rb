@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   COMMENT_TO_JSON = { only: %i[id body created_at],
-                      include: { user: { only: %i[id full_name] } } }.freeze
+                      include: { user: { only: %i[id full_name] } },
+                      methods: %i[anonymous] }.freeze
 
   before_action :authenticate_user!, except: %i[index]
 
