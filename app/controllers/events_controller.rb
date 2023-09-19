@@ -19,6 +19,9 @@ class EventsController < ApplicationController
                                producer: { only: %i[id name] },
                                venue: { only: %i[id name] } } }.freeze
 
+  REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
+                     include: { user: { only: %i[id full_name] } } }.freeze
+
   def show
     event = Event.find(params[:id])
     render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
@@ -66,7 +69,7 @@ class EventsController < ApplicationController
     reviews = event.reviews.where(reviewable_type: params[:reviewable_klass].capitalize)
                    .page(params[:page]).per(params[:per_page])
 
-    render json: { data: reviews.as_json, pagination: pagination_info(reviews) }
+    render json: { data: reviews.as_json(REVIEW_TO_JSON), pagination: pagination_info(reviews) }
   end
 
   private
