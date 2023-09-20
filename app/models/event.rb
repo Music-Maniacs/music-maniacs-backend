@@ -1,7 +1,6 @@
 class Event < ApplicationRecord
   include Followable
   include ProfileCommonMethods
-  include Likeable
   has_paper_trail
 
   ##############################################################################

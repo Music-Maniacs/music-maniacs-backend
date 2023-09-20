@@ -12,7 +12,7 @@ module LikeableActions
     head :no_content, status: :ok
   end
 
-  def dislike
+  def remove_like
     likeable = search_model_scope.find(params[:id])
     likeable.remove_like(current_user)
 

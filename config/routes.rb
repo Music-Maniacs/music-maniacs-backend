@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     resources :comments, only: [] do
       member do
         post :like
-        post :dislike
+        post :remove_like
       end
     end
     collection do
