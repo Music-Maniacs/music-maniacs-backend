@@ -3,8 +3,9 @@ class EventsController < ApplicationController
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
-                                    venue: { only: %i[id name] } },
-                         methods: %i[versions reviews_info] }.freeze
+                                    venue: { only: %i[id name] },
+                                    versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                         methods: %i[reviews_info] }.freeze
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
                            include:
