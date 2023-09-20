@@ -71,7 +71,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtO
 content-type: application/json
 
 ### Add_video ###
-POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/add_video
+POST http://localhost:3000/events/c99e523e-af6b-447f-a638-cdc624fc5dbd/videos/add_video
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkNjRmNDE0Yy1kNWM5LTRhYjAtOWQ0ZS01ODdjMDc3MWRhYjMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUyMjM2MjksImV4cCI6MTY5ODI0NzYyOSwianRpIjoiOGM3OGQxOWEtYTc3NS00M2NjLWE2NjEtZDNmYjk0ZjQ1MzEzIn0.pWWbSbviUXymPPhK3fuqqYqjVPU5vtENHheXkOR9lFw
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -87,8 +88,8 @@ Content-Disposition: form-data; name="recorded_at"
 
 
 ### Delete_video ###
-POST http://localhost:3000/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86/delete_video/03d51507-b96c-4b09-b020-bf6cd5df5ca3
-Authorization: Bearer Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE2ODMsImV4cCI6MTY5NzMyNTY4MywianRpIjoiZDc5NjkxMzgtNWUwMy00Yzk4LTk3YzktZjdjMTg4MTQ3NzNlIn0.sq09JTTH26ptKzrMI2DqQvF5ESJdDLC6vC-K3f6__8o
+POST http://localhost:3000/events/c99e523e-af6b-447f-a638-cdc624fc5dbd/videos/delete_video/5d4535a3-ea7c-4969-9ef8-844d0b65be95
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkNjRmNDE0Yy1kNWM5LTRhYjAtOWQ0ZS01ODdjMDc3MWRhYjMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUyMjM2MjksImV4cCI6MTY5ODI0NzYyOSwianRpIjoiOGM3OGQxOWEtYTc3NS00M2NjLWE2NjEtZDNmYjk0ZjQ1MzEzIn0.pWWbSbviUXymPPhK3fuqqYqjVPU5vtENHheXkOR9lFw
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -97,6 +98,9 @@ Content-Type: video/mp4
 
 lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### SHOW_VIDEOS ###
+GET http://localhost:3000/events/c99e523e-af6b-447f-a638-cdc624fc5dbd/videos
 
 ### REVIEWS ###
 GET http://localhost:3000/events/f5852279-73de-49da-b8a5-e31f875da009/reviews?reviewable_klass=artist
