@@ -15,7 +15,6 @@ class EventsController < ApplicationController
 
   EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
-                               videos: { methods: %i[url] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
                                venue: { only: %i[id name] } } }.freeze
