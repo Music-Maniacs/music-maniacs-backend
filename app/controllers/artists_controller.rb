@@ -1,14 +1,17 @@
 class ArtistsController < ApplicationController
+  include FollowableActions
+  include ReviewableActions
+
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
-                                image: { methods: %i[url] },
+                                image: { methods: %i[full_url] },
                                 last_reviews: { only: %i[id rating description] } },
                      methods: %i[versions rating past_events next_events] }.freeze
 
   def show
     artist = Artist.find(params[:id])
 
-    render json: { artist: artist.as_json(ARTIST_TO_JSON) }
+    render json: artist.as_json(ARTIST_TO_JSON)
   end
 
   def create

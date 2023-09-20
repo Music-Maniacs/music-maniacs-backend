@@ -1,8 +1,10 @@
 class CommentsController < ApplicationController
   include LikeableActions
-  before_action :authenticate_user!, except: %i[index]
+  COMMENT_TO_JSON = { only: %i[id body created_at],
+                      include: { user: { only: %i[id full_name] } },
+                      methods: %i[anonymous likes_count] }.freeze
 
-  COMMENT_TO_JSON = { methods: %i[likes_count] }.freeze
+  before_action :authenticate_user!, except: %i[index]
 
   def index
     event = Event.find(params[:event_id])
@@ -17,7 +19,7 @@ class CommentsController < ApplicationController
     comment.user = current_user
 
     if comment.save
-      render json: comment.as_json, status: :ok
+      render json: comment.as_json(COMMENT_TO_JSON), status: :ok
     else
       render json: { errors: comment.errors.details }, status: :unprocessable_entity
     end
@@ -26,7 +28,7 @@ class CommentsController < ApplicationController
   def update
     comment = current_user.comments.find(params[:id])
     if comment.update(comment_params)
-      render json: comment.as_json, status: :ok
+      render json: comment.as_json(COMMENT_TO_JSON), status: :ok
     else
       render json: { errors: @comment.errors.details }, status: :unprocessable_entity
     end

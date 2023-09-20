@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+  SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
@@ -8,16 +8,20 @@ class EventsController < ApplicationController
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
                            include:
-                           { image: { methods: %i[url] },
+                           { image: { methods: %i[full_url] },
                              artist: { only: :name },
                              producer: { only: :name },
                              venue: { only: :name } } }.freeze
 
-  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+  EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
                                venue: { only: %i[id name] } } }.freeze
+
+  REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
+                     include: { user: { only: %i[id full_name] } },
+                     methods: :anonymous }.freeze
 
   def show
     event = Event.find(params[:id])
@@ -59,6 +63,14 @@ class EventsController < ApplicationController
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
     end
+  end
+
+  def reviews
+    event = Event.find(params[:id])
+    reviews = event.reviews.where(reviewable_type: params[:reviewable_klass].capitalize)
+                   .page(params[:page]).per(params[:per_page])
+
+    render json: { data: reviews.as_json(REVIEW_TO_JSON), pagination: pagination_info(reviews) }
   end
 
   private

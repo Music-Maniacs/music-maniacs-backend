@@ -1,5 +1,5 @@
 class Admin::EventsController < ApplicationController
-  EVENT_TO_JSON = { include: { image: { methods: %i[url] },
+  EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
