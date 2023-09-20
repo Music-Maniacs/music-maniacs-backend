@@ -10,7 +10,7 @@ class VideosController < ApplicationController
     video = event.videos.build
 
     video.file.attach(params[:video]) # Asigna el archivo cargado a la instancia de Video
-    video.recorded_at = params[:recorded_at] if params[:recorded_at].present?
+    video.recorded_at = params[:recorded_at]
     video.user = current_user
 
     if video.save
