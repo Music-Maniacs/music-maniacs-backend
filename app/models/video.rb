@@ -9,4 +9,5 @@ class Video < Multimedia
   # VALIDATIONS
   ##############################################################################
   validates :file, attached: true, content_type: ['video/mp4']
+  validates :recorded_at, presence: true
 end
