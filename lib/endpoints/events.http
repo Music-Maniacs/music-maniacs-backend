@@ -98,3 +98,6 @@ Content-Type: video/mp4
 lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
+### REVIEWS ###
+GET http://localhost:3000/events/f5852279-73de-49da-b8a5-e31f875da009/reviews?reviewable_klass=artist
+content-type: application/json

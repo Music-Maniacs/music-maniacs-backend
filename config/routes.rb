@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       post :unfollow
       post 'add_video', to: 'videos#create'
       post 'delete_video/:video_id', to: 'videos#destroy'
+      get :reviews
     end
   end
 
@@ -83,6 +84,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 
@@ -90,6 +92,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 
@@ -97,6 +100,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 end
