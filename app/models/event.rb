@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   include Followable
   has_paper_trail
 
+  NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -73,7 +74,6 @@ class Event < ApplicationRecord
     }
   end
 
-  NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   def parsed_previous_changes
     changes = previous_changes.to_h.select { |key| NOTIFIABLE_ATTRIBUTES.include?(key.to_sym) }
     %w[artist_id venue_id producer_id].each do |attribute|
