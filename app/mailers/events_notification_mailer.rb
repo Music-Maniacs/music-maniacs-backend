@@ -8,6 +8,7 @@ class EventsNotificationMailer < ApplicationMailer
   def event_updates_to_followers
     @user = params[:user]
     @event = params[:event]
-    mail(to: @user.email, subject: 'hubieron cambios en un evento que sigues')
+    @changes = params[:changes]
+    mail(to: @user.email, subject: "cambios en el evento: #{@event.name}")
   end
 end

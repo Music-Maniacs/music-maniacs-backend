@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    attributes:
+      event:
+        name: "Nombre"
+        description: "Descripción"
+        datetime: "Fecha"
+        venue_id: "Espacio de eventos"
+        producer_id: "Productora"
+        artist_id: "Artista"
