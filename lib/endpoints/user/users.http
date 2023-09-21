@@ -23,6 +23,16 @@ Content-Disposition: form-data; name="user"
                 "url": "https://example.org",
                 "title": "nuevo link"
             }
+        ],
+        "images_attributes": [
+            {
+                "id": "c42fe27d-cbbd-4255-87ea-24bffa08d053",
+                "_destroy": true
+            },
+            {
+                "id": "9a812992-d9c8-4d4f-8ebb-4f8289ba31ba",
+                "_destroy": true
+            }
         ]
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW

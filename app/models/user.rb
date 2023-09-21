@@ -76,7 +76,6 @@ class User < ApplicationRecord
   ##############################################################################
   validates :username, presence: true, uniqueness: { conditions: -> { with_deleted } }
   validates :full_name, presence: true
-  validate :validate_image_count
 
   ##############################################################################
   # INSTANCE METHODS
@@ -102,11 +101,6 @@ class User < ApplicationRecord
 
   def follows?(entity)
     follows.exists?(followable: entity)
-  end
-
-  def validate_image_count
-    image_count = images.count
-    errors.add(:images, 'Too many images') if image_count > 2
   end
 
   ##############################################################################
