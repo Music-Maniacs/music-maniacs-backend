@@ -1,0 +1,38 @@
+### USER_INFO ###
+GET http://localhost:3000/users/user_info
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNjc2NWEzNS00NTNmLTQ2MmQtYjcwNy02Y2YxZWJiMThkZDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMDg5OTYsImV4cCI6MTY5ODMzMjk5NiwianRpIjoiZjEyNGNiZTAtOTY5MC00MDM1LWI1MDYtM2RmNjZiZTJhNzQxIn0.FL5RMoI9wBl9f_NobrpjWx2OTNM53C-f3hkHGN0EZJQ
+
+
+### UPDATE ###
+PUT http://localhost:3000/users/current
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNjc2NWEzNS00NTNmLTQ2MmQtYjcwNy02Y2YxZWJiMThkZDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMDg5OTYsImV4cCI6MTY5ODMzMjk5NiwianRpIjoiZjEyNGNiZTAtOTY5MC00MDM1LWI1MDYtM2RmNjZiZTJhNzQxIn0.FL5RMoI9wBl9f_NobrpjWx2OTNM53C-f3hkHGN0EZJQ
+
+{  
+    "user": {
+        "email": "emailchange@gmail.com",
+        "links_attributes": [
+            {
+                "id": "uuid de algun link",
+                "url": "https://example.com",
+                "title": "Update Example website"
+            },
+            {
+                "id": "uuid",
+                "_destroy": true
+            },
+            {
+                "url": "https://example.org",
+                "title": "nuevo link"
+            }
+        ]
+    }
+}
+
+### DESTROY ###
+DELETE http://localhost:3000/users/current
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNjc2NWEzNS00NTNmLTQ2MmQtYjcwNy02Y2YxZWJiMThkZDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMDg5OTYsImV4cCI6MTY5ODMzMjk5NiwianRpIjoiZjEyNGNiZTAtOTY5MC00MDM1LWI1MDYtM2RmNjZiZTJhNzQxIn0.FL5RMoI9wBl9f_NobrpjWx2OTNM53C-f3hkHGN0EZJQ
+
+

@@ -68,11 +68,15 @@ class User < ApplicationRecord
   has_many :followed_artists, through: :follows, source: :followable, source_type: 'Artist'
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
+  has_many :images, as: :imageable, dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
+
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
   validates :username, presence: true, uniqueness: { conditions: -> { with_deleted } }
   validates :full_name, presence: true
+  validate :validate_image_count
 
   ##############################################################################
   # INSTANCE METHODS
@@ -98,6 +102,11 @@ class User < ApplicationRecord
 
   def follows?(entity)
     follows.exists?(followable: entity)
+  end
+
+  def validate_image_count
+    image_count = images.count
+    errors.add(:images, 'Too many images') if image_count > 2
   end
 
   ##############################################################################
