@@ -3,7 +3,7 @@ GET http://localhost:3000/users/user_info
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMTI5OTcsImV4cCI6MTY5ODMzNjk5NywianRpIjoiYzBmNzA0MmItYzc1OC00YzY1LWJmZTctMTk3OTRjNDU1YzZjIn0.NhBi3ij_JjsPXCYGYwHfttCISjfNqy2rokO2JaOhZNw
 
-### UPDATE ###
+### Editar Perfil ###
 PUT http://localhost:3000/users/current
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMTI5OTcsImV4cCI6MTY5ODMzNjk5NywianRpIjoiYzBmNzA0MmItYzc1OC00YzY1LWJmZTctMTk3OTRjNDU1YzZjIn0.NhBi3ij_JjsPXCYGYwHfttCISjfNqy2rokO2JaOhZNw
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -13,7 +13,8 @@ Content-Disposition: form-data; name="user"
 
 {
         "email": "emailchange@gmail.com",
-        "full_name": "full name test",
+        "full_name": "New full_name",
+        "username": " New unique username",
         "links_attributes": [
             {
                 "url": "https://example.com",
@@ -22,15 +23,19 @@ Content-Disposition: form-data; name="user"
             {
                 "url": "https://example.org",
                 "title": "nuevo link"
+            },
+            {
+                "id": "uuid_link",
+                "_destroy": true
             }
         ],
         "images_attributes": [
             {
-                "id": "c42fe27d-cbbd-4255-87ea-24bffa08d053",
+                "id": "uuid_image",
                 "_destroy": true
             },
             {
-                "id": "9a812992-d9c8-4d4f-8ebb-4f8289ba31ba",
+                "id": "uuid_image",
                 "_destroy": true
             }
         ]
@@ -48,7 +53,7 @@ Content-Type: image/jpeg
 /lib/endpoints/assets/losinso.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### DESTROY ###
+### Eliminar Usuario ###
 DELETE http://localhost:3000/users/current
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMTI5OTcsImV4cCI6MTY5ODMzNjk5NywianRpIjoiYzBmNzA0MmItYzc1OC00YzY1LWJmZTctMTk3OTRjNDU1YzZjIn0.NhBi3ij_JjsPXCYGYwHfttCISjfNqy2rokO2JaOhZNw

@@ -69,7 +69,6 @@ class User < ApplicationRecord
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
   has_many :images, as: :imageable, dependent: :destroy
-  accepts_nested_attributes_for :images, allow_destroy: true
 
   ##############################################################################
   # VALIDATIONS

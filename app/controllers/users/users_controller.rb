@@ -15,7 +15,8 @@ class Users::UsersController < ApplicationController
     # Parsea el JSON en params[:user] y convierte las claves a símbolos
     user_params = JSON.parse(params[:user]).deep_symbolize_keys # Para la eliminacion
 
-    if params[:images].present? # Count total
+    # Contador total de imagenes
+    if params[:images].present?
       # Verifica si la actualización excede el límite de imágenes
       total_images_count = user.images.count + params[:images].size
 
@@ -25,7 +26,8 @@ class Users::UsersController < ApplicationController
       end
     end
 
-    if user_params[:images_attributes].present? # Eliminacion imagenes
+    # Eliminacion imagenes (capa extra se seguridad)
+    if user_params[:images_attributes].present?
       # Extrae las imágenes y elimina el atributo images_attributes
       images_params_delete = user_params.delete(:images_attributes) # Imagenes a borrar
 
@@ -42,7 +44,8 @@ class Users::UsersController < ApplicationController
 
     if user.update(user_params_update)
 
-      if images_params.present? # Agrega imagenes
+      # Agrega imagenes
+      if images_params.present?
         images_params.each do |image_param|
           user.images.create(file: image_param)
         end
