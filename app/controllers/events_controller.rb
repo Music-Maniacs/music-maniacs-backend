@@ -5,8 +5,9 @@ class EventsController < ApplicationController
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
-                                    venue: { only: %i[id name] } },
-                         methods: %i[versions reviews_info] }.freeze
+                                    venue: { only: %i[id name] },
+                                    versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                         methods: %i[reviews_info] }.freeze
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
                            include:
@@ -22,7 +23,9 @@ class EventsController < ApplicationController
                                venue: { only: %i[id name] } } }.freeze
 
   REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
-                     include: { user: { only: %i[id full_name] } } }.freeze
+                     include: { user: { only: %i[id full_name] } },
+                     methods: :anonymous }.freeze
+
 
   def show
     event = Event.find(params[:id])

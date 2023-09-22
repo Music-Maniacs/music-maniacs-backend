@@ -12,3 +12,7 @@ content-type: application/json
 POST http://localhost:3000/artists/f68d289b-a5df-4296-8859-a14a51690460/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
+
+### SHOW ###
+GET http://localhost:3000/artists/cf208e28-c716-4d7e-a5a0-26f027ab21ea
+content-type: application/json
