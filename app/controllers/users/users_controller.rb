@@ -77,6 +77,6 @@ class Users::UsersController < ApplicationController
                                                                 :full_name,
                                                                 :biography,
                                                                 :role_id,
-                                                                links_attributes: %i[url title _destroy id])
+                                                                :links_attributes)
   end
 end
