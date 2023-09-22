@@ -57,3 +57,14 @@ Content-Type: image/jpeg
 DELETE http://localhost:3000/users/current
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMTI5OTcsImV4cCI6MTY5ODMzNjk5NywianRpIjoiYzBmNzA0MmItYzc1OC00YzY1LWJmZTctMTk3OTRjNDU1YzZjIn0.NhBi3ij_JjsPXCYGYwHfttCISjfNqy2rokO2JaOhZNw
+
+### Cambiar Contraseña ###
+PUT http://localhost:3000/users/current/change_password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzOTMwMDEsImV4cCI6MTY5ODQxNzAwMSwianRpIjoiYjhhOWFlZTgtZTJlMC00MmE0LThkYjctMjQyNzEyZTc4ZTI4In0.vUQIYTVlu1tPt9Av-iIlB0pnNjxAoJyL0p8nYXu7VAg
+
+{ "user": 
+    { "password": "MusicManiacs21345#",
+      "password_confirmation": "MusicManiacs21345#"
+    }
+}

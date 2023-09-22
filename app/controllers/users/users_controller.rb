@@ -1,5 +1,5 @@
 class Users::UsersController < ApplicationController
-  before_action :authenticate_user!, only: %i[user_info update destroy]
+  before_action :authenticate_user!
   USER_TO_JSON = { include: { links: { only: %i[id url title] },
                               images: { methods: %i[full_url] },
                               role: {} } }.freeze
@@ -68,6 +68,20 @@ class Users::UsersController < ApplicationController
     end
   end
 
+  def change_password
+    # Para recorrer seguramente el anidamiento
+    if params.dig(:user, :password).present? &&
+       params.dig(:user, :password_confirmation).present? &&
+       params.dig(:user, :password_confirmation) == params.dig(:user, :password)
+
+      if current_user.update(user_params_change_password)
+        render head: :no_content, status: :ok
+      else
+        render json: { errors: user.errors.details }, status: :unprocessable_entity
+      end
+    end
+  end
+
   private
 
   # def validate_image_count
@@ -81,5 +95,9 @@ class Users::UsersController < ApplicationController
                                                                 :biography,
                                                                 :role_id,
                                                                 :links_attributes)
+  end
+
+  def user_params_change_password
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end
