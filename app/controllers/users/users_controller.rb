@@ -1,8 +1,11 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!
-  USER_TO_JSON = { include: { links: { only: %i[id url title] },
-                              images: { methods: %i[full_url] },
-                              role: {} } }.freeze
+  USER_TO_JSON = { only: %i[username full_name biography],
+                   include: { links: { only: %i[id url title] },
+                              images: { only: %i[id],
+                                        methods: %i[full_url] },
+                              role: { only: %i[id name] } },
+                   methods: %i[reviews] }.freeze
 
   def user_info
     render json: current_user.as_json(USER_TO_JSON), status: :ok
