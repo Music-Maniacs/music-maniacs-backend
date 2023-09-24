@@ -29,7 +29,12 @@ class EventsController < ApplicationController
   def show
     event = Event.find(params[:id])
     event_json = event.as_json(SHOW_EVENT_TO_JSON)
-    event_json['is_follower?'] = current_user.follows?(event) if event.present?
+
+    event_json['followed_by_current_user'] = if current_user.present?
+                                               current_user.follows?(event)
+                                             else
+                                               false
+                                             end
     render json: event_json, status: :ok
   end
 
