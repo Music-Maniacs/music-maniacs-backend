@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_210544) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_225559) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -206,6 +206,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_210544) do
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
+  create_table "user_stats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "days_visited"
+    t.datetime "last_incremented_at"
+    t.integer "viewed_events"
+    t.integer "likes_received"
+    t.integer "likes_given"
+    t.integer "comments_count"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_stats_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.string "username", null: false
@@ -259,5 +272,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_210544) do
   add_foreign_key "genreable_associations", "genres"
   add_foreign_key "reviews", "events"
   add_foreign_key "reviews", "users"
+  add_foreign_key "user_stats", "users"
   add_foreign_key "users", "roles"
 end

@@ -25,6 +25,7 @@ class EventsController < ApplicationController
 
   def show
     event = Event.find(params[:id])
+    current_user.user_stat.increase_counter(:viewed_events) if current_user.present?
     render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
   end
 

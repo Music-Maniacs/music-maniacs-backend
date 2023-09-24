@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   acts_as_paranoid
+  after_create :create_user_stat
   ##############################################################################
   # DEVISE CONFIGURATION
   ##############################################################################
@@ -69,6 +70,7 @@ class User < ApplicationRecord
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
   has_many :images, as: :imageable, dependent: :destroy
+  has_one :user_stat
 
   ##############################################################################
   # VALIDATIONS
@@ -107,6 +109,17 @@ class User < ApplicationRecord
   ##############################################################################
   def self.permanent_block_years
     100
+  end
+
+  def create_user_stat
+    UserStat.create!(
+      user: self,
+      days_visited: 0,
+      viewed_events: 0,
+      likes_received: 0,
+      likes_given: 0,
+      comments_count: 0
+    )
   end
 
   def self.permanent_block_date_from_now

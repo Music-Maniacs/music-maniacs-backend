@@ -2,6 +2,15 @@ class Users::SessionsController < Devise::SessionsController
   include RackSessionFixController
   respond_to :json
 
+  def create
+    super do |resource|
+      if resource.persisted?
+        load_user_stat
+        @user_stat.increment_days_visited_once_per_day if @user_stat.present?
+      end
+    end
+  end
+
   private
 
   def respond_with(_resource, _opts = {})
@@ -18,5 +27,9 @@ class Users::SessionsController < Devise::SessionsController
 
   def log_out_failure
     render json: { message: :unable_to_find_session }, status: :unauthorized
+  end
+
+  def load_user_stat
+    @user_stat = current_user.user_stat
   end
 end
