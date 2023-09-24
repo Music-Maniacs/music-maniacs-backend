@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resource :users, only: [] do
     get '/user_info', to: 'users/users#user_info'
+    get '/current', to: 'users/users#perfil'
     get '/current/followed', to: 'users/users#show_followed'
     put '/current', to: 'users/users#update'
     put '/current/change_password', to: 'users/users#change_password'

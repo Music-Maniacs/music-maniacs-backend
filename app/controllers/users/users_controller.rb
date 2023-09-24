@@ -7,8 +7,12 @@ class Users::UsersController < ApplicationController
                               role: { only: %i[id name] } },
                    methods: %i[reviews] }.freeze
 
-  def user_info
+  def perfil
     render json: current_user.as_json(USER_TO_JSON), status: :ok
+  end
+
+  def user_info
+    render json: current_user.as_json(include: :role), status: :ok
   end
 
   def update
