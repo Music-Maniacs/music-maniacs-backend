@@ -6,7 +6,7 @@ class Users::UsersController < ApplicationController
                                         methods: %i[full_url] },
                               role: { only: %i[id name] },
                               user_stat: { only: %i[id days_visited viewed_events likes_given
-                                                    likes_received comments_count last_day_visited penalty_score] } },
+                                                    likes_received comments_count last_session penalty_score] } },
                    methods: %i[reviews] }.freeze
 
   def perfil

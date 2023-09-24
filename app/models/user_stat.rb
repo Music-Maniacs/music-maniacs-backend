@@ -38,6 +38,8 @@ class UserStat < ApplicationRecord
   def increment_days_visited_once_per_day
     if last_day_visited.nil? || last_day_visited < Time.current.beginning_of_day
       self.days_visited += 1
+      self.last_session = Time.current if last_day_visited.nil?
+      self.last_session = last_day_visited if last_day_visited.present?
       self.last_day_visited = Time.current
       save
     end
