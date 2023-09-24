@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 
@@ -81,6 +82,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 
@@ -88,6 +90,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 
@@ -95,6 +98,7 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      get :reviews
     end
   end
 end

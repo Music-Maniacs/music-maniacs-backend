@@ -1,8 +1,8 @@
 class Event < ApplicationRecord
   include Followable
   has_paper_trail
-  include ProfileCommonMethods
 
+  NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -22,6 +22,23 @@ class Event < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :name, :datetime, presence: true
+
+  ##############################################################################
+  # CALLBACKS
+  ##############################################################################
+  after_commit :notify_profiles_followers, on: :create
+  after_commit :notify_changes_to_followers, on: :update
+
+  def notify_changes_to_followers
+    changes = parsed_previous_changes
+    return unless changes.present? || followers.count.zero?
+
+    EventUpdateNotificationsJob.perform_later(id, changes)
+  end
+
+  def notify_profiles_followers
+    NewEventsNotificationsJob.perform_later(id)
+  end
 
   ##############################################################################
   # INSTANCE METHODS
@@ -55,6 +72,19 @@ class Event < ApplicationRecord
       producer: producer_reviews_info,
       venue: venue_reviews_info
     }
+  end
+
+  def parsed_previous_changes
+    changes = previous_changes.to_h.select { |key| NOTIFIABLE_ATTRIBUTES.include?(key.to_sym) }
+    %w[artist_id venue_id producer_id].each do |attribute|
+      next unless changes[attribute].present?
+
+      klass = attribute.gsub('_id', '').capitalize.constantize
+      previous_klass_name = klass.find_by(id: changes[attribute][0]).name
+      new_klass_name = klass.find_by(id: changes[attribute][1]).name
+      changes[attribute] = [previous_klass_name, new_klass_name]
+    end
+    changes
   end
 
   ##############################################################################

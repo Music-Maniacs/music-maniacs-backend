@@ -1,11 +1,15 @@
 class CommentsController < ApplicationController
+  COMMENT_TO_JSON = { only: %i[id body created_at],
+                      include: { user: { only: %i[id full_name] } },
+                      methods: %i[anonymous] }.freeze
+
   before_action :authenticate_user!, except: %i[index]
 
   def index
     event = Event.find(params[:event_id])
     comments = event.comments.page(params[:page]).per(params[:per_page]).order(created_at: :asc)
 
-    render json: { data: comments.as_json, pagination: pagination_info(comments) }
+    render json: { data: comments.as_json(COMMENT_TO_JSON), pagination: pagination_info(comments) }
   end
 
   def create
@@ -14,7 +18,7 @@ class CommentsController < ApplicationController
     comment.user = current_user
 
     if comment.save
-      render json: comment.as_json, status: :ok
+      render json: comment.as_json(COMMENT_TO_JSON), status: :ok
     else
       render json: { errors: comment.errors.details }, status: :unprocessable_entity
     end
@@ -23,7 +27,7 @@ class CommentsController < ApplicationController
   def update
     comment = current_user.comments.find(params[:id])
     if comment.update(comment_params)
-      render json: comment.as_json, status: :ok
+      render json: comment.as_json(COMMENT_TO_JSON), status: :ok
     else
       render json: { errors: @comment.errors.details }, status: :unprocessable_entity
     end

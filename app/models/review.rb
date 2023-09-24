@@ -19,6 +19,14 @@ class Review < ApplicationRecord
   belongs_to :event
 
   ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def anonymous?
+    user.nil?
+  end
+  alias anonymous anonymous?
+
+  ##############################################################################
   # CLASS METHODS
   ##############################################################################
   def self.ransackable_attributes(_auth_object = nil)
