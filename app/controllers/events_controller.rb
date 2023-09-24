@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include UserStatHelper
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
@@ -25,7 +26,9 @@ class EventsController < ApplicationController
 
   def show
     event = Event.find(params[:id])
-    current_user.user_stat.increase_counter(:viewed_events) if current_user.present?
+    user_stat if current_user.present? # Desde helpers
+    user_stat.increase_counter(:viewed_events) if user_stat.present?
+
     render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
   end
 
