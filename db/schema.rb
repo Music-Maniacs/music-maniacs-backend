@@ -208,11 +208,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_225559) do
 
   create_table "user_stats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "days_visited"
-    t.datetime "last_incremented_at"
+    t.datetime "last_day_visited"
     t.integer "viewed_events"
     t.integer "likes_received"
     t.integer "likes_given"
     t.integer "comments_count"
+    t.integer "penalty_score"
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

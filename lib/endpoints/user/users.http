@@ -53,7 +53,7 @@ Content-Type: image/jpeg
 /lib/endpoints/assets/losinso.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### Eliminar Usuario ###
+### Eliminar Cuenta ###
 DELETE http://localhost:3000/users/current
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMTI5OTcsImV4cCI6MTY5ODMzNjk5NywianRpIjoiYzBmNzA0MmItYzc1OC00YzY1LWJmZTctMTk3OTRjNDU1YzZjIn0.NhBi3ij_JjsPXCYGYwHfttCISjfNqy2rokO2JaOhZNw
@@ -76,3 +76,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtO
 ### Obtener Seguidos por nombre ###
 GET http://localhost:3000/users/current/followed?q[followable_name_cont]="Usted Señalemelo"&page=1&per_page=5
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzOTMwMDEsImV4cCI6MTY5ODQxNzAwMSwianRpIjoiYjhhOWFlZTgtZTJlMC00MmE0LThkYjctMjQyNzEyZTc4ZTI4In0.vUQIYTVlu1tPt9Av-iIlB0pnNjxAoJyL0p8nYXu7VAg
+
+### Perfil ###
+GET http://localhost:3000/users/current
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWRlZmJiMS01OTUwLTQ5NWYtODQ5MS02NWQzZmUzZmY1NDgiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUzMTI5OTcsImV4cCI6MTY5ODMzNjk5NywianRpIjoiYzBmNzA0MmItYzc1OC00YzY1LWJmZTctMTk3OTRjNDU1YzZjIn0.NhBi3ij_JjsPXCYGYwHfttCISjfNqy2rokO2JaOhZNw

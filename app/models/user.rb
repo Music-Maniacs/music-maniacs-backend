@@ -118,7 +118,8 @@ class User < ApplicationRecord
       viewed_events: 0,
       likes_received: 0,
       likes_given: 0,
-      comments_count: 0
+      comments_count: 0,
+      penalty_score: 0
     )
   end
 

@@ -7,7 +7,7 @@ class UserStat < ApplicationRecord
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :days_visited, :viewed_events, :likes_received, :likes_given, :comments_count, presence: true
+  validates :days_visited, :viewed_events, :likes_received, :likes_given, :comments_count, :penalty_score, presence: true
 
   def modify_counter(counter, increment)
     return unless user_stat
@@ -20,6 +20,8 @@ class UserStat < ApplicationRecord
     when :likes_given
       user_stat.likes_given += increment
     when :comments_count
+      user_stat.comments_count += increment
+    when :penalty_score
       user_stat.comments_count += increment
     end
     user_stat.save
@@ -34,9 +36,9 @@ class UserStat < ApplicationRecord
   end
 
   def increment_days_visited_once_per_day
-    if last_incremented_at.nil? || last_incremented_at < Time.current.beginning_of_day
+    if last_day_visited.nil? || last_day_visited < Time.current.beginning_of_day
       self.days_visited += 1
-      self.last_incremented_at = Time.current
+      self.last_day_visited = Time.current
       save
     end
   end
