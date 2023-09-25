@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_25_213955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -69,6 +69,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
     t.uuid "venue_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "views_count", default: 0
+    t.bigint "popularity_score", default: 0
     t.index ["artist_id"], name: "index_events_on_artist_id"
     t.index ["producer_id"], name: "index_events_on_producer_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
@@ -249,14 +251,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
   end
 
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "videable_id", null: false
-    t.string "videable_type", null: false
     t.datetime "recorded_at"
+    t.uuid "event_id", null: false
+    t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "file"
-    t.index ["videable_id"], name: "index_videos_on_videable_id"
-    t.index ["videable_type"], name: "index_videos_on_videable_type"
+    t.index ["event_id"], name: "index_videos_on_event_id"
+    t.index ["user_id"], name: "index_videos_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -271,4 +272,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
   add_foreign_key "reviews", "events"
   add_foreign_key "reviews", "users"
   add_foreign_key "users", "roles"
+  add_foreign_key "videos", "events"
+  add_foreign_key "videos", "users"
 end
