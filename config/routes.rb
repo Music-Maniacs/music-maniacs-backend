@@ -101,4 +101,13 @@ Rails.application.routes.draw do
       get :reviews
     end
   end
+
+  resources :profiles, only: %i[] do
+    collection do
+      get :search
+      get :search_artists
+      get :search_producers
+      get :search_venues
+    end
+  end
 end
