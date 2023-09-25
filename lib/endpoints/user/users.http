@@ -42,12 +42,12 @@ Content-Disposition: form-data; name="user"
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 
-Content-Disposition: form-data; name="images[]"; filename="Perfil.jpg"
+Content-Disposition: form-data; name="images[profile]"; filename="profile.jpg"
 Content-Type: image/jpeg
 
 /lib/endpoints/assets/ArtistCover.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="images[]"; filename="Portada.jpg"
+Content-Disposition: form-data; name="images[cover]"; filename="cover.jpg"
 Content-Type: image/jpeg
 
 /lib/endpoints/assets/losinso.jpg

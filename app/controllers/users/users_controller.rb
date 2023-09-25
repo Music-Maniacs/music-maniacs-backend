@@ -20,20 +20,34 @@ class Users::UsersController < ApplicationController
   def update
     user = current_user
 
-    images_params = params[:images] if params[:images].present? # imágenes a crear
-    # Parsea el JSON en params[:user] y convierte las claves a símbolos
-    user_params = JSON.parse(params[:user]).deep_symbolize_keys # Para la eliminacion
+    images_params = params[:images]
 
-    # Contador total de imagenes
+    # Procesamiento de imágenes
+    image_params_cover = params[:images][:cover] if images_params.present? && params[:images][:cover].present?
+    image_params_profile = params[:images][:profile] if images_params.present? && params[:images][:profile].present?
+
+    ### Contador total de imágenes ####
     if params[:images].present?
-      # Verifica si la actualización excede el límite de imágenes
-      total_images_count = user.images.count + params[:images].size
+      profile_images_count = params[:images][:profile].present? ? 1 : 0
+      cover_images_count = params[:images][:cover].present? ? 1 : 0
+
+      total_images_count = user.images.count + profile_images_count + cover_images_count
 
       if total_images_count > 2
-        render json: { error: 'Too many images (maximum is 2)' }, status: :unprocessable_entity # Dejar error al front?
+        render json: { error: 'Too many images (maximum is 2)' }, status: :unprocessable_entity
         return
       end
     end
+
+    #### Creacion de imagenes ####
+
+    create_and_save_image(user, image_params_cover, false) if image_params_cover.present?
+    create_and_save_image(user, image_params_profile, true) if image_params_profile.present?
+
+    #### Eliminacion de imagenes ####
+
+    # Parsea el JSON en params[:user] y convierte las claves a símbolos
+    user_params = JSON.parse(params[:user]).deep_symbolize_keys # Para la eliminacion
 
     # Eliminacion imagenes (capa extra se seguridad)
     if user_params[:images_attributes].present?
@@ -52,14 +66,6 @@ class Users::UsersController < ApplicationController
     end
 
     if user.update(user_params_update)
-
-      # Agrega imagenes
-      if images_params.present?
-        images_params.each do |image_param|
-          user.images.create(file: image_param)
-        end
-      end
-
       render json: user.as_json(methods: :state, include: %i[links role images]), status: :ok
     else
       render json: { errors: user.errors.details }, status: :unprocessable_entity
@@ -143,5 +149,16 @@ class Users::UsersController < ApplicationController
 
   def user_params_change_password
     params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def create_and_save_image(user, image_params, is_profile)
+    image = user.images.build
+    image.file.attach(image_params)
+    is_profile ? image.mark_as_profile : image.mark_as_cover
+
+    # Asignar el usuario a la imagen
+    image.imageable = user
+
+    image.save
   end
 end
