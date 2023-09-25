@@ -3,6 +3,7 @@ class Event < ApplicationRecord
   has_paper_trail ignore: %i[popularity_score views_count]
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
+  VISIT_VALUE = 10.minutes.to_i
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -100,8 +101,6 @@ class Event < ApplicationRecord
     end
     changes
   end
-
-  VISIT_VALUE = 10.minutes.to_i
 
   def calculate_popularity_score
     created_at.to_i + (views_count || 0) * VISIT_VALUE
