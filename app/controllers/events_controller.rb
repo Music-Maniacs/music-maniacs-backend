@@ -75,6 +75,20 @@ class EventsController < ApplicationController
     render json: { data: reviews.as_json(REVIEW_TO_JSON), pagination: pagination_info(reviews) }
   end
 
+  def discover
+    result = if current_user.present?
+               { by_location: Event.by_location(params[:city]).limit(10).as_json(EVENT_TO_JSON),
+                 most_popular: Event.most_popular.limit(10).as_json(EVENT_TO_JSON),
+                 by_followed_artists: Event.where(artist_id: current_user.followed_artists.pluck(:id)).order(created_at: :desc).limit(10).as_json(EVENT_TO_JSON),
+                 by_followed_producers: Event.where(producer_id: current_user.followed_producers.pluck(:id)).order(created_at: :desc).limit(10).as_json(EVENT_TO_JSON),
+                 by_followed_venues: Event.where(venue_id: current_user.followed_venues.pluck(:id)).order(created_at: :desc).limit(10).as_json(EVENT_TO_JSON) }
+             else
+               { by_location: Event.by_location(params[:location]).limit(10).as_json(EVENT_TO_JSON),
+                 most_popular: Event.most_popular.limit(10).as_json(EVENT_TO_JSON) }
+             end
+    render json: result, status: :ok
+  end
+
   private
 
   def event_params
