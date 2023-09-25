@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   include Followable
-  has_paper_trail
+  has_paper_trail ignore: %i[popularity_score views_count]
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   ##############################################################################
@@ -28,6 +28,8 @@ class Event < ApplicationRecord
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
   after_commit :notify_changes_to_followers, on: :update
+  before_create :set_popularity_score
+  before_update :set_popularity_score, if: :will_save_change_to_views_count?
 
   def notify_changes_to_followers
     changes = parsed_previous_changes
@@ -38,6 +40,10 @@ class Event < ApplicationRecord
 
   def notify_profiles_followers
     NewEventsNotificationsJob.perform_later(id)
+  end
+
+  def set_popularity_score
+    self.popularity_score = calculate_popularity_score
   end
 
   ##############################################################################
@@ -73,6 +79,10 @@ class Event < ApplicationRecord
     }
   end
 
+  def increase_visits_count!
+    update!(views_count: views_count + 1)
+  end
+
   def parsed_previous_changes
     changes = previous_changes.to_h.select { |key| NOTIFIABLE_ATTRIBUTES.include?(key.to_sym) }
     %w[artist_id venue_id producer_id].each do |attribute|
@@ -84,6 +94,12 @@ class Event < ApplicationRecord
       changes[attribute] = [previous_klass_name, new_klass_name]
     end
     changes
+  end
+
+  VISIT_VALUE = 10.minutes.to_i
+
+  def calculate_popularity_score
+    created_at.to_i + (views_count || 0) * VISIT_VALUE
   end
 
   ##############################################################################
