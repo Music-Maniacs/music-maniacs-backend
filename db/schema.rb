@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
     t.uuid "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["event_id"], name: "index_comments_on_event_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -178,6 +179,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "moderator_comment"
+    t.text "user_comment"
+    t.integer "penalization_score"
+    t.integer "status"
+    t.integer "category"
+    t.uuid "reporter_id", null: false
+    t.uuid "resolver_id"
+    t.uuid "reportable_id", null: false
+    t.string "reportable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "rating", null: false
     t.text "description"
@@ -246,17 +261,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_001854) do
     t.json "object_changes"
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
-  end
-
-  create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "videable_id", null: false
-    t.string "videable_type", null: false
-    t.datetime "recorded_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "file"
-    t.index ["videable_id"], name: "index_videos_on_videable_id"
-    t.index ["videable_type"], name: "index_videos_on_videable_type"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

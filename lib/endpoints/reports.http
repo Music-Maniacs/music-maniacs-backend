@@ -1,0 +1,4 @@
+### RESOLVE ###
+POST http://localhost:3000/reports/e69d5dac-9113-4f5d-a1a4-c95e73bb8ea2/resolve?report_action=accept
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3M2YwZTBhOS01YzFjLTQ2YmUtOGNjNC03M2IzYzQ3NjZlYWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU3NTk4NzQsImV4cCI6MTY5ODc4Mzg3NCwianRpIjoiOGViNDRhYTItYjUwMy00M2NkLThkZWYtMmE2NDA0ZTE1ZGFkIn0.RIEwVkGXIFKHE_gdHrY4pkmJikAWut3PpazlPtYyNr0
+content-type: application/json

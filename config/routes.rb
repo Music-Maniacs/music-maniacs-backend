@@ -76,7 +76,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :comments, only: %i[update destroy]
+  resources :comments, only: %i[update destroy] do
+    member do
+      post :report
+    end
+  end
 
   resources :artists, only: %i[] do
     member do
@@ -99,6 +103,12 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+    end
+  end
+
+  resources :reports, only: %i[] do
+    member do
+      post :resolve
     end
   end
 end
