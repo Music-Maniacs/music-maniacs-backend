@@ -60,8 +60,9 @@ class Event < ApplicationRecord
       {
         rating: send("#{reviewable}_rating"),
         reviews_count: send("#{reviewable}_reviews").count,
-        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json({only: %i[id rating description created_at reviewable_type],
-                                                                                               include: { user: { only: %i[id full_name] } } }),
+        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json({ only: %i[id rating description created_at reviewable_type],
+                                                                                                include: { user: { only: %i[id full_name] } },
+                                                                                                methods: :anonymous })
       }
     end
   end
