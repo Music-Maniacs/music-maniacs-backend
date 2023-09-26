@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resource :users, only: [] do
     get '/user_info', to: 'users/users#user_info'
-    delete '/current', to: 'users/users#destroy'
+    put '/current/change_password', to: 'users/users#change_password'
   end
 
   resources :artists, only: %i[show create update]
