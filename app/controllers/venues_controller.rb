@@ -11,8 +11,14 @@ class VenuesController < ApplicationController
 
   def show
     venue = Venue.find(params[:id])
+    venue_json = venue.as_json(VENUE_TO_JSON)
 
-    render json: venue.as_json(VENUE_TO_JSON)
+    venue_json['followed_by_current_user'] = if current_user.present?
+                                                current_user.follows?(venue)
+                                              else
+                                                false
+                                              end
+    render json: venue_json, status: :ok
   end
 
   def create

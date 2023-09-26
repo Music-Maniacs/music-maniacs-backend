@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  include FollowableActions
+  before_action :authenticate_user!, only: %i[show]
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
@@ -26,7 +28,14 @@ class EventsController < ApplicationController
 
   def show
     event = Event.find(params[:id])
-    render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
+    event_json = event.as_json(SHOW_EVENT_TO_JSON)
+
+    event_json['followed_by_current_user'] = if current_user.present?
+                                               current_user.follows?(event)
+                                             else
+                                               false
+                                             end
+    render json: event_json, status: :ok
   end
 
   def search
