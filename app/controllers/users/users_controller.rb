@@ -6,13 +6,10 @@ class Users::UsersController < ApplicationController
   end
 
   def destroy
-    user = current_user
-    user.deleted_at = Time.now
-
-    if user.save
+    if current_user.destroy
       head :no_content, status: :ok
     else
-      render json: { errors: user.errors.details }, status: :unprocessable_entity
+      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
     end
   end
 end
