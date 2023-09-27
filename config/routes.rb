@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :user, controller: 'user/user', only: [] do
+  resource :users, controller: 'users/users', only: [] do
     get :user_info
     delete :current, action: 'destroy'
   end
