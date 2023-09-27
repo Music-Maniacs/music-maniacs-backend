@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :users, controller: 'users/users', only: [] do
+  resource :user, controller: 'users/users', only: [] do
     get :user_info
     get :show_followed
   end
