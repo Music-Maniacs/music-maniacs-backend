@@ -15,7 +15,7 @@ class Users::UsersController < ApplicationController
     render json: current_user.as_json(include: :role), status: :ok
   end
 
-  def perfil
+  def show
     render json: current_user.as_json(USER_TO_JSON), status: :ok
   end
 end
