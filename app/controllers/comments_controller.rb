@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include UserStatHelper
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name] } },
                       methods: %i[anonymous] }.freeze
@@ -18,6 +19,8 @@ class CommentsController < ApplicationController
     comment.user = current_user
 
     if comment.save
+      user_stat.increase_counter(:comments_count)
+
       render json: comment.as_json(COMMENT_TO_JSON), status: :ok
     else
       render json: { errors: comment.errors.details }, status: :unprocessable_entity
@@ -38,6 +41,8 @@ class CommentsController < ApplicationController
     comment = current_user.comments.find(params[:id])
 
     if comment.destroy
+      user_stat.decrease_counter(:comments_count)
+
       head :no_content, status: :ok
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
