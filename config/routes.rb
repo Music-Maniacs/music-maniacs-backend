@@ -10,10 +10,10 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :users, only: [] do
-    get '/user_info', to: 'users/users#user_info'
-    put '/current/change_password', to: 'users/users#change_password'
-  end
+resource :users, controller: 'user/user', only: [] do
+  get :user_info
+  put :current_change_password, action: 'change_password'
+end
 
   resources :artists, only: %i[show create update]
   resources :producers, only: %i[show create update]
