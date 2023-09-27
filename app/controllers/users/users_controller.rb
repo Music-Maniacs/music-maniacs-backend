@@ -15,8 +15,8 @@ class Users::UsersController < ApplicationController
 
       # Busca en las entidades que coincidan con :followable_name_cont
       followed_entities = current_user.follows.includes(:followable).where(followable_type: %w[Venue Producer Artist Event])
-       # Filtra las entidades basándonos en el atributo followable_name
-       followed_entities = followed_entities.select do |follow|
+      # Filtra las entidades basándonos en el atributo followable_name
+      followed_entities = followed_entities.select do |follow|
         followable = follow.followable
         followable.present? && followable.name.include?(followable_name)
       end
