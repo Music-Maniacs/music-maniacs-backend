@@ -10,6 +10,10 @@ class Report < ApplicationRecord
   belongs_to :reportable, -> { with_deleted }, polymorphic: true
 
   ##############################################################################
+  # VALIDATIONS
+  ##############################################################################
+
+  ##############################################################################
   # CALLBACKS
   ##############################################################################
   before_create :set_default_status
@@ -19,6 +23,8 @@ class Report < ApplicationRecord
   end
 
   def resolve(action:, resolver:, penalization_score: nil, moderator_comment: nil)
+    raise 'already resolved' if resolved? || ignored?
+
     case action
     when 'accept'
       accept(resolver, penalization_score, moderator_comment)
@@ -56,8 +62,9 @@ class Report < ApplicationRecord
     errors.add(:base, e.message)
   end
 
-  def resolve_comment_report(category)
-    # no importa la categoría hay que destruirlo
+  def resolve_comment_report(_category)
+    # no importa la categoría hay que eliminarlo
     reportable.destroy!
+    reportable.reports.update_all(status: :resolved, resolver_id: resolver.id)
   end
 end
