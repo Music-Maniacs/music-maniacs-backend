@@ -22,6 +22,8 @@ class Users::UsersController < ApplicationController
       else
         user.cover_image = Image.new(file: image_params_cover)
       end
+      user.cover_image.image_type&.update = 'cover'
+      user.cover_image.save
     end
 
     if image_params_profile.present?
@@ -31,6 +33,8 @@ class Users::UsersController < ApplicationController
       else
         user.profile_image = Image.new(file: image_params_profile)
       end
+      user.profile_image.image_type = 'profile'
+      user.profile_image.save
     end
 
     #### Eliminacion de imagenes ####
@@ -72,4 +76,9 @@ class Users::UsersController < ApplicationController
                                                                 :role_id,
                                                                 :links_attributes)
   end
+  def purge_and_attach_image(user, image_params)
+    user.cover_image.file.purge
+    user.cover_image.file.attach(image_params)
+  end
+
 end

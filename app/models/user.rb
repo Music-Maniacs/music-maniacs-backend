@@ -68,8 +68,8 @@ class User < ApplicationRecord
   has_many :followed_artists, through: :follows, source: :followable, source_type: 'Artist'
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
-  has_one :profile_image, class_name: 'Image', as: :imageable, dependent: :destroy
-  has_one :cover_image, class_name: 'Image', as: :imageable, dependent: :destroy
+  has_one :profile_image, -> { where("image_type = ?", 'profile') }, class_name: 'Image', as: :imageable, dependent: :destroy
+  has_one :cover_image, -> { where("image_type = ?", 'cover') }, class_name: 'Image', as: :imageable, dependent: :destroy
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
