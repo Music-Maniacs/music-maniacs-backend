@@ -5,7 +5,9 @@ class ArtistsController < ApplicationController
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[full_url] },
-                                last_reviews: { only: %i[id rating description] },
+                                last_reviews: { only: %i[id rating description created_at reviewable_type],
+                                                include: { user: { only: %i[id full_name] } },
+                                                methods: :anonymous },
                                 versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
                      methods: %i[rating past_events next_events] }.freeze
 
