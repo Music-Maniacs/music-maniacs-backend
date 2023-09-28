@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resource :user, controller: 'users/users', only: %i[show] do
     get :user_info
+    get :reviews
   end
 
   resources :artists, only: %i[show create update]
