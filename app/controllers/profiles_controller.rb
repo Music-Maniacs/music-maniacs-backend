@@ -21,6 +21,14 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def destroy
+    if current_user.destroy
+      head :no_content, status: :ok
+    else
+      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
+    end
+  end
+
   def show
     user = User.find(params[:id])
     render json: user.as_json(USER_TO_JSON), status: :ok
