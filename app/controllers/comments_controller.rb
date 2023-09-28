@@ -1,8 +1,4 @@
 class CommentsController < ApplicationController
-  include UserStatHelper
-  after_action :callback_increment_count_comments, only: :create
-  after_action :callback_decrement_count_comments, only: :destroy
-
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name] } },
                       methods: %i[anonymous] }.freeze
@@ -52,13 +48,5 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
-  end
-
-  def callback_increment_count_comments
-    user_stat.increment!(:comments_count)
-  end
-
-  def callback_decrement_count_comments
-    user_stat.decrement!(:comments_count)
   end
 end
