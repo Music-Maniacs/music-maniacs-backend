@@ -31,8 +31,7 @@ class VideosController < ApplicationController
   end
 
   def show
-    videos = Event.find(params[:id]).ransack(params[:q])
-    videos.sorts = 'recorded_at asc' if params[:sort].blank?
+    videos = Event.find(params[:id]).videos.reorder(params[:sort] || 'recorded_at asc')
 
     render json: videos.result.as_json(VIDEO_TO_SHOW), status: :ok
   end
