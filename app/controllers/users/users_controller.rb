@@ -1,5 +1,5 @@
 class Users::UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:user_info]
+  before_action :authenticate_user!, only: %i[user_info change_password]
 
   def user_info
     render json: current_user.as_json(include: :role), status: :ok
