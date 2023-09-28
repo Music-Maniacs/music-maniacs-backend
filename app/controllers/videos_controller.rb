@@ -7,10 +7,9 @@ class VideosController < ApplicationController
 
   def create
     event = Event.find(params[:id])
-    video = event.videos.build
+    video = event.videos.build(video_params)
 
     video.file.attach(params[:video]) # Asigna el archivo cargado a la instancia de Video
-    video.recorded_at = params[:recorded_at]
     video.user = current_user
 
     if video.save
@@ -39,6 +38,6 @@ class VideosController < ApplicationController
   private
 
   def video_params
-    params.require(:video)
+    params.permit(:recorded_at, :name)
   end
 end

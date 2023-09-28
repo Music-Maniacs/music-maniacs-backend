@@ -250,6 +250,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_235104) do
 
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "recorded_at"
+    t.string "name", null: false
     t.uuid "event_id", null: false
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
