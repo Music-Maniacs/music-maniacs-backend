@@ -19,11 +19,12 @@ class Users::UsersController < ApplicationController
   end
 
   def show
-    render json: current_user.as_json(USER_TO_JSON), status: :ok
+    user = params[:id].present? ? User.find(params[:id]) : current_user
+    render json: user.as_json(USER_TO_JSON), status: :ok
   end
 
   def reviews
-    user = current_user
+    user = params[:id].present? ? User.find(params[:id]) : current_user
     reviews = user.reviews.page(params[:page]).per(params[:per_page])
 
     render json: { data: reviews.as_json(REVIEW_TO_JSON), pagination: pagination_info(reviews) }
