@@ -1,6 +1,8 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[user_info update]
-
+  USER_TO_JSON_UPDATE = { methods: %i[cover_image profile_image state],
+                          include: { links: {},
+                                     role: {} } }.freeze
   def user_info
     render json: current_user.as_json(include: :role), status: :ok
   end
@@ -13,10 +15,23 @@ class Users::UsersController < ApplicationController
     image_params_profile = params[:profile_image] if params[:profile_image].present?
 
     #### Creacion y actualizacion de imagenes ####
-    puts "###################################################### #{image_params_cover}" if image_params_cover.present?
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #{image_params_profile}" if image_params_profile.present?
-    create_and_save_image(user, image_params_cover, false) if image_params_cover.present?
-    create_and_save_image(user, image_params_profile, true) if image_params_profile.present?
+    if image_params_cover.present?
+      if user.cover_image.present?
+        user.cover_image.file.purge
+        user.cover_image.file.attach(image_params_cover)
+      else
+        user.cover_image = Image.new(file: image_params_cover)
+      end
+    end
+
+    if image_params_profile.present?
+      if user.profile_image.present?
+        user.profile_image.file.purge
+        user.profile_image.file.attach(image_params_profile)
+      else
+        user.profile_image = Image.new(file: image_params_profile)
+      end
+    end
 
     #### Eliminacion de imagenes ####
 
@@ -35,16 +50,13 @@ class Users::UsersController < ApplicationController
         if image_id.present? && destroy == true
           image = Image.find(image_id)
           # destruye la imagen enviada si esta es portada o perfil del usuario
-          image.destroy if image.present? && image == user.cover_image || image == user.profile_image
+          image.destroy if image.present? && (image == user.cover_image || image == user.profile_image)
         end
       end
     end
 
     if user.update(user_params_update)
-      render json: user.as_json(methods: :state, include: { links: {},
-                                                            role: {},
-                                                            cover_image: { methods: %i[full_url] },
-                                                            profile_image: { methods: %i[full_url] } }), status: :ok
+      render json: user.as_json(USER_TO_JSON_UPDATE), status: :ok
     else
       render json: { errors: user.errors.details }, status: :unprocessable_entity
     end
@@ -59,25 +71,5 @@ class Users::UsersController < ApplicationController
                                                                 :biography,
                                                                 :role_id,
                                                                 :links_attributes)
-  end
-
-  def create_and_save_image(user, image_params, is_profile)
-    case is_profile
-    when true && user.profile_image.present?
-      puts "ENTRO A true && user.profile_image.present?"
-      user.profile_image.purge
-      user.profile_image.file.attach(image_params)
-    when false && user.cover_image.present?
-      puts "ENTRO A false && user.cover_image.present?"
-      user.cover_image.purge
-      user.cover_image.file.attach(image_params)
-    when true
-      puts "ENTRO A TRUE"
-      user.profile_image = Image.new(file: image_params)
-    when false
-      puts "ENTRO A FALSE"
-      user.cover_image = Image.new(file: image_params)
-    end
-    save
   end
 end
