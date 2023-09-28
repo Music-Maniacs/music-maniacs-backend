@@ -1,12 +1,8 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[user_info update]
   USER_TO_JSON_UPDATE = { methods: %i[state],
-                          include: { links: {},
-                                     role: {},
-                                     cover_image: { only: %i[id image_type],
-                                                    methods: :full_url },
-                                     profile_image: { only: %i[id image_type],
-                                                      methods: :full_url } } }.freeze
+                          include: %i[links role profile_image cover_image] }.freeze
+
   def user_info
     render json: current_user.as_json(include: :role), status: :ok
   end
@@ -57,9 +53,6 @@ class Users::UsersController < ApplicationController
     else
       user.public_send("#{image_type}_image=", Image.new(file: image_params, image_type: image_type))
     end
-
-    user.public_send("#{image_type}_image").image_type = image_type
-    user.public_send("#{image_type}_image").save
   end
 
   def destroy_image(user, images_params_delete)
@@ -70,7 +63,13 @@ class Users::UsersController < ApplicationController
       if image_id.present? && destroy == true
         image = Image.find(image_id)
         # destruye la imagen enviada si esta es portada o perfil del usuario
-        image.destroy if image.present? && (image == user.cover_image || image == user.profile_image)
+        # Si es la imagen de portada o de perfil, la eliminamos y actualizamos el usuario
+        if image == user.cover_image
+          user.update(cover_image: nil)
+        elsif image == user.profile_image
+          user.update(profile_image: nil)
+        end
+        image.destroy
       end
     end
   end
