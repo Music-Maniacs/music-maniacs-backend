@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: %i[] do
     get :info
+    put :change_password
   end
 
   resources :artists, only: %i[show create update]
