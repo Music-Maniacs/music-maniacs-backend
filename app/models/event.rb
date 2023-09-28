@@ -28,6 +28,7 @@ class Event < ApplicationRecord
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
   after_commit :notify_changes_to_followers, on: :update
+  # TODO: after_commit :notify_changes_to_followers, on: :destroy
 
   def notify_changes_to_followers
     changes = parsed_previous_changes

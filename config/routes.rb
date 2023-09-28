@@ -60,7 +60,11 @@ Rails.application.routes.draw do
     resources :events, only: %i[index show create update destroy]
   end
 
-  resources :reviews, only: %i[update destroy]
+  resources :reviews, only: %i[update destroy] do
+    member do
+      post :report
+    end
+  end
 
   resources :events, only: %i[show create update] do
     post 'add_review/:reviewable_klass', to: 'reviews#create'
@@ -73,6 +77,7 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
     end
   end
 
@@ -87,6 +92,7 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
     end
   end
 
@@ -95,6 +101,7 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
     end
   end
 
@@ -103,6 +110,7 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
     end
   end
 

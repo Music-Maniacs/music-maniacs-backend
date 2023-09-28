@@ -20,7 +20,7 @@ module ReportableActions
   private
 
   def report_params
-    params.require(:report).permit(:category, :user_comment)
+    params.require(:report).permit(:category, :user_comment, :original_reportable_id)
   end
 
   def search_model_scope

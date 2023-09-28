@@ -1,6 +1,6 @@
 class Report < ApplicationRecord
   enum status: { pending: 0, resolved: 1, ignored: 2 }
-  enum category: { inappropriate_content: 0, spam: 1, other: 2 }
+  enum category: { inappropriate_content: 0, spam: 1, other: 2, fake: 3, duplicated: 4 }
 
   ##############################################################################
   # ASSOCIATIONS
@@ -12,6 +12,9 @@ class Report < ApplicationRecord
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
+  # que el original_reportable_id sea distinto que el reportable_id
+  # que la categoría sea valida para el reportable
+  # que el reportador no pueda resolver su propio reporte
 
   ##############################################################################
   # CALLBACKS
@@ -45,7 +48,11 @@ class Report < ApplicationRecord
 
       case reportable.class.to_s
       when 'Comment'
-        resolve_comment_report(category)
+        resolve_comment_report
+      when 'Artist', 'Venue', 'Producer'
+        resolve_event_profile_report
+      else
+        raise 'Invalid reportable'
       end
       save!
     end
@@ -62,9 +69,37 @@ class Report < ApplicationRecord
     errors.add(:base, e.message)
   end
 
-  def resolve_comment_report(_category)
+  def resolve_comment_report
     # no importa la categoría hay que eliminarlo
     reportable.destroy!
     reportable.reports.update_all(status: :resolved, resolver_id: resolver.id)
+  end
+
+  def resolve_event_profile_report
+    case category
+    when 'fake' || 'spam' || 'other'
+      reportable.destroy!
+      reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
+    when 'duplicated'
+      # TODO: ver que hacer cuando no existe mas el sugerido como duplicado
+      merge_profile(duplicated: reportable, original: reportable.class.find(original_reportable_id).id)
+      reportable.reports.where(category:, original_reportable_id:).update_all(status: :resolved, resolver_id: resolver.id)
+    end
+  end
+
+  def resolve_event_report
+    case category
+    when 'fake' || 'spam' || 'other'
+      reportable.destroy!
+      reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
+    when 'duplicated'
+  end
+
+  def merge_profile(duplicated:, original:)
+    duplicated.events.update_all(artist_id: original)
+    duplicated.reviews.update_all(reviewable_id: original)
+    duplicated.follows.update_all(followable_id: original)
+    duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
+    duplicated.destroy!
   end
 end

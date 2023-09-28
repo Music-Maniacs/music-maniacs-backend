@@ -1,6 +1,7 @@
 class VenuesController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },

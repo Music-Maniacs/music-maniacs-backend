@@ -7,3 +7,15 @@ content-type: application/json
 POST http://localhost:3000/venues/ea2ec6e2-a3d6-47ca-b009-299cf183b605/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwMzc2MTcsImV4cCI6MTY5NzA2MTYxNywianRpIjoiMjAxMmQ1ZWYtMDQ1My00MDEzLThmYmQtZTllODY3NDVlNzk1In0.7GKbaHZuEu7Och5uzjeuJwET6TH2zUtNjSZMm6HtQ1E
 content-type: application/json
+
+### REPORT ###
+POST http://localhost:3000/venues/9721f317-f36c-43dd-a9e1-306ef9d5057b/report
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU4NTc0NTMsImV4cCI6MTY5ODg4MTQ1MywianRpIjoiMTVlM2RjYWQtZWJmYi00YTE4LTgxYjQtMDUyYWJkYTNkZWZmIn0.CojSkwqHaBHaNGS8O1cfjE1x4T_wJpU77ib6NkAsxdM
+content-type: application/json
+
+{
+    "report": {
+        "category": "fake",
+        "user_comment": "venue falso"
+    }
+}

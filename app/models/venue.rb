@@ -2,7 +2,9 @@ class Venue < ApplicationRecord
   include Reviewable
   include Followable
   include ProfileCommonMethods
+  include Reportable
   has_paper_trail # para soporte de versionado
+  acts_as_paranoid
 
   ##############################################################################
   # ASSOCIATIONS

@@ -2,7 +2,9 @@ class Artist < ApplicationRecord
   include Reviewable
   include Followable
   include ProfileCommonMethods
+  include Reportable
   has_paper_trail
+  acts_as_paranoid
 
   ##############################################################################
   # ASSOCIATIONS

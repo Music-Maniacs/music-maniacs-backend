@@ -11,3 +11,29 @@ content-type: application/json
 ### SHOW ###
 GET http://localhost:3000/artists/cf208e28-c716-4d7e-a5a0-26f027ab21ea
 content-type: application/json
+
+### REPORT ###
+POST http://localhost:3000/artists/c1546a74-7ad7-4a8d-bb57-d05dc789d6ec/report
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU4NTc0NTMsImV4cCI6MTY5ODg4MTQ1MywianRpIjoiMTVlM2RjYWQtZWJmYi00YTE4LTgxYjQtMDUyYWJkYTNkZWZmIn0.CojSkwqHaBHaNGS8O1cfjE1x4T_wJpU77ib6NkAsxdM
+content-type: application/json
+
+{
+    "report": {
+        "category": "fake",
+        "user_comment": "el artista es falso"
+    }
+}
+
+
+### REPORT DUPLICATED ###
+POST http://localhost:3000/artists/c1546a74-7ad7-4a8d-bb57-d05dc789d6ec/report
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU4NTc0NTMsImV4cCI6MTY5ODg4MTQ1MywianRpIjoiMTVlM2RjYWQtZWJmYi00YTE4LTgxYjQtMDUyYWJkYTNkZWZmIn0.CojSkwqHaBHaNGS8O1cfjE1x4T_wJpU77ib6NkAsxdM
+content-type: application/json
+
+{
+    "report": {
+        "category": "duplicated",
+        "user_comment": "",
+        "original_reportable_id": "b7cff469-c072-4328-bf3f-0271445948a8"
+    }
+}

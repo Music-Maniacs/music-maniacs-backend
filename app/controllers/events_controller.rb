@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include ReportableActions
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },

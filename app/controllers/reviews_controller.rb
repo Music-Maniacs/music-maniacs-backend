@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  include ReportableActions
   REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
                      include: { user: { only: %i[id full_name] } },
                      methods: %i[anonymous] }.freeze

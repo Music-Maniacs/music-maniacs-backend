@@ -2,6 +2,8 @@ class Producer < ApplicationRecord
   include Reviewable
   include Followable
   include ProfileCommonMethods
+  include Reportable
+  acts_as_paranoid
   has_paper_trail
 
   ##############################################################################

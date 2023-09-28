@@ -48,6 +48,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_artists_on_deleted_at"
   end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -57,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_comments_on_deleted_at"
     t.index ["event_id"], name: "index_comments_on_event_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -70,7 +73,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.uuid "venue_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["artist_id"], name: "index_events_on_artist_id"
+    t.index ["deleted_at"], name: "index_events_on_deleted_at"
     t.index ["producer_id"], name: "index_events_on_producer_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end
@@ -177,18 +182,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_producers_on_deleted_at"
   end
 
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "moderator_comment"
     t.text "user_comment"
     t.integer "penalization_score"
-    t.integer "status"
+    t.integer "status", default: 0
     t.integer "category"
     t.uuid "reporter_id", null: false
     t.uuid "resolver_id"
     t.uuid "reportable_id", null: false
     t.string "reportable_type", null: false
+    t.uuid "original_reportable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -250,6 +258,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_venues_on_deleted_at"
   end
 
   create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
