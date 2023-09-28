@@ -38,6 +38,6 @@ class VideosController < ApplicationController
   private
 
   def video_params
-    params.permit(:recorded_at, :name)
+    params.require(:name).permit(:recorded_at)
   end
 end
