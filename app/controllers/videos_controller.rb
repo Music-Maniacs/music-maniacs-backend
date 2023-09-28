@@ -14,7 +14,7 @@ class VideosController < ApplicationController
     video.user = current_user
 
     if video.save
-      head :no_content, status: :ok
+      render json: video.as_json(VIDEO_TO_SHOW), status: :ok
     else
       render json: { errors: video.errors.details }, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class VideosController < ApplicationController
   def show
     videos = Event.find(params[:id]).videos.reorder(params[:sort] || 'recorded_at asc')
 
-    render json: videos.result.as_json(VIDEO_TO_SHOW), status: :ok
+    render json: videos.as_json(VIDEO_TO_SHOW), status: :ok
   end
 
   private
