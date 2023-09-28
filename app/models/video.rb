@@ -10,4 +10,13 @@ class Video < Multimedia
   ##############################################################################
   validates :file, attached: true, content_type: ['video/mp4']
   validates :recorded_at, presence: true
+  
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def anonymous?
+    user.nil?
+  end
+  alias anonymous anonymous?
+
 end
