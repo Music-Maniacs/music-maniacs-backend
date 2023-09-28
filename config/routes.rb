@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
   resource :user, controller: 'users/users', only: [] do
     get :user_info
-    get :show_followed
+    get :show_followed_by_type
+    get :show_followed_by_name
   end
 
   resources :artists, only: %i[show create update]
