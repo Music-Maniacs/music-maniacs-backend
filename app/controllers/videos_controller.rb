@@ -3,7 +3,8 @@ class VideosController < ApplicationController
 
   VIDEO_TO_SHOW = { only: %i[id created_at recorded_at],
                     methods: %i[full_url],
-                    include: { user: { only: %i[id username] } } }.freeze
+                    include: { user: { only: %i[id username] } },
+                    methods: %i[anonymous]}.freeze
 
   def create
     event = Event.find(params[:id])
