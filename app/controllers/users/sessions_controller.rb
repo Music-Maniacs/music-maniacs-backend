@@ -3,13 +3,13 @@ class Users::SessionsController < Devise::SessionsController
   include UserStatHelper
   respond_to :json
 
-  private
-
   def create
     super do |resource|
       user_stat.increment_days_visited_once_per_day if resource.persisted?
     end
   end
+
+  private
 
   def respond_with(_resource, _opts = {})
     render json: { message: :logged_in, user: current_user.as_json(include: :role) }, status: :ok

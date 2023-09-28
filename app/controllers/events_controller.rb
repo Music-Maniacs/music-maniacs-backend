@@ -31,7 +31,7 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     event_json = event.as_json(SHOW_EVENT_TO_JSON)
     user_stat if current_user.present? # Desde helpers
-    user_stat.increase_counter(:viewed_events) if user_stat.present?
+    user_stat.increment!(:viewed_events) if user_stat.present?
 
     event_json['followed_by_current_user'] = if current_user.present?
                                                current_user.follows?(event)

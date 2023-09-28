@@ -15,7 +15,7 @@ class Admin::EventsController < ApplicationController
   def show
     event = Event.find(params[:id])
     user_stat if current_user.present? # Desde helpers
-    user_stat.increase_counter(:viewed_events) if user_stat.present?
+    user_stat.increment!(:viewed_events) if user_stat.present?
 
     render json: event.as_json(EVENT_TO_JSON)
   end
