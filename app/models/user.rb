@@ -100,6 +100,10 @@ class User < ApplicationRecord
     follows.exists?(followable: entity)
   end
 
+  def last_reviews
+    reviews.order(created_at: :desc).limit(5)
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
