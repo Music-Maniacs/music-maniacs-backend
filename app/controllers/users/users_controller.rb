@@ -1,8 +1,12 @@
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[user_info update]
-  USER_TO_JSON_UPDATE = { methods: %i[cover_image profile_image state],
+  USER_TO_JSON_UPDATE = { methods: %i[state],
                           include: { links: {},
-                                     role: {} } }.freeze
+                                     role: {},
+                                     cover_image: { only: %i[id image_type],
+                                                    methods: :full_url },
+                                     profile_image: { only: %i[id image_type],
+                                                      methods: :full_url } } }.freeze
   def user_info
     render json: current_user.as_json(include: :role), status: :ok
   end
@@ -10,53 +14,22 @@ class Users::UsersController < ApplicationController
   def update
     user = current_user
 
-    # Procesamiento de imágenes
-    image_params_cover = params[:cover_image] if params[:cover_image].present?
-    image_params_profile = params[:profile_image] if params[:profile_image].present?
-
-    #### Creacion y actualizacion de imagenes ####
-    if image_params_cover.present?
-      if user.cover_image.present?
-        user.cover_image.file.purge
-        user.cover_image.file.attach(image_params_cover)
-      else
-        user.cover_image = Image.new(file: image_params_cover)
-      end
-      user.cover_image.image_type&.update = 'cover'
-      user.cover_image.save
-    end
-
-    if image_params_profile.present?
-      if user.profile_image.present?
-        user.profile_image.file.purge
-        user.profile_image.file.attach(image_params_profile)
-      else
-        user.profile_image = Image.new(file: image_params_profile)
-      end
-      user.profile_image.image_type = 'profile'
-      user.profile_image.save
-    end
-
-    #### Eliminacion de imagenes ####
-
     # Parsea el JSON en params[:user] y convierte las claves a símbolos
     user_params = JSON.parse(params[:user]).deep_symbolize_keys # Para la eliminacion
 
-    # Eliminacion imagenes (con comprobacion de permiso para borrar)
+    # Recuperacion de imagen desde params
+    image_params_cover = params[:cover_image] if params[:cover_image].present?
+    image_params_profile = params[:profile_image] if params[:profile_image].present?
+
+    #### CREATE UPDATE IMAGES ####
+    update_image(user, image_params_cover, 'cover') if image_params_cover.present?
+    update_image(user, image_params_profile, 'profile') if image_params_profile.present?
+
+    #### DESTROY IMAGES #### (con comprobacion de permiso para borrar)
     if user_params[:images_attributes].present?
       # Extrae las imágenes y elimina el atributo images_attributes
-      images_params_delete = user_params.delete(:images_attributes) # Imagenes a borrar
-
-      images_params_delete.each do |image_params| # Borra por cada imagen
-        image_id = image_params[:id]
-        destroy = image_params[:_destroy]
-
-        if image_id.present? && destroy == true
-          image = Image.find(image_id)
-          # destruye la imagen enviada si esta es portada o perfil del usuario
-          image.destroy if image.present? && (image == user.cover_image || image == user.profile_image)
-        end
-      end
+      images_to_delete = user_params.delete(:images_attributes) # Imagenes a borrar
+      destroy_image(user, images_to_delete)
     end
 
     if user.update(user_params_update)
@@ -76,9 +49,29 @@ class Users::UsersController < ApplicationController
                                                                 :role_id,
                                                                 :links_attributes)
   end
-  def purge_and_attach_image(user, image_params)
-    user.cover_image.file.purge
-    user.cover_image.file.attach(image_params)
+
+  def update_image(user, image_params, image_type)
+    if user.public_send("#{image_type}_image").present?
+      user.public_send("#{image_type}_image").file.purge
+      user.public_send("#{image_type}_image").file.attach(image_params)
+    else
+      user.public_send("#{image_type}_image=", Image.new(file: image_params, image_type: image_type))
+    end
+
+    user.public_send("#{image_type}_image").image_type = image_type
+    user.public_send("#{image_type}_image").save
   end
 
+  def destroy_image(user, images_params_delete)
+    images_params_delete.each do |image_params| # Borra por cada imagen
+      image_id = image_params[:id]
+      destroy = image_params[:_destroy]
+
+      if image_id.present? && destroy == true
+        image = Image.find(image_id)
+        # destruye la imagen enviada si esta es portada o perfil del usuario
+        image.destroy if image.present? && (image == user.cover_image || image == user.profile_image)
+      end
+    end
+  end
 end
