@@ -4,8 +4,8 @@ content-type: application/json
 
 
 ### ADD COMMENT ###
-POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/add_comment
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+POST http://localhost:3000/events/f0ba609b-9cdd-4a1b-9fbf-268ff2b449fe/add_comment
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNDI0YWJhNC1mNDBjLTRjNzctYTliZS1mZTE1Y2E2NmVhN2UiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYwMDY2MjQsImV4cCI6MTY5OTAzMDYyNCwianRpIjoiODVlOGRmZDUtOWM4OS00NDEyLWFlMGUtZTU3YTZiNjMwN2EwIn0.CX2FfuAnstfpC8sKOVYU66FmY5JNqoNEKK03MM5quxA
 content-type: application/json
 
 {  
@@ -32,11 +32,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItO
 content-type: application/json
 
 ### LIKE ###
-POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments/8d6fc1b5-aff1-41fe-a6d0-642c6ad8b2a1/like
+POST http://localhost:3000/events/:id_event/comments/:id_comment/like
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
 content-type: application/json
 
 ### DISLIKE ###
-POST http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments/8d6fc1b5-aff1-41fe-a6d0-642c6ad8b2a1/dislike
+POST http://localhost:3000/events/:id_event/comments/:id_comment/dislike
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
 content-type: application/json
