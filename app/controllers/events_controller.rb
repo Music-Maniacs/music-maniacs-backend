@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   include FollowableActions
-  before_action :authenticate_user!, only: %i[show]
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
@@ -21,10 +20,6 @@ class EventsController < ApplicationController
                                artist: { only: %i[id name] },
                                producer: { only: %i[id name] },
                                venue: { only: %i[id name] } } }.freeze
-
-  REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
-                     include: { user: { only: %i[id full_name] } },
-                     methods: :anonymous }.freeze
 
   def show
     event = Event.find(params[:id])
@@ -80,7 +75,7 @@ class EventsController < ApplicationController
     reviews = event.reviews.where(reviewable_type: params[:reviewable_klass].capitalize)
                    .page(params[:page]).per(params[:per_page])
 
-    render json: { data: reviews.as_json(REVIEW_TO_JSON), pagination: pagination_info(reviews) }
+    render json: { data: reviews.as_json(Review::TO_JSON), pagination: pagination_info(reviews) }
   end
 
   private

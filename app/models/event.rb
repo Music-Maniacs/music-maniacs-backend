@@ -8,6 +8,8 @@ class Event < ApplicationRecord
   ##############################################################################
   has_one :image, as: :imageable, dependent: :destroy
 
+  has_many :videos
+
   belongs_to :artist
   belongs_to :producer
   belongs_to :venue
@@ -60,8 +62,7 @@ class Event < ApplicationRecord
       {
         rating: send("#{reviewable}_rating"),
         reviews_count: send("#{reviewable}_reviews").count,
-        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json({only: %i[id rating description created_at reviewable_type],
-                                                                                               include: { user: { only: %i[id full_name] } } }),
+        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json(Review::TO_JSON)
       }
     end
   end

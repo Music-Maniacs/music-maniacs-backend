@@ -61,6 +61,12 @@ class Admin::EventsController < ApplicationController
   private
 
   def event_params
-    JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name, :description, :datetime, :artist_id, :producer_id, :venue_id, :links_attributes)
+    JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name,
+                                                                 :description,
+                                                                 :datetime,
+                                                                 :artist_id,
+                                                                 :producer_id,
+                                                                 :venue_id,
+                                                                 :links_attributes)
   end
 end
