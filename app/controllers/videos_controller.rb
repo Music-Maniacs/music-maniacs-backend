@@ -2,9 +2,8 @@ class VideosController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
 
   VIDEO_TO_SHOW = { only: %i[id created_at recorded_at],
-                    methods: %i[full_url],
-                    include: { user: { only: %i[id username] } },
-                    methods: %i[anonymous]}.freeze
+                    methods: %i[full_url anonymous],
+                    include: { user: { only: %i[id username] } } }.freeze
 
   def create
     event = Event.find(params[:id])
@@ -39,6 +38,6 @@ class VideosController < ApplicationController
   private
 
   def video_params
-    params.require(:name).permit(:recorded_at)
+    params.permit(:recorded_at, :name)
   end
 end
