@@ -1,5 +1,4 @@
 class Comment < ApplicationRecord
-  include UserStatHelper
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -18,11 +17,11 @@ class Comment < ApplicationRecord
   after_destroy :decrement_count_comments
 
   def increment_count_comments
-    user_stat.increment!(:comments_count)
+    user.user_stat.increment!(:comments_count)
   end
 
   def decrement_count_comments
-    user_stat.decrement!(:comments_count)
+    user.user_stat.decrement!(:comments_count)
   end
 
   ##############################################################################
