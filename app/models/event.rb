@@ -8,6 +8,8 @@ class Event < ApplicationRecord
   ##############################################################################
   has_one :image, as: :imageable, dependent: :destroy
 
+  has_many :videos
+
   belongs_to :artist
   belongs_to :producer
   belongs_to :venue
