@@ -82,6 +82,7 @@ class User < ApplicationRecord
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
   has_one :user_stat
+  has_many :videos
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -112,6 +113,10 @@ class User < ApplicationRecord
 
   def follows?(entity)
     follows.exists?(followable: entity)
+  end
+
+  def last_reviews
+    reviews.order(created_at: :desc).limit(5)
   end
 
   ##############################################################################
