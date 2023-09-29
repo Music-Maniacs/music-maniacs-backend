@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!, except: %i[show reviews]
 
-  USER_TO_JSON = { only: %i[username full_name biography],
+  USER_TO_JSON = { only: %i[username full_name biography email],
                    include: { links: { only: %i[id url title] },
                               last_reviews: { only: %i[id rating description created_at reviewable_type],
                                               include: { user: { only: %i[id full_name] } },
