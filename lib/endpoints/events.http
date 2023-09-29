@@ -1,5 +1,5 @@
 ### SHOW ###
-GET http://localhost:3000/admin/events/276ac324-a512-4c2b-9c32-fb7d4b1f9a86
+GET http://localhost:3000/events/f01f6f53-a2d7-4134-9a8f-5e3f6943b6fd
 content-type: application/json
 
 ### SEARCH ###
@@ -61,13 +61,13 @@ lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### FOLLOW ###
-POST http://localhost:3000/events/5760f2d7-60c8-456f-bf5e-7e92c7877736/follow
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE5NjUsImV4cCI6MTY5NzMyNTk2NSwianRpIjoiOGVlMmRmNjAtMjgxYS00ZGZhLTg5MjYtNWI1OTU1Njc4NTMyIn0.0DR-fqgl2S_OvfL3Hk5j0LCbV-66YsmXXfBhnthmiGI
+POST http://localhost:3000/events/f01f6f53-a2d7-4134-9a8f-5e3f6943b6fd/follow
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
 ### UNFOLLOW ###
-POST http://localhost:3000/events/5760f2d7-60c8-456f-bf5e-7e92c7877736/unfollow
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZGUzNmI5Mi1hOWVlLTQ3NGUtOTg3Ni0xN2Q4NDMzZGUwZWMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQzMDE5NjUsImV4cCI6MTY5NzMyNTk2NSwianRpIjoiOGVlMmRmNjAtMjgxYS00ZGZhLTg5MjYtNWI1OTU1Njc4NTMyIn0.0DR-fqgl2S_OvfL3Hk5j0LCbV-66YsmXXfBhnthmiGI
+POST http://localhost:3000/events/f01f6f53-a2d7-4134-9a8f-5e3f6943b6fd/unfollow
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
 ### Add_video ###

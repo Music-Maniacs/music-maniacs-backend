@@ -5,13 +5,22 @@ class VenuesController < ApplicationController
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] },
-                               last_reviews: { only: %i[id rating description] } },
-                    methods: %i[versions rating past_events next_events] }.freeze
+                               last_reviews: { only: %i[id rating description created_at reviewable_type],
+                                               include: { user: { only: %i[id full_name] } },
+                                               methods: :anonymous },
+                               versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                    methods: %i[rating past_events next_events] }.freeze
 
   def show
     venue = Venue.find(params[:id])
+    venue_json = venue.as_json(VENUE_TO_JSON)
 
-    render json: venue.as_json(VENUE_TO_JSON)
+    venue_json['followed_by_current_user'] = if current_user.present?
+                                                current_user.follows?(venue)
+                                              else
+                                                false
+                                              end
+    render json: venue_json, status: :ok
   end
 
   def create
