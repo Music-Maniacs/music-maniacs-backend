@@ -87,7 +87,7 @@ namespace :populate do
      { email: 'jokinabarzua@hotmail.com', username: 'jokinAbarzua', full_name: 'Jokin Abarzua' },
      { email: 'ezesalas@gmail.com', username: 'ezeSalas', full_name: 'Eze Salas' },
      { email: 'octalcalde@gmail.com', username: 'octavio', full_name: 'Octa Alcalde' },
-     { email: 'lucasmiranda@gmail.com', username: 'lucarMiranda', full_name: 'Lucas Miranda' }].each do |user|
+     { email: 'lucasmiranda@gmail.com', username: 'lucasMiranda', full_name: 'Lucas Miranda' }].each do |user|
 
         next if User.find_by('email= ? OR username= ?', user[:email], user[:username]).present?
 

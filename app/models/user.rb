@@ -70,6 +70,7 @@ class User < ApplicationRecord
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
   has_one :profile_image, -> { where("image_type = ?", 'profile') }, class_name: 'Image', as: :imageable, dependent: :destroy
   has_one :cover_image, -> { where("image_type = ?", 'cover') }, class_name: 'Image', as: :imageable, dependent: :destroy
+  has_many :videos
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -100,6 +101,10 @@ class User < ApplicationRecord
 
   def follows?(entity)
     follows.exists?(followable: entity)
+  end
+
+  def last_reviews
+    reviews.order(created_at: :desc).limit(5)
   end
 
   ##############################################################################

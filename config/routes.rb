@@ -10,9 +10,11 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :profile, only: %i[] do
+  resource :profile, only: %i[destroy] do
     get :info
     put :update
+    put :change_password
+    get '/:id', action: :show
   end
 
   resources :artists, only: %i[show create update]
@@ -73,6 +75,9 @@ Rails.application.routes.draw do
     member do
       post :follow
       post :unfollow
+      post '/videos/add_video', to: 'videos#create'
+      post '/videos/delete_video/:video_id', to: 'videos#destroy'
+      get '/videos', to: 'videos#show'
       get :reviews
     end
   end
