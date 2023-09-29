@@ -2,6 +2,7 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!, except: %i[show reviews]
 
   USER_TO_JSON = { only: %i[username full_name biography email],
+
                    include: { links: { only: %i[id url title] },
                               last_reviews: { only: %i[id rating description created_at reviewable_type],
                                               include: { user: { only: %i[id full_name] } },
@@ -16,6 +17,14 @@ class ProfilesController < ApplicationController
   def change_password
     if current_user.update(user_params_change_password)
       render head: :no_content, status: :ok
+    else
+      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if current_user.destroy
+      head :no_content, status: :ok
     else
       render json: { errors: current_user.errors.details }, status: :unprocessable_entity
     end

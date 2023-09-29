@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   include FollowableActions
-  before_action :authenticate_user!, only: %i[show]
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },

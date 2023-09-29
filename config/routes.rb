@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :profile, only: %i[] do
+  resource :profile, only: %i[destroy] do
     get :info
     put :change_password
     get '/:id', action: :show
