@@ -5,14 +5,24 @@ class ArtistsController < ApplicationController
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[full_url] },
-                                last_reviews: { only: %i[id rating description] } },
-                     methods: %i[versions rating past_events next_events] }.freeze
+                                last_reviews: { only: %i[id rating description created_at reviewable_type],
+                                                include: { user: { only: %i[id full_name] } },
+                                                methods: :anonymous },
+                                versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                     methods: %i[rating past_events next_events] }.freeze
 
   def show
     artist = Artist.find(params[:id])
+    artist_json = artist.as_json(ARTIST_TO_JSON)
 
-    render json: artist.as_json(ARTIST_TO_JSON)
+    artist_json['followed_by_current_user'] = if current_user.present?
+                                                current_user.follows?(artist)
+                                              else
+                                                false
+                                              end
+    render json: artist_json, status: :ok
   end
+                  
 
   def create
     artist = Artist.new(artist_params)
