@@ -12,7 +12,10 @@ Rails.application.routes.draw do
 
   resource :user, controller: 'users/users', only: [] do
     get :user_info
-    get :show_followed_by_type
+    get :show_followed_by_artist
+    get :show_followed_by_producer
+    get :show_followed_by_event
+    get :show_followed_by_venue
     get :show_followed_by_name
   end
 

@@ -1,36 +1,8 @@
 class Users::UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:user_info]
+  before_action :authenticate_user!
 
   def user_info
     render json: current_user.as_json(include: :role), status: :ok
-  end
-
-  def show_followed_by_type
-    # Busca en params [:q] si es busqueda por tipo o incluye params[:q]
-    params_type = params.dig(:q, :followable_type_cont) if params.dig(:q, :followable_type_cont).present?
-
-    if params_type.present? # Busqueda por tipo
-      followed_entities = current_user.follows.includes(:followable)
-                                      .where(followable_type: params_type)
-    else # Todas las entidades si no viene followable_name
-      followed_entities = current_user.follows.includes(:followable)
-    end
-
-    # followed_entities sea un ActiveRecord::Relation
-    followed_entities = Follow.where(id: followed_entities.map(&:id))
-
-    # Pagina los resultados
-    followed_entities = followed_entities.page(params[:page]).per(params[:per_page])
-
-    # Mapea los datos
-    follow_data = followed_entities.map do |follow|
-      {
-        followable_id: follow.followable_id,
-        followable_type: follow.followable_type,
-        name: follow.followable_name
-      }
-    end
-    render json: { data: follow_data, pagination: pagination_info(followed_entities) }, status: :ok
   end
 
   def show_followed_by_name
@@ -62,6 +34,42 @@ class Users::UsersController < ApplicationController
         followable_id: follow.followable_id,
         followable_type: follow.followable_type,
         name: follow.followable_name
+      }
+    end
+    render json: { data: follow_data, pagination: pagination_info(followed_entities) }, status: :ok
+  end
+
+  def show_followed_by_artist
+    followed_entities = current_user.followed_artists
+    pagina_y_mapea(followed_entities)
+  end
+
+  def show_followed_by_producer
+    followed_entities = current_user.followed_producers
+    pagina_y_mapea(followed_entities)
+  end
+
+  def show_followed_by_venue
+    followed_entities = current_user.followed_venues
+    pagina_y_mapea(followed_entities)
+  end
+
+  def show_followed_by_event
+    followed_entities = current_user.followed_events
+    pagina_y_mapea(followed_entities)
+  end
+
+  private
+
+  def pagina_y_mapea(followed_entities)
+    # Pagina los resultados
+    followed_entities = followed_entities.page(params[:page]).per(params[:per_page])
+
+    # Mapea los datos
+    follow_data = followed_entities.map do |follow|
+      {
+        id: follow.id,
+        name: follow.name
       }
     end
     render json: { data: follow_data, pagination: pagination_info(followed_entities) }, status: :ok
