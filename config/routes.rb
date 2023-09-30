@@ -68,12 +68,6 @@ Rails.application.routes.draw do
     post 'add_review/:reviewable_klass', to: 'reviews#create'
     post :add_comment, to: 'comments#create'
     get :comments, to: 'comments#index'
-    resources :comments, only: [] do
-      member do
-        post :like
-        post :remove_like
-      end
-    end
     collection do
       get :search
     end
@@ -83,13 +77,21 @@ Rails.application.routes.draw do
       post '/videos/add_video', to: 'videos#create'
       post '/videos/delete_video/:id', to: 'videos#destroy'
       get '/videos', to: 'videos#show'
-      post '/videos/:id/like', to: 'videos#like'
-      post '/videos/:id/remove_like', to: 'videos#remove_like'
       get :reviews
     end
   end
 
-  resources :comments, only: %i[update destroy]
+  resource :videos, only: [] do
+    post '/:id/like', action: :like
+    post '/:id/remove_like', action: :remove_like
+  end
+
+  resources :comments, only: %i[update destroy] do
+    member do
+      post :like
+      post :remove_like
+    end
+  end
 
   resources :artists, only: %i[] do
     member do

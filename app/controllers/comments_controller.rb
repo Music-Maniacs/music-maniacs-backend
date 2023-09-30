@@ -10,7 +10,8 @@ class CommentsController < ApplicationController
     event = Event.find(params[:event_id])
     comments = event.comments.page(params[:page]).per(params[:per_page]).order(created_at: :asc)
 
-    render json: { data: comments.as_json(COMMENT_TO_JSON), pagination: pagination_info(comments) }
+    comment_json = comments.as_json(COMMENT_TO_JSON)
+    verify_like(comment_json, comments)
   end
 
   def create
@@ -49,5 +50,16 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def verify_like(entity_json ,pagination_entity)
+    if current_user.present?
+      entity_json.each do |data|
+        entity = Comment.find(data['id'])
+        data['liked_by_current_user'] = current_user.likes?(entity) if entity.present?
+      end
+    end
+    comment_json = entity_json
+    render json: { data: comment_json, pagination: pagination_info(pagination_entity) }
   end
 end

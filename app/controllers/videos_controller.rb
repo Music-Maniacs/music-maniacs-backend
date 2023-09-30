@@ -32,12 +32,24 @@ class VideosController < ApplicationController
   def show
     videos = Event.find(params[:id]).videos.reorder(params[:sort] || 'recorded_at asc')
 
-    render json: videos.as_json(VIDEO_TO_SHOW), status: :ok
+    video_json = videos.as_json(VIDEO_TO_SHOW)
+    verify_like(video_json)
   end
 
   private
 
   def video_params
     params.permit(:recorded_at, :name)
+  end
+
+  def verify_like(entity_json)
+    if current_user.present?
+      entity_json.each do |data|
+        entity = Video.find(data['id'])
+        data['liked_by_current_user'] = current_user.likes?(entity) if entity.present?
+      end
+    end
+    video_json = entity_json
+    render json: video_json, status: :ok
   end
 end
