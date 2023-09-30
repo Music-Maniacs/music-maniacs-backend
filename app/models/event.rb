@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   include Followable
   has_paper_trail
+  acts_as_paranoid
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   ##############################################################################

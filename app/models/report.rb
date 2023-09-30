@@ -93,12 +93,24 @@ class Report < ApplicationRecord
       reportable.destroy!
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
     when 'duplicated'
+      # TODO: validar que el evento tenga asociado los mismos perfiles
+      merge_events(duplicated: reportable, original: Event.find(original_reportable_id))
+      reportable.destroy!
+    end
   end
 
   def merge_profile(duplicated:, original:)
     duplicated.events.update_all(artist_id: original)
     duplicated.reviews.update_all(reviewable_id: original)
     duplicated.follows.update_all(followable_id: original)
+    duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
+    duplicated.destroy!
+  end
+
+  def merge_events(duplicated:, original:)
+    duplicated.reviews.update_all(reviewable_id: original)
+    duplicated.follows.update_all(followable_id: original)
+    duplicated.videos.update_all(event: original)
     duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
     duplicated.destroy!
   end
