@@ -53,7 +53,7 @@ class Event < ApplicationRecord
   # SCOPES
   ##############################################################################
   scope :most_popular, -> { order(popularity_score: :desc) }
-
+  scope :by_artist, ->(artist_id) { where(artist_id:) }
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
@@ -111,6 +111,17 @@ class Event < ApplicationRecord
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
+  def self.discover_by_location(department:, province:, country:)
+    events = all.ransack(venue_location_department: department).result(distinct: true)
+    if events.size < 10
+      events += all.ransack(venue_location_province: province).result(distinct: true)
+      if events.size < 10
+        events += all.ransack(venue_location_country: country).result(distinct: true)
+      end
+    end
+    events
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[name datetime artist_id venue_id producer_id]
   end
