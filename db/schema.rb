@@ -104,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_235104) do
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "imageable_id", null: false
     t.string "imageable_type", null: false
+    t.string "image_type", default: "profile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imageable_id"], name: "index_images_on_imageable_id"

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: %i[destroy] do
     get :info
+    put :update
     put :change_password
     get :show_followed_by_artist
     get :show_followed_by_producer
