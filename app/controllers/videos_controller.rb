@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   include LikeableActions
 
-  VIDEO_TO_SHOW = { only: %i[id created_at recorded_at],
+  VIDEO_TO_SHOW = { only: %i[id name created_at recorded_at],
                     methods: %i[full_url anonymous likes_count],
                     include: { user: { only: %i[id username] } } }.freeze
   def create
