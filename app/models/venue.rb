@@ -29,6 +29,10 @@ class Venue < ApplicationRecord
     "#{location.street} #{location.number}, #{location.locality}, #{location.province}, #{location.country}"
   end
 
+  def short_address
+    "#{location.province}, #{location.country}"
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
