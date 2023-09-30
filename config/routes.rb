@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     get :comments, to: 'comments#index'
     collection do
       get :search
+      get :discover
     end
     member do
       post :follow
