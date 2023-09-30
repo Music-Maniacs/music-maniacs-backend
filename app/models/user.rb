@@ -35,10 +35,23 @@ class User < ApplicationRecord
   ##############################################################################
   # CALLBACKS
   ##############################################################################
+  after_create :create_user_stat
   after_initialize :set_default_role
 
   def set_default_role
     self.role = TrustLevel.default_trust_level if role.blank?
+  end
+
+  def create_user_stat
+    UserStat.create!(
+      user: self,
+      days_visited: 0,
+      viewed_events: 0,
+      likes_received: 0,
+      likes_given: 0,
+      comments_count: 0,
+      penalty_score: 0
+    )
   end
 
   ##############################################################################
@@ -69,6 +82,7 @@ class User < ApplicationRecord
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
   has_many :followed_events, through: :follows, source: :followable, source_type: 'Event'
+  has_one :user_stat
   has_many :videos
   ##############################################################################
   # VALIDATIONS
