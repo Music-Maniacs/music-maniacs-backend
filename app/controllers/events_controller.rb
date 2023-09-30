@@ -23,6 +23,7 @@ class EventsController < ApplicationController
 
   def show
     event = Event.find(params[:id])
+    event.increase_visits_count!
     event_json = event.as_json(SHOW_EVENT_TO_JSON)
 
     event_json['followed_by_current_user'] = if current_user.present?
