@@ -1,13 +1,13 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!, except: %i[show reviews update]
-  USER_TO_JSON_UPDATE = { include: { links: {},
-                                     role: {},
+  USER_TO_JSON_UPDATE = { include: { links: { only: %i[id url title] },
+                                     role: { only: %i[id name] },
                                      profile_image: {
-                                       only: %i[id created_at image_type],
+                                       only: %i[id created_at],
                                        methods: :full_url
                                      },
                                      cover_image: {
-                                       only: %i[id created_at image_type],
+                                       only: %i[id created_at],
                                        methods: :full_url
                                      } } }.freeze
 
@@ -17,15 +17,16 @@ class ProfilesController < ApplicationController
                                               include: { user: { only: %i[id full_name] } },
                                               methods: :anonymous },
                               profile_image: {
-                                only: %i[id created_at image_type],
+                                only: %i[id created_at],
                                 methods: :full_url
                               },
                               cover_image: {
-                                only: %i[id created_at image_type],
+                                only: %i[id created_at],
                                 methods: :full_url
                               },
-                              user_stat: { only: %i[id days_visited viewed_events likes_given
-                                                    likes_received comments_count last_session penalty_score] },
+                              user_stat: { only: %i[id days_visited viewed_events
+                                                    likes_given likes_received comments_count
+                                                    last_session penalty_score] },
                               role: { only: %i[id name] } } }.freeze
 
   def info
