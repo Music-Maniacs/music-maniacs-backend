@@ -106,6 +106,7 @@ class ProfilesController < ApplicationController
     followed_entities = current_user.followed_events
     pagina_y_mapea(followed_entities)
   end
+
   def update
     user = current_user
 
