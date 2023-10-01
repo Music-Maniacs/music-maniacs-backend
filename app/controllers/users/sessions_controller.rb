@@ -2,6 +2,12 @@ class Users::SessionsController < Devise::SessionsController
   include RackSessionFixController
   respond_to :json
 
+  def create
+    super do |resource|
+      current_user.user_stat.increment_days_visited_once_per_day if resource.persisted? && current_user.present?
+    end
+  end
+
   private
 
   def respond_with(_resource, _opts = {})

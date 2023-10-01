@@ -21,7 +21,7 @@ module Likeable
   end
 
   def remove_like(user)
-    liking_users.delete(user)
+    liking_users.destroy(user)
   end
 
   def likes_count
