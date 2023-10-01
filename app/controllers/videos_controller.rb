@@ -32,9 +32,9 @@ class VideosController < ApplicationController
   def show
     videos = Event.find(params[:id]).videos.reorder(params[:sort] || 'recorded_at asc')
     videos_json = if current_user.present?
-                    videos.with_liked_by_user(current_user).as_json(COMMENT_TO_JSON)
+                    videos.with_liked_by_user(current_user).as_json(VIDEO_TO_SHOW)
                   else
-                    videos.as_json(COMMENT_TO_JSON)
+                    videos.as_json(VIDEO_TO_SHOW)
                   end
 
     render json: { data: videos_json, pagination: pagination_info(videos) }
