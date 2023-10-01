@@ -37,7 +37,7 @@ class VideosController < ApplicationController
                     videos.as_json(VIDEO_TO_SHOW)
                   end
 
-    render json: { data: videos_json, pagination: pagination_info(videos) }
+    render json: videos_json
   end
 
   private
