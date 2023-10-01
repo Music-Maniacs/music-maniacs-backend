@@ -1,6 +1,5 @@
 class Event < ApplicationRecord
   include Followable
-  include ProfileCommonMethods
   has_paper_trail
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
