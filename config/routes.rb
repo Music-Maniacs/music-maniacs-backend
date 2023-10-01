@@ -76,12 +76,13 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       post '/videos/add_video', to: 'videos#create'
+      post '/videos/delete_video/:id', to: 'videos#destroy'
       get '/videos', to: 'videos#show'
       get :reviews
     end
   end
 
-  resources :videos, only: %i[destroy] do
+  resources :videos, only: [] do
     member do
       post :like
       post :remove_like
