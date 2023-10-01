@@ -3,7 +3,7 @@ class VideosController < ApplicationController
   include LikeableActions
 
   VIDEO_TO_SHOW = { only: %i[id name created_at recorded_at],
-                    methods: %i[full_url anonymous likes_count],
+                    methods: %i[full_url anonymous likes_count liked_by_current_user],
                     include: { user: { only: %i[id username] } } }.freeze
   def create
     event = Event.find(params[:id])
@@ -31,25 +31,18 @@ class VideosController < ApplicationController
 
   def show
     videos = Event.find(params[:id]).videos.reorder(params[:sort] || 'recorded_at asc')
+    videos_json = if current_user.present?
+                    videos.with_liked_by_user(current_user).as_json(COMMENT_TO_JSON)
+                  else
+                    videos.as_json(COMMENT_TO_JSON)
+                  end
 
-    video_json = videos.as_json(VIDEO_TO_SHOW)
-    verify_like(video_json)
+    render json: { data: videos_json, pagination: pagination_info(videos) }
   end
 
   private
 
   def video_params
     params.permit(:recorded_at, :name)
-  end
-
-  def verify_like(entity_json)
-    if current_user.present?
-      entity_json.each do |data|
-        entity = Video.find(data['id'])
-        data['liked_by_current_user'] = current_user.likes?(entity) if entity.present?
-      end
-    end
-    video_json = entity_json
-    render json: video_json, status: :ok
   end
 end

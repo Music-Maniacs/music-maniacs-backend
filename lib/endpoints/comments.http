@@ -1,5 +1,6 @@
 ### INDEX ###
-GET http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments
+GET http://localhost:3000/events/5753673f-30d2-440a-8f51-7658db4a2f30/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYxNzM3NjksImV4cCI6MTY5OTE5Nzc2OSwianRpIjoiM2E2YWEwZmEtOWI2Ni00M2E1LWI4NzUtMjRhN2M3NGIzOWE2In0.GrJQfvC0t6VIpqeJyvm8WiAh7JmgFRD9EJ4Arqk0i4g
 content-type: application/json
 
 

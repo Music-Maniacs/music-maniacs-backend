@@ -19,5 +19,4 @@ class Video < Multimedia
     user.nil?
   end
   alias anonymous anonymous?
-
 end
