@@ -69,6 +69,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_235104) do
     t.uuid "venue_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "views_count", default: 0
+    t.bigint "popularity_score", default: 0
     t.index ["artist_id"], name: "index_events_on_artist_id"
     t.index ["producer_id"], name: "index_events_on_producer_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
