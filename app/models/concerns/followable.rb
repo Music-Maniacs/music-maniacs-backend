@@ -11,6 +11,6 @@ module Followable
   end
 
   def remove_follower(user)
-    followers.delete(user)
+    followers.destroy(user)
   end
 end
