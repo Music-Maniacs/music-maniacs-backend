@@ -1,10 +1,10 @@
 class VideosController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
+  include LikeableActions
 
-  VIDEO_TO_SHOW = { only: %i[id created_at recorded_at],
-                    methods: %i[full_url anonymous],
+  VIDEO_TO_SHOW = { only: %i[id name created_at recorded_at],
+                    methods: %i[full_url anonymous likes_count liked_by_current_user],
                     include: { user: { only: %i[id username] } } }.freeze
-
   def create
     event = Event.find(params[:id])
     video = event.videos.build(video_params)
@@ -20,7 +20,7 @@ class VideosController < ApplicationController
   end
 
   def destroy
-    video = Video.find(params[:video_id])
+    video = current_user.videos.find(params[:id])
 
     if video.destroy
       head :no_content, status: :ok
@@ -31,8 +31,13 @@ class VideosController < ApplicationController
 
   def show
     videos = Event.find(params[:id]).videos.reorder(params[:sort] || 'recorded_at asc')
+    videos_json = if current_user.present?
+                    videos.with_liked_by_user(current_user).as_json(VIDEO_TO_SHOW)
+                  else
+                    videos.as_json(VIDEO_TO_SHOW)
+                  end
 
-    render json: videos.as_json(VIDEO_TO_SHOW), status: :ok
+    render json: videos_json
   end
 
   private
