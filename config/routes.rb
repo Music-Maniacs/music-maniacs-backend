@@ -81,9 +81,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :videos, only: [] do
-    post '/:id/like', action: :like
-    post '/:id/remove_like', action: :remove_like
+  resources :videos, only: [] do
+    member do
+      post :like
+      post :remove_like
+    end
   end
 
   resources :comments, only: %i[update destroy] do
