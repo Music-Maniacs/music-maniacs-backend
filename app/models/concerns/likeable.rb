@@ -11,7 +11,7 @@ module Likeable
   class_methods do
     def with_liked_by_user(user)
       all.each do |comment|
-        comment.liked_by_current_user = comment.likes.where(user:).exists?
+        comment.liked_by_current_user = user.likes?(comment)
       end
     end
   end
