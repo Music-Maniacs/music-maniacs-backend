@@ -20,7 +20,7 @@ class VideosController < ApplicationController
   end
 
   def destroy
-    video = Video.find(params[:id])
+    video = current_user.videos.find(params[:id])
 
     if video.destroy
       head :no_content, status: :ok
