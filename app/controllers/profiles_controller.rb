@@ -16,6 +16,7 @@ class ProfilesController < ApplicationController
                               last_reviews: { only: %i[id rating description created_at reviewable_type],
                                               include: { user: { only: %i[id full_name] } },
                                               methods: :anonymous },
+                              user_stat: { except: %i[id user_id created_at updated_at] },
                               profile_image: {
                                 only: %i[id created_at],
                                 methods: :full_url
@@ -24,9 +25,6 @@ class ProfilesController < ApplicationController
                                 only: %i[id created_at],
                                 methods: :full_url
                               },
-                              # user_stat: { only: %i[id days_visited viewed_events
-                              #                       likes_given likes_received comments_count
-                              #                       last_session penalty_score] },
                               role: { only: %i[id name] } } }.freeze
 
   def info
