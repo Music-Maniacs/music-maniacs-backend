@@ -72,7 +72,7 @@ class ProfilesController < ApplicationController
     update_image(user, image_params_cover, 'cover') if image_params_cover.present?
     update_image(user, image_params_profile, 'profile') if image_params_profile.present?
 
-    #### DESTROY IMAGES #### (con comprobacion de permiso para borrar)
+    #### DESTROY IMAGES ####
     if params[:destroy_cover_image].present? && user.cover_image.present?
       user.cover_image.destroy
       user.update(cover_image: nil)
