@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: %i[destroy] do
     get :info
+    put :update
     put :change_password
     get '/:id', action: :show
   end
