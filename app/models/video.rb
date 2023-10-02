@@ -1,4 +1,5 @@
 class Video < Multimedia
+  include Likeable
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -18,5 +19,4 @@ class Video < Multimedia
     user.nil?
   end
   alias anonymous anonymous?
-
 end

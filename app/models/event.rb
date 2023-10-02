@@ -1,8 +1,9 @@
 class Event < ApplicationRecord
   include Followable
-  has_paper_trail
+  has_paper_trail ignore: %i[popularity_score views_count]
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
+  VISIT_VALUE = 10.minutes.to_i
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -30,6 +31,8 @@ class Event < ApplicationRecord
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
   after_commit :notify_changes_to_followers, on: :update
+  before_create :set_popularity_score
+  before_update :set_popularity_score, if: :will_save_change_to_views_count?
 
   def notify_changes_to_followers
     changes = parsed_previous_changes
@@ -42,6 +45,15 @@ class Event < ApplicationRecord
     NewEventsNotificationsJob.perform_later(id)
   end
 
+  def set_popularity_score
+    self.popularity_score = calculate_popularity_score
+  end
+
+  ##############################################################################
+  # SCOPES
+  ##############################################################################
+  scope :most_popular, -> { order(popularity_score: :desc) }
+  scope :by_artist, ->(artist_id) { where(artist_id:) }
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
@@ -75,6 +87,10 @@ class Event < ApplicationRecord
     }
   end
 
+  def increase_visits_count!
+    update!(views_count: views_count + 1)
+  end
+
   def parsed_previous_changes
     changes = previous_changes.to_h.select { |key| NOTIFIABLE_ATTRIBUTES.include?(key.to_sym) }
     %w[artist_id venue_id producer_id].each do |attribute|
@@ -88,9 +104,24 @@ class Event < ApplicationRecord
     changes
   end
 
+  def calculate_popularity_score
+    created_at.to_i + (views_count || 0) * VISIT_VALUE
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
+  def self.discover_by_location(department:, province:, country:)
+    events = all.ransack(venue_location_department: department).result(distinct: true)
+    if events.size < 10
+      events += all.ransack(venue_location_province: province).result(distinct: true)
+      if events.size < 10
+        events += all.ransack(venue_location_country: country).result(distinct: true)
+      end
+    end
+    events
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[name datetime artist_id venue_id producer_id]
   end
