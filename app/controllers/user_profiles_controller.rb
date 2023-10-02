@@ -1,4 +1,4 @@
-class ProfilesController < ApplicationController
+class UserProfilesController < ApplicationController
   before_action :authenticate_user!, except: %i[show reviews]
 
   USER_TO_JSON = { only: %i[username full_name biography email],
