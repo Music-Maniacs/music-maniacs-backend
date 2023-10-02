@@ -43,6 +43,28 @@ class ProfilesController < ApplicationController
     render json: { data: reviews.as_json(Review::TO_JSON), pagination: pagination_info(reviews) }
   end
 
+  def index_followed
+    followed_entities = current_user.follows.includes(:followable)
+                                    .ransack(params[:q])
+                                    .result(distinct: true)
+                                    .page(params[:page])
+                                    .per(params[:per_page])
+                                    .order(created_at: :desc)
+
+    data = followed_entities.map do |entity_followed|
+      entity_show = Artist.find_by(id: entity_followed.followable_id) ||
+                    Producer.find_by(id: entity_followed.followable_id) ||
+                    Venue.find_by(id: entity_followed.followable_id) ||
+                    Event.find_by(id: entity_followed.followable_id)
+      {
+        id: entity_show.id,
+        name: entity_show.name,
+        followable_type: entity_followed.followable_type
+      }
+    end
+
+    render json: { data: data, pagination: pagination_info(followed_entities) }
+  end
 
   %w[artist producer venue event].each do |entity|
     define_method "show_followed_#{entity.pluralize}" do

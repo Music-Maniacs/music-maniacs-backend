@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get :show_followed_producers
     get :show_followed_events
     get :show_followed_venues
+    get :index_followed
     get '/:id', action: :show
   end
 
