@@ -10,8 +10,10 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :users, controller: 'users/users', only: [] do
-    get :user_info
+  resource :profile, only: %i[destroy] do
+    get :info
+    put :change_password
+    get '/:id', action: :show
   end
 
   resources :artists, only: %i[show create update]
@@ -68,15 +70,30 @@ Rails.application.routes.draw do
     get :comments, to: 'comments#index'
     collection do
       get :search
+      get :discover
     end
     member do
       post :follow
       post :unfollow
+      post '/videos/add_video', to: 'videos#create'
+      get '/videos', to: 'videos#show'
       get :reviews
     end
   end
 
-  resources :comments, only: %i[update destroy]
+  resources :videos, only: %i[destroy] do
+    member do
+      post :like
+      post :remove_like
+    end
+  end
+
+  resources :comments, only: %i[update destroy] do
+    member do
+      post :like
+      post :remove_like
+    end
+  end
 
   resources :artists, only: %i[] do
     member do

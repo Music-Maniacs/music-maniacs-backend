@@ -1,12 +1,15 @@
 class Event < ApplicationRecord
   include Followable
-  has_paper_trail
+  has_paper_trail ignore: %i[popularity_score views_count]
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
+  VISIT_VALUE = 10.minutes.to_i
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
   has_one :image, as: :imageable, dependent: :destroy
+
+  has_many :videos
 
   belongs_to :artist
   belongs_to :producer
@@ -28,6 +31,8 @@ class Event < ApplicationRecord
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
   after_commit :notify_changes_to_followers, on: :update
+  before_create :set_popularity_score
+  before_update :set_popularity_score, if: :will_save_change_to_views_count?
 
   def notify_changes_to_followers
     changes = parsed_previous_changes
@@ -40,6 +45,15 @@ class Event < ApplicationRecord
     NewEventsNotificationsJob.perform_later(id)
   end
 
+  def set_popularity_score
+    self.popularity_score = calculate_popularity_score
+  end
+
+  ##############################################################################
+  # SCOPES
+  ##############################################################################
+  scope :most_popular, -> { order(popularity_score: :desc) }
+  scope :by_artist, ->(artist_id) { where(artist_id:) }
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
@@ -60,8 +74,7 @@ class Event < ApplicationRecord
       {
         rating: send("#{reviewable}_rating"),
         reviews_count: send("#{reviewable}_reviews").count,
-        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json({only: %i[id rating description created_at reviewable_type],
-                                                                                               include: { user: { only: %i[id full_name] } } }),
+        last_reviews: send("#{reviewable}_reviews").order(created_at: :desc).limit(3).as_json(Review::TO_JSON)
       }
     end
   end
@@ -72,6 +85,10 @@ class Event < ApplicationRecord
       producer: producer_reviews_info,
       venue: venue_reviews_info
     }
+  end
+
+  def increase_visits_count!
+    update!(views_count: views_count + 1)
   end
 
   def parsed_previous_changes
@@ -87,9 +104,24 @@ class Event < ApplicationRecord
     changes
   end
 
+  def calculate_popularity_score
+    created_at.to_i + (views_count || 0) * VISIT_VALUE
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
+  def self.discover_by_location(department:, province:, country:)
+    events = all.ransack(venue_location_department: department).result(distinct: true)
+    if events.size < 10
+      events += all.ransack(venue_location_province: province).result(distinct: true)
+      if events.size < 10
+        events += all.ransack(venue_location_country: country).result(distinct: true)
+      end
+    end
+    events
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[name datetime artist_id venue_id producer_id]
   end

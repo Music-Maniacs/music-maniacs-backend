@@ -2,7 +2,8 @@ module ReviewableActions
   extend ActiveSupport::Concern
 
   REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
-                     include: { user: { only: %i[id full_name] } } }.freeze
+                     include: { user: { only: %i[id full_name] } },
+                     methods: :anonymous }.freeze
 
   def reviews
     reviews_result = search_model_scope.find(params[:id]).reviews.page(params[:page]).per(params[:per_page])

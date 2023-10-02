@@ -1,9 +1,9 @@
 module ProfileCommonMethods
-  EVENT_TO_JSON = { only: %i[datetime],
+  EVENT_TO_JSON = { only: %i[id datetime name],
                     include:
                     { venue:
-                      { only: %i[name],
-                        methods: %i[address] } } }.freeze
+                      { only: %i[id name],
+                        methods: %i[short_address] } } }.freeze
 
   def past_events
     events.where('datetime < ?', Time.now).order(datetime: :desc).limit(5).as_json(EVENT_TO_JSON)
