@@ -13,10 +13,10 @@ Rails.application.routes.draw do
   resource :profile, only: %i[destroy] do
     get :info
     put :change_password
-    get :show_followed_by_artist
-    get :show_followed_by_producer
-    get :show_followed_by_event
-    get :show_followed_by_venue
+    get :show_followed_artists
+    get :show_followed_producers
+    get :show_followed_events
+    get :show_followed_venues
     get :show_followed_by_name
     get '/:id', action: :show
   end

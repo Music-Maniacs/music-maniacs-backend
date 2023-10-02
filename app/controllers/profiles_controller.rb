@@ -76,43 +76,19 @@ class ProfilesController < ApplicationController
     render json: { data: follow_data, pagination: pagination_info(followed_entities) }, status: :ok
   end
 
-  def show_followed_by_artist
-    followed_entities = current_user.followed_artists
-    pagina_y_mapea(followed_entities)
-  end
+  %w[artist producer venue event].each do |entity|
+    define_method "show_followed_#{entity.pluralize}" do
+      followed_entities_search = current_user.send("followed_#{entity.pluralize}").ransack(params[:q])
+      followed_entities = followed_entities_search.result(distinct: true).page(params[:page]).per(params[:per_page])
 
-  def show_followed_by_producer
-    followed_entities = current_user.followed_producers
-    pagina_y_mapea(followed_entities)
-  end
-
-  def show_followed_by_venue
-    followed_entities = current_user.followed_venues
-    pagina_y_mapea(followed_entities)
-  end
-
-  def show_followed_by_event
-    followed_entities = current_user.followed_events
-    pagina_y_mapea(followed_entities)
+      render json: { data: followed_entities.as_json(only: %i[id name]),
+                     pagination: pagination_info(followed_entities) }
+    end
   end
 
   private
 
   def user_params_change_password
     params.require(:user).permit(:password, :password_confirmation)
-  end
-
-  def pagina_y_mapea(followed_entities)
-    # Pagina los resultados
-    followed_entities = followed_entities.page(params[:page]).per(params[:per_page])
-
-    # Mapea los datos
-    follow_data = followed_entities.map do |follow|
-      {
-        id: follow.id,
-        name: follow.name
-      }
-    end
-    render json: { data: follow_data, pagination: pagination_info(followed_entities) }, status: :ok
   end
 end
