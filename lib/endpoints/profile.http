@@ -1,13 +1,9 @@
 ################## GESTIONAR SEGUIMIENTOS ##################
-### SHOW_FOLLOWED ###
-GET /profile/show_followed_by_name&page=1&per_page=5 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
 
-### SHOW_FOLLOWED_BY_NAME ###
-GET /profile/show_followed_by_name?q[followable_name_cont]="Usted Señalemelo"&page=1&per_page=5 HTTP/1.1
+### INDEX_FOLLOWED ###
+GET /profile/index_followed?page=1&per_page=5 HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3MTM3ZDJlMC00MDE4LTQyN2YtOTEzOC04OGU4ZGIzMGE4N2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyODEzMjMsImV4cCI6MTY5OTMwNTMyMywianRpIjoiMWExMTQyYWMtYThhOS00M2MzLTkwMjgtMmFlZTk5NGY5OThmIn0.fhB1m_ZzQg79fI2GM389ATig82o-wctdagxXcTzPqH8
 
 ### SHOW_FOLLOWED_ARTISTS ###
 GET /profile/show_followed_artists?per_page=5&page=1 HTTP/1.1
