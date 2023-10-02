@@ -74,18 +74,30 @@ Rails.application.routes.draw do
     get :comments, to: 'comments#index'
     collection do
       get :search
+      get :discover
     end
     member do
       post :follow
       post :unfollow
       post '/videos/add_video', to: 'videos#create'
-      post '/videos/delete_video/:video_id', to: 'videos#destroy'
       get '/videos', to: 'videos#show'
       get :reviews
     end
   end
 
-  resources :comments, only: %i[update destroy]
+  resources :videos, only: %i[destroy] do
+    member do
+      post :like
+      post :remove_like
+    end
+  end
+
+  resources :comments, only: %i[update destroy] do
+    member do
+      post :like
+      post :remove_like
+    end
+  end
 
   resources :artists, only: %i[] do
     member do
