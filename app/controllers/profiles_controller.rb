@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!, except: %i[show reviews update]
+  before_action :authenticate_user!, except: %i[show reviews]
   USER_TO_JSON_UPDATE = { include: { links: { only: %i[id url title] },
                                      role: { only: %i[id name] },
                                      profile_image: {
