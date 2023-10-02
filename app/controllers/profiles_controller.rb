@@ -24,10 +24,9 @@ class ProfilesController < ApplicationController
                                 only: %i[id created_at],
                                 methods: :full_url
                               },
-                              user_stat: { only: %i[id days_visited viewed_events
-                                                    likes_given likes_received comments_count
-                                                    last_session penalty_score] },
-
+                              # user_stat: { only: %i[id days_visited viewed_events
+                              #                       likes_given likes_received comments_count
+                              #                       last_session penalty_score] },
                               role: { only: %i[id name] } } }.freeze
 
   def info
