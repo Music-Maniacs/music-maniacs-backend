@@ -90,7 +90,6 @@ class ProfilesController < ApplicationController
                                                                 :email,
                                                                 :full_name,
                                                                 :biography,
-                                                                :role_id,
                                                                 :links_attributes)
   end
 
