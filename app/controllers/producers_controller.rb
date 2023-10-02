@@ -16,10 +16,10 @@ class ProducersController < ApplicationController
     producer_json = producer.as_json(PRODUCER_TO_JSON)
 
     producer_json['followed_by_current_user'] = if current_user.present?
-                                                current_user.follows?(producer)
-                                              else
-                                                false
-                                              end
+                                                  current_user.follows?(producer)
+                                                else
+                                                  false
+                                                end
     render json: producer_json, status: :ok
   end
 

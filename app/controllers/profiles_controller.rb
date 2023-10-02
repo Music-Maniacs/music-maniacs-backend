@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
                                               include: { user: { only: %i[id full_name] } },
                                               methods: :anonymous },
                               # images: { only: %i[id], methods: %i[full_url] },
-                              # user_stat: { only: %i[id days_visited viewed_events likes_given likes_received comments_count last_session penalty_score] }
+                              # user_stat: { except: %i[id user_id created_at updated_at] }
                               role: { only: %i[id name] } } }.freeze
   def info
     render json: current_user.as_json(include: :role), status: :ok

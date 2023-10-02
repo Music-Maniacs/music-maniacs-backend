@@ -1,0 +1,135 @@
+################## GESTIONAR SEGUIMIENTOS ##################
+### SHOW_FOLLOWED ###
+GET /profile/show_followed_by_name&page=1&per_page=5 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+### SHOW_FOLLOWED_BY_NAME ###
+GET /profile/show_followed_by_name?q[followable_name_cont]="Usted Señalemelo"&page=1&per_page=5 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+### SHOW_FOLLOWED_ARTISTS ###
+GET /profile/show_followed_artists?per_page=5&page=1 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+### SHOW_FOLLOWED_VENUES ###
+GET /profile/show_followed_venues?per_page=5&page=1 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+### SHOW_FOLLOWED_PRODUCERS ###
+GET /profile/show_followed_producers?per_page=5&page=1 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+### SHOW_FOLLOWED_EVENTS ###
+GET /profile/show_followed_producers?per_page=5&page=1 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+################## EDITAR PERFIL USUARIO ##################
+
+### EDITAR PERFIL ###
+PUT /profile HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+Content-Length: 559
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user"
+
+{
+        "email": "emailchange@gmail.com",
+        "username": "Lucas 2",
+        "biography": "Biograohy",
+        "full_name": "Lucas miranda test",
+        "links_attributes": [
+            {
+                "url": "https://example.com",
+                "title": "Update Example website"
+            },
+            {
+                "url": "https://example.org",
+                "title": "nuevo link"
+            }
+        ]
+} 
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### EDITAR PERFIL - AGREGAR IMAGENES ###
+
+PUT /profile HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+Content-Length: 599
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user"
+
+{
+        "email": "emailchange@gmail.com",
+        "username": "Lucas Cambiado",
+        "biography": "Biograohy",
+        "full_name": "Lucas Miranda test"
+} 
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profile_image"; filename="LOSINSO.jpg"
+Content-Type: image/jpeg
+
+/lib/endpoints/assets/losinso.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="cover_image"; filename="los_simpsons_portada.jpg"
+Content-Type: image/jpeg
+
+/lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### EDITAR PERFIL - ELIMINAR IMAGENES ###
+PUT /profile HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+Content-Length: 342
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="destroy_profile_image"
+
+true
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="destroy_cover_image"
+
+true
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user"
+
+{} # o los atributos que se quieran mandar para actualizar
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+################## PERFIL USUARIO ##################
+
+### MOSTRAR PERFIL ###
+GET /profile/:id_usuario HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+
+### CAMBIAR PASSWORD ###
+PUT /profile/change_password HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
+Content-Length: 110
+
+{ "user": 
+    { "password": "MusicManiacs21345#",
+      "password_confirmation": "MusicManiacs21345#"
+    }
+}
+
+### ELIMINAR USUARIO ###
+DELETE /profile HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MTY0MzNhNy02NjI2LTRmMTYtYjdlZC03NDAxZDc2OGE3OTQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYyMTMwMDQsImV4cCI6MTY5OTIzNzAwNCwianRpIjoiOTI4ZDAxYjQtMWY4Ny00NDBlLWI1OWEtMzY2ZWMxYjcwOGMzIn0.oCsihu-RvX4eMcqwZMl5VeI5nxCue1_vX4Rn0VAGnIA
