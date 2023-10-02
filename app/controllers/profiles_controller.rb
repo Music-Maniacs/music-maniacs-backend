@@ -1,51 +1,26 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!, except: %i[show reviews]
+  def search
+    artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
-  USER_TO_JSON = { only: %i[username full_name biography email],
-
-                   include: { links: { only: %i[id url title] },
-                              last_reviews: { only: %i[id rating description created_at reviewable_type],
-                                              include: { user: { only: %i[id full_name] } },
-                                              methods: :anonymous },
-                              # images: { only: %i[id], methods: %i[full_url] },
-                              user_stat: { except: %i[id user_id created_at updated_at] },
-                              role: { only: %i[id name] } } }.freeze
-
-  def info
-    render json: current_user.as_json(include: :role), status: :ok
+    render json: { artists: { data: artists, pagination: pagination_info(artists) },
+                   producers: { data: producers, pagination: pagination_info(producers) },
+                   venues: { data: venues, pagination: pagination_info(venues) } }
   end
 
-  def change_password
-    if current_user.update(user_params_change_password)
-      render head: :no_content, status: :ok
-    else
-      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
-    end
+  def search_artists
+    artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    render json: { data: artists, pagination: pagination_info(artists) }
   end
 
-  def destroy
-    if current_user.destroy
-      head :no_content, status: :ok
-    else
-      render json: { errors: current_user.errors.details }, status: :unprocessable_entity
-    end
+  def search_producers
+    producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    render json: { data: producers, pagination: pagination_info(producers) }
   end
 
-  def show
-    user = User.find(params[:id])
-    render json: user.as_json(USER_TO_JSON), status: :ok
-  end
-
-  def reviews
-    user = User.find(params[:id])
-    reviews = user.reviews.page(params[:page]).per(params[:per_page])
-
-    render json: { data: reviews.as_json(Review::TO_JSON), pagination: pagination_info(reviews) }
-  end
-
-  private
-
-  def user_params_change_password
-    params.require(:user).permit(:password, :password_confirmation)
+  def search_venues
+    venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    render json: { data: venues, pagination: pagination_info(venues) }
   end
 end
