@@ -59,6 +59,16 @@ class ProfilesController < ApplicationController
     render json: { data: reviews.as_json(Review::TO_JSON), pagination: pagination_info(reviews) }
   end
 
+  %w[artist producer venue event].each do |entity|
+    define_method "show_followed_#{entity.pluralize}" do
+      followed_entities_search = current_user.send("followed_#{entity.pluralize}").ransack(params[:q])
+      followed_entities = followed_entities_search.result(distinct: true).page(params[:page]).per(params[:per_page])
+
+      render json: { data: followed_entities.as_json(only: %i[id name]),
+                     pagination: pagination_info(followed_entities) }
+    end
+  end
+
   def update
     # Recuperacion de imagen desde params
     image_params_cover = params[:cover_image] if params[:cover_image].present?
