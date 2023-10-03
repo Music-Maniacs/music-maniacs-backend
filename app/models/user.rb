@@ -85,7 +85,9 @@ class User < ApplicationRecord
   has_one :user_stat
   has_one :profile_image, -> { where("image_type = ?", 'profile') }, class_name: 'Image', as: :imageable, dependent: :destroy
   has_one :cover_image, -> { where("image_type = ?", 'cover') }, class_name: 'Image', as: :imageable, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_many :videos
+
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -116,6 +118,10 @@ class User < ApplicationRecord
 
   def follows?(entity)
     follows.exists?(followable: entity)
+  end
+
+  def likes?(entity)
+    likes.exists?(likeable: entity)
   end
 
   def last_reviews
