@@ -60,6 +60,7 @@ class User < ApplicationRecord
   scope :deleted, -> { with_deleted.where.not(deleted_at: nil) }
   scope :blocked, -> { where.not(blocked_until: nil) }
   scope :active, -> { where(deleted_at: nil, blocked_until: nil) }
+  scope :regular, -> { joins(:role).where(role: { type: 'TrustLevel' }) }
 
   scope :search_by_state, lambda { |state|
     case state
@@ -81,6 +82,9 @@ class User < ApplicationRecord
   has_many :followed_artists, through: :follows, source: :followable, source_type: 'Artist'
   has_many :followed_venues, through: :follows, source: :followable, source_type: 'Venue'
   has_many :followed_producers, through: :follows, source: :followable, source_type: 'Producer'
+  has_many :followed_events, through: :follows, source: :followable, source_type: 'Event'
+  has_one :profile_image, -> { where("image_type = ?", 'profile') }, class_name: 'Image', as: :imageable, dependent: :destroy
+  has_one :cover_image, -> { where("image_type = ?", 'cover') }, class_name: 'Image', as: :imageable, dependent: :destroy
   has_one :user_stat
   has_many :likes, dependent: :destroy
   has_many :videos
@@ -125,9 +129,36 @@ class User < ApplicationRecord
     reviews.order(created_at: :desc).limit(5)
   end
 
+  def update_trust_level!
+    raise StandardError, 'user does not have trust level' unless role.is_a?(TrustLevel)
+
+    trust_levels = TrustLevel.all.order(order: :desc)
+    trust_levels.each do |trust_level|
+      if trust_level.requirements_met_by_user?(self) && role.order != trust_level.order
+        update!(role: trust_level)
+        break
+      end
+    end
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
+  def self.update_trust_levels
+    trust_levels = TrustLevel.all.order(order: :desc)
+    regular.find_each do |user|
+      trust_levels.each do |trust_level|
+        if trust_level.requirements_met_by_user?(user) && user.role.order != trust_level.order
+          user.update!(role: trust_level)
+          break
+        end
+      end
+    rescue StandardError => e
+      puts e
+      next
+    end
+  end
+
   def self.permanent_block_years
     100
   end
