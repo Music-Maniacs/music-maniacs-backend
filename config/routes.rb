@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :profile, only: %i[destroy] do
+  resource :profile, controller: 'user_profiles_controller',only: %i[destroy] do
     get :info
     put :update
     put :change_password
@@ -121,6 +121,15 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+    end
+  end
+
+  resources :profiles, only: %i[] do
+    collection do
+      get :search
+      get :search_artists
+      get :search_producers
+      get :search_venues
     end
   end
 end
