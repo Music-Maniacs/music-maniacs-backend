@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     get :info
     put :update
     put :change_password
+    get :show_followed_artists
+    get :show_followed_producers
+    get :show_followed_events
+    get :show_followed_venues
     get '/:id', action: :show
   end
 
