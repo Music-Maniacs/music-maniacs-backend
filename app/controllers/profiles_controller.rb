@@ -9,18 +9,10 @@ class ProfilesController < ApplicationController
                    venues: { data: venues, pagination: pagination_info(venues) } }
   end
 
-  def search_artists
-    artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-    render json: { data: artists, pagination: pagination_info(artists) }
-  end
-
-  def search_producers
-    producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-    render json: { data: producers, pagination: pagination_info(producers) }
-  end
-
-  def search_venues
-    venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-    render json: { data: venues, pagination: pagination_info(venues) }
+  %w[artists producers venues].each do |klass|
+    define_method "search_#{klass}" do
+      klass_results = klass.classify.constantize.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+      render json: { data: klass_results, pagination: pagination_info(klass_results) }
+    end
   end
 end
