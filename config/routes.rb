@@ -17,6 +17,11 @@ Rails.application.routes.draw do
     get '/:id', action: :show
   end
 
+  resource :backup, only: %i[] do
+    get :list_backups
+    post '/:id', action: :restore_backup
+  end
+
   resources :artists, only: %i[show create update]
   resources :producers, only: %i[show create update]
   resources :venues, only: %i[show create update]

@@ -32,7 +32,7 @@ Backup::Model.new(:mm_backup, 'Description for mm_backup') do
   end
 
   # Gzip [Compressor]
-  compress_with Gzip
+  # compress_with Gzip
 
   # # Mail [Notifier]
   # notify_by Mail do |mail|
