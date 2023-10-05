@@ -21,3 +21,8 @@
 every :day, at: '12:01am' do
   rake 'cron:update_trust_levels'
 end
+
+every :day, at: '12:20am' do
+  command 'backup perform -t mm_backup -c ./config/backup/config.rb'
+end
+
