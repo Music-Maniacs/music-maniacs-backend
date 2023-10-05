@@ -32,7 +32,7 @@ Backup::Logger.configure do
   # syslog.enabled    = true            # Same as command line: --syslog
   # syslog.ident      = 'my_app_backup' # Default: 'backup'
   # Logfile options:
-  logfile.enabled   = true
+  logfile.enabled   = true # ponerlo en false y mirar los logs
   logfile.log_path  = 'log'
   logfile.max_bytes = 500_000
 end

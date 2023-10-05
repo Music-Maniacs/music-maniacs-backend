@@ -28,7 +28,7 @@ Backup::Model.new(:mm_backup, 'Description for mm_backup') do
   #
   store_with Local do |local|
     local.path       = '~/backups/'
-    local.keep       = 5
+    local.keep       = 7
   end
 
   # Gzip [Compressor]
