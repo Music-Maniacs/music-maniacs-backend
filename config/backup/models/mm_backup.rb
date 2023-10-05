@@ -19,7 +19,7 @@ Backup::Model.new(:mm_backup, 'Description for mm_backup') do
     db.port           = 5432
     # db.pg_dump_path   = '/usr/bin/pg_dump'
     # db.socket         = '/tmp'
-    # db.skip_tables        = ["skip", "these", "tables"]
+    # db.skip_tables        = ['users', 'active_storage_blobs', 'versions']
     # db.only_tables        = ["only", "these", "tables"]
   end
 
