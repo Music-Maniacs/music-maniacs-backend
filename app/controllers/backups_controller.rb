@@ -16,7 +16,7 @@ class BackupsController < ApplicationController
   def restore_backup
     selected_backup = params[:id]
     backup_file_path = "#{BACKUP_DIR}/#{selected_backup}/mm_backup/databases/PostgreSQL.sql"
-    tar_file_path = "#{BACKUP_DIR}/#{selected_backup}/mm_backup.tar" # Cambio aquí
+    tar_file_path = "#{BACKUP_DIR}/#{selected_backup}" # Cambio aquí
 
     # Limpiar la base de datos antes de restaurar el backup
     clean_database
@@ -25,8 +25,7 @@ class BackupsController < ApplicationController
     restore_command = "sudo docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} < #{backup_file_path}"
 
     # Descomprime y restaura
-
-    system("tar -xf #{tar_file_path}") # descomprime
+    system("cd #{tar_file_path} && tar -xf mm_backup.tar") # descomprime
     system(restore_command) # restaura la db
 
     head :no_content
