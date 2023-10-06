@@ -1,9 +1,15 @@
 ### list_backups ###
-GET /backup/list_backups HTTP/1.1
+GET /backup HTTP/1.1
 Host: localhost:3000
 
 ### restore_backup ###
-POST /backup/2023.10.05.14.31.31 HTTP/1.1
+POST /backup HTTP/1.1
 Host: localhost:3000
+Content-Type: application/json
+Content-Length: 37
+
+{
+      "id": "2023.10.05.14.31.31"
+}
 
 ### delete backup ? ###

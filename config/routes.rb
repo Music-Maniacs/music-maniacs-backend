@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   end
 
   resource :backup, only: %i[] do
-    get :list_backups
-    post '/:id', action: :restore_backup
+    get :index
+    post '/', action: :restore_backup
   end
 
   resources :artists, only: %i[show create update]
