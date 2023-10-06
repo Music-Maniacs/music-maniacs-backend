@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   resource :backup, only: %i[] do
     get :index
+    post '/delete', action: :destroy
     post '/', action: :restore_backup
   end
 
