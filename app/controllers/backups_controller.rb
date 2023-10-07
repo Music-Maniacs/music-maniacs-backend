@@ -5,11 +5,21 @@ class BackupsController < ApplicationController
   DB = 'music_maniacs_backend_development'.freeze
 
   def index
-    backup_files = Dir.glob("#{BACKUP_DIR}/*").map { |folder| File.basename(folder) }
-    if backup_files.present?
-      render json: backup_files, status: :ok
+    backup_data = Dir.glob("#{BACKUP_DIR}/*").map do |folder|
+      folder_size_bytes = Dir.glob("#{folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
+      folder_size_megabytes = folder_size_bytes / 1_048_576.0  # Convertir bytes a megabytes
+      {
+        name: File.basename(folder),
+        size_megabytes: folder_size_megabytes.round(2), # Tamaño MB
+        date: extract_date_from_filename(File.basename(folder)), # Fecha de la última modificación del directorio
+        path: folder
+      }
+    end
+
+    if backup_data.present?
+      render json: backup_data, status: :ok
     else
-      render json: backup_files.errors, status: :unprocessable_entity
+      render json: { errors: backup_data.errors.details }, status: :unprocessable_entity
     end
   end
 
@@ -50,5 +60,15 @@ class BackupsController < ApplicationController
   def clean_database
     clean_database_command = "sudo docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
     system(clean_database_command) # limpia la db
+  end
+
+  def extract_date_from_filename(filename)
+    # Suponemos que el formato del nombre del archivo es "YYYY.MM.DD.HH.MM.SS.extensión"
+
+    # Extraer la parte de la fecha del nombre del archivo
+    date_str = filename.match(/\d{4}\.\d{2}\.\d{2}\.\d{2}\.\d{2}\.\d{2}/).to_s
+
+    # Convertir la cadena de fecha a un objeto de fecha
+    DateTime.strptime(date_str, '%Y.%m.%d.%H.%M.%S')
   end
 end
