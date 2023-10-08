@@ -93,6 +93,7 @@ class Report < ApplicationRecord
       reportable.destroy!
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
     when 'duplicated'
+    end
   end
 
   def merge_profile(duplicated:, original:)
