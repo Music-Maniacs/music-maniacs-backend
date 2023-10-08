@@ -35,7 +35,7 @@ class ApplicationController < ActionController::API
   end
 
   def validate_user_is_admin
-    return if current_user.admin?
+    return if current_user&.admin?
 
     render json: { errors: :unauthorized }, status: :forbidden
   end
