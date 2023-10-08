@@ -15,7 +15,7 @@ class UserProfilesController < ApplicationController
                    include: { links: { only: %i[id url title] },
                               last_reviews: { only: %i[id rating description created_at reviewable_type],
                                               include: { user: { only: %i[id full_name] } },
-                                              methods: %i[anonymous] },
+                                              methods: %i[anonymous reviewable_name] },
                               profile_image: {
                                 only: %i[id created_at],
                                 methods: :full_url
