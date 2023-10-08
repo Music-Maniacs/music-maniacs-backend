@@ -1,6 +1,6 @@
 class Admin::ArtistsController < ApplicationController
-  before_action :validate_user_is_admin
   include Search
+  before_action :validate_user_is_admin, except: :search_typeahead
 
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
