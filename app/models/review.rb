@@ -29,6 +29,10 @@ class Review < ApplicationRecord
   end
   alias anonymous anonymous?
 
+  def reviewable_name
+    reviewable.name
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
