@@ -1,4 +1,5 @@
 class VideosController < ApplicationController
+  before_action :authorize_action
   before_action :authenticate_user!, only: %i[create destroy]
   include LikeableActions
 

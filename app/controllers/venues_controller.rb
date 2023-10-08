@@ -1,4 +1,6 @@
 class VenuesController < ApplicationController
+  before_action :authorize_action
+
   include FollowableActions
   include ReviewableActions
 

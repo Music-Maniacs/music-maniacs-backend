@@ -4,6 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    user ||= User.new(role: Role.find_by(name: 'guest')) # guest user (not logged in)
     # Define abilities for the user here. For example:
     #
     #   return unless user.present?
@@ -28,5 +29,13 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+    # can :manage, :all if user.admin?
+    user.role.permissions.each do |permission|
+      if permission.subject_id.nil?
+        can permission.action.to_sym, permission.subject_class.constantize
+      else
+        can permission.action.to_sym, permission.subject_class.constantize, id: permission.subject_id
+      end
+    end
   end
 end

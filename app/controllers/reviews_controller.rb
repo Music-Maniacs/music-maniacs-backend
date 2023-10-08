@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authorize_action
 
   def create
     event = Event.find(params[:event_id])

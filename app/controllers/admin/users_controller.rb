@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  before_action :validate_user_is_admin
+
   def index
     q = users_scope.ransack(params[:q])
     users = q.result(distinct: true).page(params[:page]).per(params[:per_page])

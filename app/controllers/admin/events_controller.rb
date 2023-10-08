@@ -1,4 +1,6 @@
 class Admin::EventsController < ApplicationController
+  before_action :validate_user_is_admin
+
   EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },

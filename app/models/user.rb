@@ -140,6 +140,14 @@ class User < ApplicationRecord
     end
   end
 
+  def admin?
+    role.name.match?(/admin/i)
+  end
+
+  def moderator?
+    role.name.match?(/moderator/i)
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################

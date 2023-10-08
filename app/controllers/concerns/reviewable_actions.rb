@@ -1,5 +1,8 @@
 module ReviewableActions
   extend ActiveSupport::Concern
+  included do
+    skip_before_action :authorize_action, only: :reviews
+  end
 
   REVIEW_TO_JSON = { only: %i[id rating description created_at reviewable_type],
                      include: { user: { only: %i[id full_name] } },

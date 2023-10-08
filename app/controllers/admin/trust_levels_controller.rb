@@ -1,4 +1,6 @@
 class Admin::TrustLevelsController < ApplicationController
+  before_action :validate_user_is_admin
+
   def index
     trust_levels = TrustLevel.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 

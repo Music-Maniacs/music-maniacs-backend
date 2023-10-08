@@ -1,5 +1,8 @@
 class Admin::VenuesController < ApplicationController
   include Search
+
+  before_action :validate_user_is_admin, except: :search_typeahead
+
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] } } }.freeze
