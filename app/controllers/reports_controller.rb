@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
 
     if report.resolve(action: params[:report_action], resolver: current_user,
                       penalization_score: params[:penalization_score], moderator_comment: params[:moderator_comment])
-      render json: { data: report.as_json(REPORTS_TO_JSON_SHOW) }
+      render json: report.as_json(REPORTS_TO_JSON_SHOW)
     else
       render json: { errors: report.errors.details }, status: :unprocessable_entity
     end
