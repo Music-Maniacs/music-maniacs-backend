@@ -116,7 +116,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reports, only: %i[] do
+  resources :reports, only: %i[index show] do
     member do
       post :resolve
     end
