@@ -9,7 +9,7 @@ class ArtistsController < ApplicationController
                                 last_reviews: { only: %i[id rating description created_at reviewable_type],
                                                 include: { user: { only: %i[id full_name] } },
                                                 methods: :anonymous },
-                                versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                                versions: { except: :object_changes, methods: %i[anonymous named_object_changes], include: { user: { only: %i[id full_name] } } } },
                      methods: %i[rating past_events next_events] }.freeze
 
   def show

@@ -46,6 +46,7 @@ gem 'kaminari'
 
 gem 'paper_trail'
 gem 'sidekiq'
+gem 'whenever'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

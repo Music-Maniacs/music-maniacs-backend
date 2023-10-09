@@ -1,6 +1,5 @@
 ### SHOW ###
 GET http://localhost:3000/events/f01f6f53-a2d7-4134-9a8f-5e3f6943b6fd
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
 ### SEARCH ###
@@ -9,7 +8,7 @@ content-type: application/json
 
 ### CREATE ###
 POST http://localhost:3000/events
-content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="event"
@@ -17,48 +16,126 @@ Content-Disposition: form-data; name="event"
 {
     "name":"Digweed, Metropolitano 2023",
     "datetime": "2023-09-05 19:30:10",
-    "artist_id": "73cf157a-0e70-4f35-960b-2e44c023a502",
-    "producer_id": "ee1abc73-31a7-44d4-b45b-19242b09c7fc",
-    "venue_id": "94209a94-03e3-4977-86c0-e7932b8b45f4",
+    "artist_id": "c91da1e7-16a2-43ee-8d1d-849fee5f4064",
+    "producer_id": "55d5f4e2-c769-456e-88f9-bbd54f07da0b",
+    "venue_id": "ba1a582b-a59b-41b1-9803-79f261658dd9",
     "description": "description"
 }
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="LOSINSO.jpg"
+Content-Type: image/jpeg
 
-Content-Disposition: form-data; name="image"; filename="1.png"
-Content-Type: image/jpg
+/lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="RetratoFamiliar.mp4"
+Content-Type: video/mp4
 
-lib/endpoints/assets/ArtistCover.jpg
+lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
 ### UPDATE ###
-PUT http://localhost:3000/events/21c21362-70f4-40a7-863d-e43cc2cc4cb2
-content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
+PUT http://localhost:3000/events/1e0b6c21-da00-4f1a-8e54-71e0607d54ba
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="event"
 
 {
-    "name":"Digweed Update"
-}------WebKitFormBoundary7MA4YWxkTrZu0gW
-
-Content-Disposition: form-data; name="image"; filename="1.png"
-Content-Type: image/jpg
+    "name":"Digweed, Modified",
+    "videos_attributes":{
+        "id":"uuid",
+        "_destroy": true
+    }
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="LOSINSO.jpg"
+Content-Type: image/jpeg
 
 /lib/endpoints/assets/ArtistCover.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="RetratoFamiliar.mp4"
+Content-Type: video/mp4
+
+lib/endpoints/assets/RetratoFamiliar.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### FOLLOW ###
-POST http://localhost:3000/events/f01f6f53-a2d7-4134-9a8f-5e3f6943b6fd/follow
+POST http://localhost:3000/events/:id_event/follow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
 ### UNFOLLOW ###
-POST http://localhost:3000/events/f01f6f53-a2d7-4134-9a8f-5e3f6943b6fd/unfollow
+POST http://localhost:3000/events/:id_event/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
+### LIKE EVENT ###
+POST http://localhost:3000/events/:id_event/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### DISLIKE EVENT ###
+POST http://localhost:3000/events/:id_event/dislike
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### LIKE COMMENT ###
+POST http://localhost:3000/events/:id_event/comment/:id_comment/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### DISLIKE COMMENT ###
+POST http://localhost:3000/events/:id_event/comment/:id_comment/dislike
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### LIKE VIDEO ###
+POST http://localhost:3000/events/:id_event/videos/:id_video/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### DISLIKE VIDEO ###
+POST http://localhost:3000/events/:id_event/videos/:id_video/dislike
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### Add_video ###
+POST http://localhost:3000/events/c99e523e-af6b-447f-a638-cdc624fc5dbd/videos/add_video
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkNjRmNDE0Yy1kNWM5LTRhYjAtOWQ0ZS01ODdjMDc3MWRhYjMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUyMjM2MjksImV4cCI6MTY5ODI0NzYyOSwianRpIjoiOGM3OGQxOWEtYTc3NS00M2NjLWE2NjEtZDNmYjk0ZjQ1MzEzIn0.pWWbSbviUXymPPhK3fuqqYqjVPU5vtENHheXkOR9lFw
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="RetratoFamiliar.mp4"
+Content-Type: video/mp4
+
+lib/endpoints/assets/RetratoFamiliar.mp4
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="recorded_at"
+
+2022-09-12 14:35:03 -0300
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### Delete_video ###
+POST http://localhost:3000/events/c99e523e-af6b-447f-a638-cdc624fc5dbd/videos/delete_video/5d4535a3-ea7c-4969-9ef8-844d0b65be95
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkNjRmNDE0Yy1kNWM5LTRhYjAtOWQ0ZS01ODdjMDc3MWRhYjMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUyMjM2MjksImV4cCI6MTY5ODI0NzYyOSwianRpIjoiOGM3OGQxOWEtYTc3NS00M2NjLWE2NjEtZDNmYjk0ZjQ1MzEzIn0.pWWbSbviUXymPPhK3fuqqYqjVPU5vtENHheXkOR9lFw
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="video"; filename="Retrato Familiar.mp4"
+Content-Type: video/mp4
+
+lib/endpoints/assets/RetratoFamiliar.mp4
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### SHOW_VIDEOS ###
+GET http://localhost:3000/events/c99e523e-af6b-447f-a638-cdc624fc5dbd/videos
+
 ### REVIEWS ###
 GET http://localhost:3000/events/f5852279-73de-49da-b8a5-e31f875da009/reviews?reviewable_klass=artist
+content-type: application/json
+
+### INDEX COMMENTS ###
+GET http://localhost:3000/events/01bc2211-ef15-4ceb-8511-ed82c68d4d0f/comments
 content-type: application/json

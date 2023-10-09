@@ -1,19 +1,22 @@
-class Role < ApplicationRecord
+class Video < Multimedia
+  include Likeable
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_and_belongs_to_many :permissions
-  has_many :users, dependent: :restrict_with_error
+  belongs_to :event
+  belongs_to :user
 
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :name, presence: true, uniqueness: true
+  validates :file, attached: true, content_type: ['video/mp4']
+  validates :recorded_at, :name, presence: true
 
   ##############################################################################
-  # CLASS METHODS
+  # INSTANCE METHODS
   ##############################################################################
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[name]
+  def anonymous?
+    user.nil?
   end
+  alias anonymous anonymous?
 end

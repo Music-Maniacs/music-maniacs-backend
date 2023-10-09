@@ -9,7 +9,7 @@ class ProducersController < ApplicationController
                                   last_reviews: { only: %i[id rating description created_at reviewable_type],
                                                   include: { user: { only: %i[id full_name] } },
                                                   methods: :anonymous },
-                                  versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                                  versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
                        methods: %i[rating past_events next_events] }.freeze
 
   def show
@@ -17,10 +17,10 @@ class ProducersController < ApplicationController
     producer_json = producer.as_json(PRODUCER_TO_JSON)
 
     producer_json['followed_by_current_user'] = if current_user.present?
-                                                current_user.follows?(producer)
-                                              else
-                                                false
-                                              end
+                                                  current_user.follows?(producer)
+                                                else
+                                                  false
+                                                end
     render json: producer_json, status: :ok
   end
 

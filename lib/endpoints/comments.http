@@ -1,11 +1,12 @@
 ### INDEX ###
-GET http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/comments
+GET http://localhost:3000/events/5753673f-30d2-440a-8f51-7658db4a2f30/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYxNzM3NjksImV4cCI6MTY5OTE5Nzc2OSwianRpIjoiM2E2YWEwZmEtOWI2Ni00M2E1LWI4NzUtMjRhN2M3NGIzOWE2In0.GrJQfvC0t6VIpqeJyvm8WiAh7JmgFRD9EJ4Arqk0i4g
 content-type: application/json
 
 
 ### ADD COMMENT ###
-POST http://localhost:3000/events/ef9fba6b-2d48-4bcc-915b-42a4b3f7e88d/add_comment
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjOGNhMjdjOS0xN2IwLTQ3ZDItOWUyYS1kZjY4M2YzOWQyM2EiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQwNDM3NzYsImV4cCI6MTY5NzA2Nzc3NiwianRpIjoiNTc1ZTY5MjQtZDc4ZC00NWE0LWExNmYtZWFmNmMzY2RjNjc5In0.dbt2KUyHQKDbfnBfrwfRjwW3zUcioA5_WosBlSePTR0
+POST http://localhost:3000/events/f0ba609b-9cdd-4a1b-9fbf-268ff2b449fe/add_comment
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNDI0YWJhNC1mNDBjLTRjNzctYTliZS1mZTE1Y2E2NmVhN2UiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYwMDY2MjQsImV4cCI6MTY5OTAzMDYyNCwianRpIjoiODVlOGRmZDUtOWM4OS00NDEyLWFlMGUtZTU3YTZiNjMwN2EwIn0.CX2FfuAnstfpC8sKOVYU66FmY5JNqoNEKK03MM5quxA
 content-type: application/json
 
 {  
@@ -43,3 +44,13 @@ content-type: application/json
         "user_comment": "this is a spam comment"
     }
 }
+
+### LIKE ###
+POST http://localhost:3000/events/:id_event/comments/:id_comment/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json
+
+### DISLIKE ###
+POST http://localhost:3000/events/:id_event/comments/:id_comment/dislike
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmQ3YmM2MC1jMGMyLTRiMTgtOTRiZS02ZjViMjk4NmRjNWEiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTQ2MjY2MTgsImV4cCI6MTY5NzY1MDYxOCwianRpIjoiMTQ2OTQwZDUtYjI1Ni00NDhlLTg0M2ItNGY4OTMyN2M2NTEzIn0.-XYdiQpanu4yNSmYsZ2kTbYxnkRYlfrc90ubLr3-2DI
+content-type: application/json

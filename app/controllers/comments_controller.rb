@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
   include ReportableActions
+  include LikeableActions
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name] } },
-                      methods: %i[anonymous] }.freeze
+                      methods: %i[anonymous likes_count liked_by_current_user] }.freeze
 
   before_action :authenticate_user!, except: %i[index]
 
@@ -10,7 +11,12 @@ class CommentsController < ApplicationController
     event = Event.find(params[:event_id])
     comments = event.comments.page(params[:page]).per(params[:per_page]).order(created_at: :asc)
 
-    render json: { data: comments.as_json(COMMENT_TO_JSON), pagination: pagination_info(comments) }
+    comments_json = if current_user.present?
+                      comments.with_liked_by_user(current_user).as_json(COMMENT_TO_JSON)
+                    else
+                      comments.as_json(COMMENT_TO_JSON)
+                    end
+    render json: { data: comments_json, pagination: pagination_info(comments) }
   end
 
   def create

@@ -10,9 +10,14 @@ Rails.application.routes.draw do
                passwords: 'users/passwords'
              }
 
-  resource :profile, only: %i[destroy] do
+  resource :profile, controller: 'user_profiles',only: %i[destroy] do
     get :info
+    put :update
     put :change_password
+    get :show_followed_artists
+    get :show_followed_producers
+    get :show_followed_events
+    get :show_followed_venues
     get '/:id', action: :show
   end
 
@@ -74,18 +79,30 @@ Rails.application.routes.draw do
     get :comments, to: 'comments#index'
     collection do
       get :search
+      get :discover
     end
     member do
       post :follow
       post :unfollow
+      post '/videos/add_video', to: 'videos#create'
+      get '/videos', to: 'videos#show'
       get :reviews
       post :report
+    end
+  end
+
+  resources :videos, only: %i[destroy] do
+    member do
+      post :like
+      post :remove_like
     end
   end
 
   resources :comments, only: %i[update destroy] do
     member do
       post :report
+      post :like
+      post :remove_like
     end
   end
 
@@ -119,6 +136,15 @@ Rails.application.routes.draw do
   resources :reports, only: %i[index show] do
     member do
       post :resolve
+    end
+  end
+
+  resources :profiles, only: %i[] do
+    collection do
+      get :search
+      get :search_artists
+      get :search_producers
+      get :search_venues
     end
   end
 end
