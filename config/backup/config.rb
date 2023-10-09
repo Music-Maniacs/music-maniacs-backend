@@ -17,7 +17,7 @@
 # or a utility can not be found in your $PATH.
 #
 Backup::Utilities.configure do
-  pg_dump '/usr/bin/pg_dump'  # Debe apuntar a la ruta dentro del contenedor
+  pg_dump '/usr/bin/pg_dump' # Debe apuntar a la ruta dentro del contenedor
 end
 
 ##
@@ -28,8 +28,8 @@ end
 #
 Backup::Logger.configure do
   # Logfile options:
-  # console.quiet     = true # quitar el commentario
-  logfile.enabled   = true 
+  console.quiet     = true # quitar el commentario para no mostrar informacion en consola
+  logfile.enabled   = true
   logfile.log_path  = 'log'
   logfile.max_bytes = 500_000
 end
@@ -38,7 +38,6 @@ end
 # For example, the following would override the example settings above
 # to disable syslog and enable console output.
 #   backup perform --trigger my_backup --no-syslog --no-quiet
-
 
 # * * * * * * * * * * * * * * * * * * * *
 #        Do Not Edit Below Here.
