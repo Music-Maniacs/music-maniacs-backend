@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_27_014725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -73,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.uuid "venue_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "views_count", default: 0
+    t.bigint "popularity_score", default: 0
     t.datetime "deleted_at"
     t.index ["artist_id"], name: "index_events_on_artist_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
@@ -110,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "imageable_id", null: false
     t.string "imageable_type", null: false
+    t.string "image_type", default: "profile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imageable_id"], name: "index_images_on_imageable_id"
@@ -122,6 +125,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+  end
+
+  create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "likeable_type", null: false
+    t.uuid "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -229,6 +242,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
+  create_table "user_stats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "last_day_visited"
+    t.datetime "last_session"
+    t.integer "days_visited"
+    t.integer "viewed_events"
+    t.integer "likes_received"
+    t.integer "likes_given"
+    t.integer "comments_count"
+    t.integer "penalty_score"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_stats_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.string "username", null: false
@@ -273,6 +301,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "recorded_at"
+    t.string "name", null: false
+    t.uuid "event_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_videos_on_event_id"
+    t.index ["user_id"], name: "index_videos_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "events"
@@ -282,7 +321,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_204627) do
   add_foreign_key "events", "venues"
   add_foreign_key "follows", "users"
   add_foreign_key "genreable_associations", "genres"
+  add_foreign_key "likes", "users"
   add_foreign_key "reviews", "events"
   add_foreign_key "reviews", "users"
+  add_foreign_key "user_stats", "users"
   add_foreign_key "users", "roles"
+  add_foreign_key "videos", "events"
+  add_foreign_key "videos", "users"
 end
