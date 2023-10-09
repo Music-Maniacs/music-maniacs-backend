@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   include Followable
+  include Reportable
   acts_as_paranoid
   has_paper_trail ignore: %i[popularity_score views_count]
 
