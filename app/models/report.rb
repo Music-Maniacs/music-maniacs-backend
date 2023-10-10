@@ -114,4 +114,8 @@ class Report < ApplicationRecord
     duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
     duplicated.destroy!
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[category reportable_type status created_at]
+  end
 end
