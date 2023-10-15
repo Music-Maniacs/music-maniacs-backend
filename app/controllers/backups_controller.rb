@@ -1,4 +1,5 @@
 class BackupsController < ApplicationController
+  before_action :authenticate_user!
   BACKUP_DIR = File.expand_path('~/backups/mm_backup').freeze
   CONTAINER_NAME = 'docker_services-db-1'.freeze
   USER_DB = 'docker'.freeze
@@ -53,6 +54,13 @@ class BackupsController < ApplicationController
     else
       render json: { error: 'El directorio de backup no existe' }, status: :not_found
     end
+  end
+
+  def create
+    system('backup perform -t mm_backup -c ./config/backup/config.rb')
+    head :no_content, status: :ok
+  rescue StandardError => e
+    render json: { error: "Error al crear el backup: #{e.message}" }, status: :not_found
   end
 
   private
