@@ -6,8 +6,12 @@ class BackupsController < ApplicationController
   DB = 'music_maniacs_backend_development'.freeze
 
   def index
-    backup_data = Dir.glob("#{BACKUP_DIR}/*").map do |folder|
-      folder_size_bytes = Dir.glob("#{folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
+    dir = Dir.glob("#{BACKUP_DIR}/*")
+
+    paginated_backups = Kaminari.paginate_array(dir).page(params[:page]).per(params[:per_page])
+
+    backup_data = paginated_backups.map do |folder|
+      folder_size_bytes = Dir.glob("#{folder}/*/").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
       folder_size_megabytes = folder_size_bytes / 1_048_576.0  # Convertir bytes a megabytes
       {
         name: File.basename(folder),
@@ -18,7 +22,7 @@ class BackupsController < ApplicationController
     end
 
     if backup_data.present?
-      render json: backup_data, status: :ok
+      render json: { data: backup_data, pagination: { total: dir.size } }, status: :ok
     else
       render json: { data: [] }, status: :unprocessable_entity
     end
