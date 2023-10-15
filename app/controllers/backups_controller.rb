@@ -19,7 +19,7 @@ class BackupsController < ApplicationController
     if backup_data.present?
       render json: backup_data, status: :ok
     else
-      render json: { errors: backup_data.errors.details }, status: :unprocessable_entity
+      render json: {}, status: :unprocessable_entity
     end
   end
 
@@ -38,7 +38,7 @@ class BackupsController < ApplicationController
     system("cd #{tar_file_path} && tar -xf mm_backup.tar") # descomprime
     system(restore_command) # restaura la db
 
-    head :no_content
+    head :no_content, status: :ok
   rescue StandardError => e
     render json: { error: "Error al restaurar el backup: #{e.message}" }, status: :not_found
   end

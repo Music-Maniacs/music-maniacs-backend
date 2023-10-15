@@ -21,10 +21,12 @@ Rails.application.routes.draw do
     get '/:id', action: :show
   end
 
-  resource :backup, only: %i[] do
-    get :index
-    post '/delete', action: :destroy
-    post '/', action: :restore_backup
+  constraints(id: /[^\/]+/) do
+    resources :backups, only: %i[index destroy] do
+      member do
+        post :restore
+      end
+    end
   end
 
   resources :artists, only: %i[show create update]
