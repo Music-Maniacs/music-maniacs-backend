@@ -19,7 +19,7 @@ class BackupsController < ApplicationController
     if backup_data.present?
       render json: backup_data, status: :ok
     else
-      render json: {}, status: :unprocessable_entity
+      render json: { data: [] }, status: :unprocessable_entity
     end
   end
 
