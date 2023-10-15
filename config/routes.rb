@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   constraints(id: /[^\/]+/) do
     resources :backups, only: %i[index destroy create] do
       member do
-        post :restore
+        post :restore_backup
       end
     end
   end
