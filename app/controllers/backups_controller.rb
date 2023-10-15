@@ -69,7 +69,7 @@ class BackupsController < ApplicationController
       date: extract_date_from_filename(File.basename(latest_folder)), # Fecha de la última modificación del directorio
       path: latest_folder
     }
-    render json: { data: latest_backup_info }, status: :ok
+    render json: latest_backup_info, status: :ok
   rescue StandardError => e
     render json: { error: "Error al crear el backup: #{e.message}" }, status: :not_found
   end
