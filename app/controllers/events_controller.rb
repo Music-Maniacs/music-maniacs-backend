@@ -5,7 +5,7 @@ class EventsController < ApplicationController
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
                                     venue: { only: %i[id name] },
-                                    versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                                    versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
                          methods: %i[reviews_info] }.freeze
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
@@ -67,7 +67,7 @@ class EventsController < ApplicationController
     end
 
     if event.update(event_edit_params)
-      render json: event.as_json(EVENT_TO_JSON), status: :ok
+      render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
     end
