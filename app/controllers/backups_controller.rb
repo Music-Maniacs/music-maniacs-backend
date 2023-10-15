@@ -20,12 +20,7 @@ class BackupsController < ApplicationController
         path: folder
       }
     end
-
-    if backup_data.present?
-      render json: { data: backup_data, pagination: { total: dir.size } }, status: :ok
-    else
-      render json: { data: [] }, status: :unprocessable_entity
-    end
+    render json: { data: backup_data, pagination: { total: dir.size } }, status: :ok
   end
 
   def restore_backup
@@ -62,7 +57,19 @@ class BackupsController < ApplicationController
 
   def create
     system('backup perform -t mm_backup -c ./config/backup/config.rb')
-    head :no_content, status: :ok
+    dir = Dir.glob("#{BACKUP_DIR}/*")
+    latest_folder = dir.max_by { |folder| File.ctime(folder) }
+
+    folder_size_bytes = Dir.glob("#{latest_folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
+    folder_size_megabytes = folder_size_bytes / 1_048_576.0  # Convertir bytes a megabytes
+
+    latest_backup_info = {
+      name: File.basename(latest_folder),
+      size_megabytes: folder_size_megabytes.round(2), # Tamaño MB
+      date: extract_date_from_filename(File.basename(latest_folder)), # Fecha de la última modificación del directorio
+      path: latest_folder
+    }
+    render json: { data: latest_backup_info }, status: :ok
   rescue StandardError => e
     render json: { error: "Error al crear el backup: #{e.message}" }, status: :not_found
   end
