@@ -67,7 +67,7 @@ class EventsController < ApplicationController
     end
 
     if event.update(event_edit_params)
-      render json: event.as_json(EVENT_TO_JSON), status: :ok
+      render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
     end
