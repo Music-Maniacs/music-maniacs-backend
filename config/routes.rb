@@ -144,5 +144,8 @@ Rails.application.routes.draw do
   resource :metrics, only: %i[] do
     get :show_metrics
     get :show_type_users
+    get :show_comments
+    get :show_reviews
+    # get :show_reports
   end
 end

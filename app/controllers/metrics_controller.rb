@@ -28,7 +28,7 @@ class MetricsController < ApplicationController
       { role_name: role_name, count: count }
     end
 
-    render json: role_counts
+    render json: role_counts, status: :ok
   end
 
   def show_new_users
@@ -43,16 +43,17 @@ class MetricsController < ApplicationController
     # u
   end
 
-  def show_comments
-    # u
-  end
-
-  def show_reviews
-    # u
-  end
-
-  def show_reports
-    # u
+  %w[reports reviews comments].each do |klass_name|
+    define_method "show_#{klass_name}" do
+      start_date = params[:startDate]
+      end_date = params[:endDate]
+      klass = klass_name.classify.constantize
+      results = klass.where(created_at: start_date..end_date)
+                     .group('DATE(created_at)')
+                     .order('DATE(created_at)')
+                     .count
+      render json: results
+    end
   end
 
   private
