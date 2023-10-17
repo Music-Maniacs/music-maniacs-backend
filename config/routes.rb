@@ -146,6 +146,8 @@ Rails.application.routes.draw do
     get :show_type_users
     get :show_comments
     get :show_reviews
+    get :show_users
+    get :show_events
     # get :show_reports
   end
 end

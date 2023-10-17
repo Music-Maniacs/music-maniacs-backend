@@ -31,19 +31,11 @@ class MetricsController < ApplicationController
     render json: role_counts, status: :ok
   end
 
-  def show_new_users
-    # u
-  end
-
-  def show_new_events
-    # u
-  end
-
   def show_visits
     # u
   end
 
-  %w[reports reviews comments].each do |klass_name|
+  %w[reports reviews comments users events].each do |klass_name|
     define_method "show_#{klass_name}" do
       start_date = params[:startDate]
       end_date = params[:endDate]
