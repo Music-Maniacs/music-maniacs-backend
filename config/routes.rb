@@ -143,5 +143,6 @@ Rails.application.routes.draw do
 
   resource :metrics, only: %i[] do
     get :show_metrics
+    get :show_type_users
   end
 end

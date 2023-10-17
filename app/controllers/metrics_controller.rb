@@ -21,7 +21,14 @@ class MetricsController < ApplicationController
   end
 
   def show_type_users
-    # u
+    roles = Role.pluck(:id, :name)
+
+    role_counts = roles.map do |role_id, role_name|
+      count = User.active.where(role_id: role_id).count
+      { role_name: role_name, count: count }
+    end
+
+    render json: role_counts
   end
 
   def show_new_users
