@@ -61,8 +61,4 @@ class MetricsController < ApplicationController
   def count_30days(entity)
     entity.where('created_at >= ?', Time.zone.now - 30.days).count
   end
-
-  def count_users
-    # u
-  end
 end
