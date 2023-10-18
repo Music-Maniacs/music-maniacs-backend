@@ -68,6 +68,14 @@ class MetricsController < ApplicationController
     entity.where('created_at >= ? AND created_at <= ?', start_of_day, end_of_day).count
   end
 
+  def count_7days(entity)
+    count_by_date(entity, 7)
+  end
+
+  def count_30days(entity)
+    count_by_date(entity, 30)
+  end
+
   def generate_metrics(*models)
     metrics = {}
 
