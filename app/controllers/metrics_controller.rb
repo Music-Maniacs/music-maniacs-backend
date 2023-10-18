@@ -26,10 +26,29 @@ class MetricsController < ApplicationController
   end
 
   def visits(start_date, end_date)
-    User.active
-        .joins(:user_stat)
-        .where('user_stats.created_at >= ? AND user_stats.created_at <= ?', start_date, end_date)
-        .sum('user_stats.days_visited')
+    users = User.active
+    visit_info = []
+
+    users.each do |user|
+      user_stat = user.user_stat
+      # Filtra las versiones por fecha
+      versions = user_stat.versions.where('created_at >= ? AND created_at <= ?', start_date, end_date)
+
+      # Si hay versiones, agregamos la información al array
+      if versions.present? 
+        versions.each do |version|
+          visit_info << {
+            last_day_visited: version.object_changes,
+            created_at: version.created_at
+          }
+        end
+      end
+    end
+
+    puts "############################################ #{visit_info.size}"
+    # Devolvemos la información recopilada
+    visit_info
+    
   end
 
   def show_metrics(klass_name, start_date, end_date)
