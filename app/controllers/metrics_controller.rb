@@ -1,70 +1,74 @@
 class MetricsController < ApplicationController
-  def show_metrics
+  def index
+    start_date = params[:startDate]
+    end_date = params[:endDate]
     metrics = {
-      videos: {
-        today: count_today(Video),
-        days7: count_7days(Video),
-        days30: count_30days(Video)
-      },
-      likes: {
-        today: count_today(Like),
-        days7: count_7days(Like),
-        days30: count_30days(Like)
-      },
-      events: {
-        today: count_today(Event),
-        days7: count_7days(Event),
-        days30: count_30days(Event)
-      }
+      metricas: generate_metrics(Video, Like, Event),
+      users_type: type_users,
+      visits: visits(start_date, end_date),
+      # reports: show_metrics('Report', start_date, end_date),
+      reviews: show_metrics('Review', start_date, end_date),
+      comments: show_metrics('Comment', start_date, end_date),
+      users: show_metrics('User', start_date, end_date),
+      events: show_metrics('Event', start_date, end_date)
     }
     render json: metrics, status: :ok
   end
 
-  def show_type_users
-    roles = Role.pluck(:id, :name)
+  private
 
-    role_counts = roles.map do |role_id, role_name|
+  def type_users
+    roles = Role.pluck(:id, :name)
+    roles.map do |role_id, role_name|
       count = User.active.where(role_id: role_id).count
       { role_name: role_name, count: count }
     end
-
-    render json: role_counts, status: :ok
   end
 
-  def show_visits
-    start_date = params[:startDate]
-    end_date = params[:endDate]
-    visits_count = User.active
-                       .joins(:user_stat)
-                       .where(created_at: start_date..end_date)
-                       .sum('days_visited')
-    render json: visits_count
+  def visits(start_date, end_date)
+    User.active
+        .joins(:user_stat)
+        .where(created_at: start_date..end_date)
+        .sum('days_visited')
   end
 
-  %w[reports reviews comments users events].each do |klass_name|
-    define_method "show_#{klass_name}" do
-      start_date = params[:startDate]
-      end_date = params[:endDate]
-      klass = klass_name.classify.constantize
-      results = klass.where(created_at: start_date..end_date) # .. es como un between
-                     .group('DATE(created_at)')
-                     .order('DATE(created_at)')
-                     .count
-      render json: results
-    end
+  def show_metrics(klass_name, start_date, end_date)
+    klass = klass_name.classify.constantize
+    results = klass.where(created_at: start_date..end_date)
+                   .group('DATE(created_at)')
+                   .order('DATE(created_at)')
+                   .count
+    results
   end
 
-  private
+  ##########
+  def count_by_date(entity, days_ago)
+    entity.where('created_at >= ?', Time.zone.now - days_ago.days).count
+  end
 
   def count_today(entity)
-    entity.where('DATE(created_at) = ?', Time.zone.now.to_date).count
+    count_by_date(entity, 0)
   end
 
   def count_7days(entity)
-    entity.where('created_at >= ?', Time.zone.now - 7.days).count
+    count_by_date(entity, 7)
   end
 
   def count_30days(entity)
-    entity.where('created_at >= ?', Time.zone.now - 30.days).count
+    count_by_date(entity, 30)
+  end
+
+  def generate_metrics(*models)
+    metrics = {}
+
+    models.each do |model|
+      model_name = model.name.underscore.pluralize.to_sym
+      metrics[model_name] = {
+        today: count_today(model),
+        days7: count_7days(model),
+        days30: count_30days(model)
+      }
+    end
+    metrics
   end
 end
