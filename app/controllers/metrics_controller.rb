@@ -57,7 +57,7 @@ class MetricsController < ApplicationController
          .count
   end
 
-  ##########
+  ########## Metodos apartado metricas
   def count_by_date(entity, days_ago)
     entity.where('created_at >= ?', Time.zone.now - days_ago.days).count
   end
