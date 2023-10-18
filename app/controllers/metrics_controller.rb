@@ -32,7 +32,13 @@ class MetricsController < ApplicationController
   end
 
   def show_visits
-    # u
+    start_date = params[:startDate]
+    end_date = params[:endDate]
+    visits_count = User.active
+                       .joins(:user_stat)
+                       .where(created_at: start_date..end_date)
+                       .sum('days_visited')
+    render json: visits_count
   end
 
   %w[reports reviews comments users events].each do |klass_name|
@@ -40,7 +46,7 @@ class MetricsController < ApplicationController
       start_date = params[:startDate]
       end_date = params[:endDate]
       klass = klass_name.classify.constantize
-      results = klass.where(created_at: start_date..end_date)
+      results = klass.where(created_at: start_date..end_date) # .. es como un between
                      .group('DATE(created_at)')
                      .order('DATE(created_at)')
                      .count

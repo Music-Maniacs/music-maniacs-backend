@@ -148,6 +148,7 @@ Rails.application.routes.draw do
     get :show_reviews
     get :show_users
     get :show_events
+    get :show_visits
     # get :show_reports
   end
 end
