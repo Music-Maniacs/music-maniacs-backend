@@ -28,17 +28,16 @@ class MetricsController < ApplicationController
   def visits(start_date, end_date)
     User.active
         .joins(:user_stat)
-        .where(created_at: start_date..end_date)
-        .sum('days_visited')
+        .where('user_stats.created_at >= ? AND user_stats.created_at <= ?', start_date, end_date)
+        .sum('user_stats.days_visited')
   end
 
   def show_metrics(klass_name, start_date, end_date)
     klass = klass_name.classify.constantize
-    results = klass.where(created_at: start_date..end_date)
-                   .group('DATE(created_at)')
-                   .order('DATE(created_at)')
-                   .count
-    results
+    klass.where('created_at >= ? AND created_at <= ?', start_date, end_date)
+         .group('DATE(created_at)')
+         .order('DATE(created_at)')
+         .count
   end
 
   ##########
@@ -47,7 +46,9 @@ class MetricsController < ApplicationController
   end
 
   def count_today(entity)
-    count_by_date(entity, 0)
+    start_of_day = Time.zone.now.beginning_of_day
+    end_of_day = Time.zone.now.end_of_day
+    entity.where('created_at >= ? AND created_at <= ?', start_of_day, end_of_day).count
   end
 
   def count_7days(entity)
