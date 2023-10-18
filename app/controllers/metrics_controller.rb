@@ -5,9 +5,9 @@ class MetricsController < ApplicationController
     metrics = {
       metrics: generate_metrics(Video, Like, Event),
       users_type: users_type,
-      new_visits: visits(start_date, end_date),
+      visits: visits(start_date, end_date),
       # reports: show_metrics('Report', start_date, end_date),
-      new_reviews: show_metrics('Review', start_date, end_date),
+      reviews: show_metrics('Review', start_date, end_date),
       new_comments: show_metrics('Comment', start_date, end_date),
       new_users: show_metrics('User', start_date, end_date),
       new_events: show_metrics('Event', start_date, end_date)
