@@ -3,8 +3,8 @@ class MetricsController < ApplicationController
     start_date = params[:startDate]
     end_date = params[:endDate]
     metrics = {
-      metricas: generate_metrics(Video, Like, Event),
-      users_type: type_users,
+      metrics: generate_metrics(Video, Like, Event),
+      users_type: users_type,
       visits: visits(start_date, end_date),
       # reports: show_metrics('Report', start_date, end_date),
       reviews: show_metrics('Review', start_date, end_date),
@@ -17,7 +17,7 @@ class MetricsController < ApplicationController
 
   private
 
-  def type_users
+  def users_type
     roles = Role.pluck(:id, :name)
     roles.map do |role_id, role_name|
       count = User.active.where(role_id: role_id).count
