@@ -12,8 +12,9 @@ class BackupsController < ApplicationController
     paginated_backups = Kaminari.paginate_array(dir).page(params[:page]).per(params[:per_page])
 
     backup_data = paginated_backups.map do |folder|
-      folder_size_bytes = Dir.glob("#{folder}/*/").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
+      folder_size_bytes = Dir.glob("#{folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
       folder_size_megabytes = folder_size_bytes / 1_048_576.0  # Convertir bytes a megabytes
+
       {
         name: File.basename(folder),
         size_megabytes: folder_size_megabytes.round(2), # Tamaño MB
