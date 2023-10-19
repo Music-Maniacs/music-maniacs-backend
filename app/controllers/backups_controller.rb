@@ -67,21 +67,7 @@ class BackupsController < ApplicationController
     dir = Dir.glob("#{BACKUP_DIR}/*")
     latest_folder = dir.max_by { |folder| File.ctime(folder) }
 
-    if params[:multimedia].present? # backup multimedia
-      storage_directory = MULTIMEDIA_DIR
-      backup_directory = latest_folder
-
-      # Nombre del archivo de respaldo comprimido
-      backup_filename = "multimedia-#{Time.now.strftime('%Y%m%d%H%M%S')}.tar"
-
-      # Comprimir el directorio de almacenamiento en un archivo TAR
-      Dir.chdir(storage_directory) do
-        system("tar -cvf #{backup_filename} .")
-      end
-
-      # Mover el archivo comprimido a la carpeta de backups
-      FileUtils.mv("#{storage_directory}/#{backup_filename}", backup_directory)
-    end
+    multimedia_create(latest_folder) if params[:multimedia].present? # backup multimedia
 
     # Despues de todas las operaciones calculo el tamaño
 
@@ -136,5 +122,21 @@ class BackupsController < ApplicationController
 
     # Eliminar la carpeta temporal
     FileUtils.rm_r(temp_extract_dir)
+  end
+
+  def multimedia_create(latest_folder)
+    storage_directory = MULTIMEDIA_DIR
+    backup_directory = latest_folder
+
+    # Nombre del archivo de respaldo comprimido
+    backup_filename = "multimedia-#{Time.now.strftime('%Y%m%d%H%M%S')}.tar"
+
+    # Comprimir el directorio de almacenamiento en un archivo TAR
+    Dir.chdir(storage_directory) do
+      system("tar -cvf #{backup_filename} .")
+    end
+
+    # Mover el archivo comprimido a la carpeta de backups
+    FileUtils.mv("#{storage_directory}/#{backup_filename}", backup_directory)
   end
 end
