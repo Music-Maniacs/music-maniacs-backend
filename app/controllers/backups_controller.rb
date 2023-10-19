@@ -43,7 +43,7 @@ class BackupsController < ApplicationController
 
     matching_files = Dir.glob(path_multimedia)
 
-    multimedia_restore(matching_files) if params[:multimedia].present?
+    multimedia_restore(matching_files) if params[:multimedia].present? && params[:multimedia] == true
 
     head :no_content, status: :ok
   rescue StandardError => e
@@ -67,7 +67,7 @@ class BackupsController < ApplicationController
     dir = Dir.glob("#{BACKUP_DIR}/*")
     latest_folder = dir.max_by { |folder| File.ctime(folder) }
 
-    multimedia_create(latest_folder) if params[:multimedia].present? # backup multimedia
+    multimedia_create(latest_folder) if params[:multimedia].present? && params[:multimedia] == true # backup multimedia
 
     # Despues de todas las operaciones calculo el tamaño
 
