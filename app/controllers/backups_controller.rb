@@ -1,6 +1,7 @@
 class BackupsController < ApplicationController
   before_action :authenticate_user!
   BACKUP_DIR = File.expand_path('~/backups/mm_backup').freeze
+  MULTIMEDIA_DIR = File.expand_path('./storage').freeze
   CONTAINER_NAME = 'docker_services-db-1'.freeze
   USER_DB = 'docker'.freeze
   DB = 'music_maniacs_backend_development'.freeze
@@ -61,7 +62,23 @@ class BackupsController < ApplicationController
     latest_folder = dir.max_by { |folder| File.ctime(folder) }
 
     folder_size_bytes = Dir.glob("#{latest_folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
-    folder_size_megabytes = folder_size_bytes / 1_048_576.0  # Convertir bytes a megabytes
+    folder_size_megabytes = folder_size_bytes / 1_048_576.0 # Convertir bytes a megabytes
+
+    if params[:multimedia].present? # backup multimedia
+      storage_directory = MULTIMEDIA_DIR
+      backup_directory = latest_folder
+
+      # Nombre del archivo de respaldo comprimido
+      backup_filename = "multimeda-#{Time.now.strftime('%Y%m%d%H%M%S')}.tar"
+
+      # Comprimir el directorio de almacenamiento en un archivo TAR
+      Dir.chdir(storage_directory) do
+        system("tar -cvf #{backup_filename} .")
+      end
+
+      # Mover el archivo comprimido a la carpeta de backups
+      FileUtils.mv("#{storage_directory}/#{backup_filename}", backup_directory)
+    end # revisar como hace el backup por que no anda bien
 
     latest_backup_info = {
       name: File.basename(latest_folder),
