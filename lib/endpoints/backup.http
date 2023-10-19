@@ -1,23 +1,19 @@
 ### index_backup ###
-GET /backup HTTP/1.1
+GET /backups HTTP/1.1
 Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
 
-### restore_backup ###
-POST /backup HTTP/1.1
+### Create Backup ###
+POST /backups?multimedia=true HTTP/1.1
 Host: localhost:3000
-Content-Type: application/json
-Content-Length: 37
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
 
-{
-      "id": "2023.10.05.14.31.31"
-}
-
-### delete_backup ###
-POST /backup/delete HTTP/1.1
+### Restore Backup ###
+POST /backups/2023.10.19.12.00.50/restore_backup?multimedia=true HTTP/1.1
 Host: localhost:3000
-Content-Type: application/json
-Content-Length: 37
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
 
-{
-      "id": "2023.10.06.13.56.11"
-}
+### Delete Backup ###
+DELETE /backups/2023.10.19.12.00.50 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
