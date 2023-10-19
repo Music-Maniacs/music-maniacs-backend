@@ -61,9 +61,6 @@ class BackupsController < ApplicationController
     dir = Dir.glob("#{BACKUP_DIR}/*")
     latest_folder = dir.max_by { |folder| File.ctime(folder) }
 
-    folder_size_bytes = Dir.glob("#{latest_folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
-    folder_size_megabytes = folder_size_bytes / 1_048_576.0 # Convertir bytes a megabytes
-
     if params[:multimedia].present? # backup multimedia
       storage_directory = MULTIMEDIA_DIR
       backup_directory = latest_folder
@@ -78,7 +75,12 @@ class BackupsController < ApplicationController
 
       # Mover el archivo comprimido a la carpeta de backups
       FileUtils.mv("#{storage_directory}/#{backup_filename}", backup_directory)
-    end # revisar como hace el backup por que no anda bien
+    end
+
+    # Despues de todas las operaciones calculo el tamaño
+
+    folder_size_bytes = Dir.glob("#{latest_folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
+    folder_size_megabytes = folder_size_bytes / 1_048_576.0 # Convertir bytes a megabytes
 
     latest_backup_info = {
       name: File.basename(latest_folder),
