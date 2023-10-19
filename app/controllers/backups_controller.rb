@@ -56,7 +56,7 @@ class BackupsController < ApplicationController
     # Existe el directorio?
     if Dir.exist?(backup_file_path_delete)
       FileUtils.rm_rf(backup_file_path_delete) # Borra el directorio y su contenido
-      head :no_content
+      head :no_content, status: :ok
     else
       render json: { error: 'El directorio de backup no existe' }, status: :not_found
     end
