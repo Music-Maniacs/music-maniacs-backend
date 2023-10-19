@@ -13,7 +13,7 @@ class BackupsController < ApplicationController
 
     backup_data = paginated_backups.map do |folder|
       folder_size_bytes = Dir.glob("#{folder}/**/*").select { |f| File.file?(f) }.map { |f| File.size(f) }.sum
-      folder_size_megabytes = folder_size_bytes / 1_048_576.0  # Convertir bytes a megabytes
+      folder_size_megabytes = folder_size_bytes / 1_048_576.0 # Convertir bytes a megabytes
 
       {
         name: File.basename(folder),
@@ -28,7 +28,8 @@ class BackupsController < ApplicationController
   def restore_backup
     selected_backup = params[:id]
     backup_file_path = "#{BACKUP_DIR}/#{selected_backup}/mm_backup/databases/PostgreSQL.sql"
-    tar_file_path = "#{BACKUP_DIR}/#{selected_backup}" # Cambio aquí
+    tar_file_path = "#{BACKUP_DIR}/#{selected_backup}"
+    path_multimedia = "#{BACKUP_DIR}/#{selected_backup}/multimedia*"
 
     # Limpiar la base de datos antes de restaurar el backup
     clean_database
@@ -39,6 +40,10 @@ class BackupsController < ApplicationController
     # Descomprime y restaura
     system("cd #{tar_file_path} && tar -xf mm_backup.tar") # descomprime
     system(restore_command) # restaura la db
+
+    matching_files = Dir.glob(path_multimedia)
+
+    multimedia_restore(matching_files) if params[:multimedia].present?
 
     head :no_content, status: :ok
   rescue StandardError => e
@@ -67,7 +72,7 @@ class BackupsController < ApplicationController
       backup_directory = latest_folder
 
       # Nombre del archivo de respaldo comprimido
-      backup_filename = "multimeda-#{Time.now.strftime('%Y%m%d%H%M%S')}.tar"
+      backup_filename = "multimedia-#{Time.now.strftime('%Y%m%d%H%M%S')}.tar"
 
       # Comprimir el directorio de almacenamiento en un archivo TAR
       Dir.chdir(storage_directory) do
@@ -109,5 +114,27 @@ class BackupsController < ApplicationController
 
     # Convertir la cadena de fecha a un objeto de fecha
     DateTime.strptime(date_str, '%Y.%m.%d.%H.%M.%S')
+  end
+
+  def multimedia_restore(path_multimedia)
+    temp_extract_dir = "#{MULTIMEDIA_DIR}/temp_extract" # Carpeta temporal
+
+    FileUtils.mkdir_p(temp_extract_dir) # Crear carpeta temporal si no existe
+
+    # Copiar el archivo comprimido a la carpeta temporal
+    FileUtils.cp_r(path_multimedia, temp_extract_dir)
+
+    # Descomprimir el archivo TAR en la carpeta temporal
+    system("cd #{temp_extract_dir} && tar -xf multimedia*.tar")
+
+    # Copiar los archivos extraídos al directorio MULTIMEDIA_DIR
+    FileUtils.cp_r("#{temp_extract_dir}/.", MULTIMEDIA_DIR)
+
+    # Eliminar el archivo TAR
+    tar_file = Dir.glob("#{MULTIMEDIA_DIR}/multimedia*.tar")
+    FileUtils.rm(tar_file)
+
+    # Eliminar la carpeta temporal
+    FileUtils.rm_r(temp_extract_dir)
   end
 end
