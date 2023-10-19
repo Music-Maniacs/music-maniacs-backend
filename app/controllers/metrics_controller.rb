@@ -3,8 +3,6 @@ class MetricsController < ApplicationController
     start_date = params[:startDate]
     end_date = params[:endDate]
     metrics = {
-      metrics: generate_metrics(Video, Like, Event),
-      users_type: users_type,
       visits: visits(start_date, end_date),
       # reports: show_metrics('Report', start_date, end_date),
       reviews: show_metrics('Review', start_date, end_date),
@@ -15,16 +13,24 @@ class MetricsController < ApplicationController
     render json: metrics, status: :ok
   end
 
+  def metrics_and_user_type
+    metrics = {
+      metrics: generate_metrics(Video, Like, Event),
+      user_type: user_type
+    }
+    render json: metrics, status: :ok
+  end
+
   private
 
-  def users_type
+  def user_type
     roles = Role.pluck(:id, :name)
-    users_type_info = Hash.new(0) # Hash para contar las users_type
+    user_type_info = Hash.new(0) # Hash para contar las users_type
     roles.map do |role_id, role_name|
       count = User.active.where(role_id: role_id).count
-      users_type_info[role_name] = count
+      user_type_info[role_name] = count
     end
-    users_type_info
+    user_type_info
   end
 
   def visits(start_date, end_date)
