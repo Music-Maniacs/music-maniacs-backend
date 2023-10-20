@@ -4,12 +4,12 @@ Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
 
 ### Create Backup ###
-POST /backups?multimedia=true HTTP/1.1
+POST /backups HTTP/1.1
 Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
 
 ### Restore Backup ###
-POST /backups/2023.10.19.12.00.50/restore_backup?multimedia=true HTTP/1.1
+POST /backups/2023.10.19.12.00.50/restore_backup HTTP/1.1
 Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDhiNzc1Zi1jM2U5LTQzZjgtODRiZi05MzgwZGVjMjdkN2QiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTc1ODE5NzMsImV4cCI6MTcwMDYwNTk3MywianRpIjoiZWM3MmVhNDYtNTNmNC00MzMxLTg2NTktNmU1ZjRmODA1YjNlIn0.GpaSYftCvADoTsd1Pzsz4Wccaw5qfxyRtO7TidbsRes
 

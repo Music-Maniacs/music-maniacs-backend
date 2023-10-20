@@ -35,7 +35,7 @@ class BackupsController < ApplicationController
     clean_database
 
     # Ruta para restaurar la base de datos desde el archivo PostgreSQL.sql
-    restore_command = "sudo docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} < #{backup_file_path}"
+    restore_command = "docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} < #{backup_file_path}"
 
     # Descomprime y restaura
     system("cd #{tar_file_path} && tar -xf mm_backup.tar") # descomprime
@@ -43,7 +43,7 @@ class BackupsController < ApplicationController
 
     matching_files = Dir.glob(path_multimedia)
 
-    multimedia_restore(matching_files) if params[:multimedia].present? && params[:multimedia] == true
+    multimedia_restore(matching_files)
 
     head :no_content, status: :ok
   rescue StandardError => e
@@ -67,7 +67,7 @@ class BackupsController < ApplicationController
     dir = Dir.glob("#{BACKUP_DIR}/*")
     latest_folder = dir.max_by { |folder| File.ctime(folder) }
 
-    multimedia_create(latest_folder) if params[:multimedia].present? && params[:multimedia] == true # backup multimedia
+    multimedia_create(latest_folder) # backup multimedia
 
     # Despues de todas las operaciones calculo el tamaño
 
@@ -88,7 +88,7 @@ class BackupsController < ApplicationController
   private
 
   def clean_database
-    clean_database_command = "sudo docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
+    clean_database_command = "docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
     system(clean_database_command) # limpia la db
   end
 
