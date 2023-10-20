@@ -27,28 +27,24 @@ class MetricsController < ApplicationController
 
   def visits(start_date, end_date)
     users = User.active
-    visit_info = []
+    visit_info = Hash.new(0) # Hash para contar las visitas por fecha
 
     users.each do |user|
       user_stat = user.user_stat
-      # Filtra las versiones por fecha
+      visited_dates = Set.new # Conjunto para almacenar las fechas de visitas únicas por usuario
+
       versions = user_stat.versions.where('created_at >= ? AND created_at <= ?', start_date, end_date)
 
-      # Si hay versiones, agregamos la información al array
-      if versions.present? 
-        versions.each do |version|
-          visit_info << {
-            last_day_visited: version.object_changes,
-            created_at: version.created_at
-          }
+      versions.each do |version|
+        created_at_date = version.created_at.to_date
+        # Verifica si ya se contó una visita para este usuario en esta fecha
+        unless visited_dates.include?(created_at_date)
+          visited_dates.add(created_at_date) # Agrega la fecha al conjunto
+          visit_info[created_at_date.strftime('%Y-%m-%d')] += 1
         end
       end
     end
-
-    puts "############################################ #{visit_info.size}"
-    # Devolvemos la información recopilada
     visit_info
-    
   end
 
   def show_metrics(klass_name, start_date, end_date)
