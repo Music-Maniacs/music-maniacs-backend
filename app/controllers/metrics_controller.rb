@@ -19,10 +19,12 @@ class MetricsController < ApplicationController
 
   def users_type
     roles = Role.pluck(:id, :name)
+    users_type_info = Hash.new(0) # Hash para contar las users_type
     roles.map do |role_id, role_name|
       count = User.active.where(role_id: role_id).count
-      { role_name: role_name, count: count }
+      users_type_info[role_name] = count
     end
+    users_type_info
   end
 
   def visits(start_date, end_date)
