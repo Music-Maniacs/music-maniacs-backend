@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   include LikeableActions
   COMMENT_TO_JSON = { only: %i[id body created_at],
-                      include: { user: { only: %i[id full_name] } },
+                      include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
                       methods: %i[anonymous likes_count liked_by_current_user] }.freeze
 
   before_action :authenticate_user!, except: %i[index]

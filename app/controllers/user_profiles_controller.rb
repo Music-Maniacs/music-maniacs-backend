@@ -14,7 +14,7 @@ class UserProfilesController < ApplicationController
   USER_TO_JSON = { only: %i[username full_name biography email],
                    include: { links: { only: %i[id url title] },
                               last_reviews: { only: %i[id rating description created_at reviewable_type],
-                                              include: { user: { only: %i[id full_name] } },
+                                              include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
                                               methods: %i[anonymous reviewable_name] },
                               profile_image: {
                                 only: %i[id created_at],

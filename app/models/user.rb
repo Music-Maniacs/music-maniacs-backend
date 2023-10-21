@@ -141,6 +141,10 @@ class User < ApplicationRecord
     end
   end
 
+  def profile_image_full_url
+    profile_image&.full_url
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
