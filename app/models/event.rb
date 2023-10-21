@@ -1,9 +1,13 @@
 class Event < ApplicationRecord
   include Followable
   include Reportable
+
+  def self.ignored_version_attrs
+    %i[popularity_score views_count]
+  end
+
   include Versionable
   acts_as_paranoid
-  has_paper_trail ignore: %i[popularity_score views_count]
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   VISIT_VALUE = 10.minutes.to_i
