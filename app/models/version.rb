@@ -34,4 +34,3 @@ class Version < PaperTrail::Version
     all
   end
 end
-
