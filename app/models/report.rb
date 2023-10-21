@@ -68,6 +68,7 @@ class Report < ApplicationRecord
 
   def resolve_comment_report
     # no importa la categoría hay que eliminarlo
+    reportable.reports.pending.update_all(status: :resolved, resolver_id: resolver.id)
     reportable.destroy!
   end
 
@@ -100,6 +101,7 @@ class Report < ApplicationRecord
 
   def resolve_video_report
     # no importa la categoría hay que eliminarlo
+    reportable.reports.pending.update_all(status: :resolved, resolver_id: resolver.id)
     reportable.destroy!
   end
 
