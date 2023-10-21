@@ -1,3 +1,3 @@
-class VenuesController < ApplicationController
+class VersionsController < ApplicationController
   include ReportableActions
 end
