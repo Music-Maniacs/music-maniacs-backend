@@ -1,6 +1,6 @@
 class Report < ApplicationRecord
   enum status: { pending: 0, resolved: 1, ignored: 2 }
-  enum category: { inappropriate_content: 0, spam: 1, other: 2, fake: 3, duplicated: 4 }
+  enum category: { inappropriate_content: 0, spam: 1, other: 2, fake: 3, duplicated: 4, incorrect_artist: 5, incorrect_venue: 6, incorrect_producer: 7 }
 
   ##############################################################################
   # ASSOCIATIONS
@@ -40,31 +40,17 @@ class Report < ApplicationRecord
 
   def accept(resolver, penalization_score, moderator_comment)
     ActiveRecord::Base.transaction do
-      self.status = :resolved
-      self.resolver = resolver
-      self.penalization_score = penalization_score
-      self.moderator_comment = moderator_comment
+      update!(status: :resolved, resolver:, penalization_score:, moderator_comment:)
 
+      # cuando la categoría es incorrect_profile, siempre se va a penalizar al autor y quizá otro usuario fue el que hizo el cambio de perfil
       penalize_author if penalization_score.present?
 
-      case reportable.class.to_s
-      when 'Comment'
-        resolve_comment_report
-      when 'Artist', 'Venue', 'Producer'
-        resolve_event_profile_report
-      when 'Event'
-        resolve_event_report
-      when 'Video'
-        resolve_video_report
-      when 'Review'
-        resolve_review_report
-      else
-        raise 'Invalid reportable'
-      end
-      save!
+      send("resolve_#{reportable.class.to_s.downcase}_report")
     end
+    true
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:base, e.message)
+    false
   end
 
   def penalize_author
@@ -73,23 +59,21 @@ class Report < ApplicationRecord
   end
 
   def reject(resolver, moderator_comment)
-    self.status = :ignored
-    self.resolver = resolver
-    self.moderator_comment = moderator_comment
-    save!
+    update!(status: :resolved, resolver:, moderator_comment:)
+    true
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:base, e.message)
+    false
   end
 
   def resolve_comment_report
     # no importa la categoría hay que eliminarlo
     reportable.destroy!
-    reportable.reports.update_all(status: :resolved, resolver_id: resolver.id)
   end
 
   def resolve_event_profile_report
     case category
-    when 'fake' || 'spam' || 'other'
+    when 'fake', 'spam', 'other'
       reportable.destroy!
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
     when 'duplicated'
@@ -101,9 +85,12 @@ class Report < ApplicationRecord
 
   def resolve_event_report
     case category
-    when 'fake' || 'spam' || 'other'
+    when 'fake', 'spam', 'other'
       reportable.destroy!
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
+    when 'incorrect_artist', 'incorrect_venue', 'incorrect_producer'
+      # TODO: ver que hacer cuando no existe mas el sugerido como duplicado
+      reportable.update!("#{category.split('_').last}_id" => original_reportable_id)
     when 'duplicated'
       # TODO: validar que el evento tenga asociado los mismos perfiles
       merge_events(duplicated: reportable, original: Event.find(original_reportable_id))
@@ -112,18 +99,15 @@ class Report < ApplicationRecord
   end
 
   def resolve_video_report
+    # no importa la categoría hay que eliminarlo
     reportable.destroy!
-    reportable.reports.update_all(status: :resolved, resolver_id: resolver.id)
   end
 
   def merge_profile(duplicated:, original:)
     profile_type = reportble.class.to_s.downcase # artist, venue, producer
     duplicated.events.update_all("#{profile_type}_id" => original.id)
-
-    # duplicated.events.update_all(artist_id: original)
     duplicated.reviews.update_all(reviewable_id: original)
     duplicated.follows.update_all(followable_id: original)
-    duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
     duplicated.destroy!
   end
 
@@ -131,7 +115,6 @@ class Report < ApplicationRecord
     duplicated.reviews.update_all(reviewable_id: original.id)
     duplicated.follows.update_all(followable_id: original.id)
     duplicated.videos.update_all(event_id: original.id)
-    duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
     duplicated.destroy!
   end
 
