@@ -42,6 +42,6 @@ class UserStat < ApplicationRecord
   # INSTANCE METHODS
   ##############################################################################
   def increment_penalization_score!(score)
-    update(penalty_score: penalty_score + score)
+    update!(penalty_score: penalty_score + score)
   end
 end
