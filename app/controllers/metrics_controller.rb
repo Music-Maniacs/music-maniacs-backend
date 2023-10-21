@@ -7,7 +7,7 @@ class MetricsController < ApplicationController
       reviews: show_metrics('Review', start_date, end_date),
       new_profiles: new_profiles(start_date, end_date),
       new_comments: show_metrics('Comment', start_date, end_date),
-      new_users: show_metrics('User', start_date, end_date),
+      new_users: show_metrics('User', start_date, end_date)
     }
     render json: metrics, status: :ok
   end
