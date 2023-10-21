@@ -128,9 +128,9 @@ class Report < ApplicationRecord
   end
 
   def merge_events(duplicated:, original:)
-    duplicated.reviews.update_all(reviewable_id: original)
-    duplicated.follows.update_all(followable_id: original)
-    duplicated.videos.update_all(event: original)
+    duplicated.reviews.update_all(reviewable_id: original.id)
+    duplicated.follows.update_all(followable_id: original.id)
+    duplicated.videos.update_all(event_id: original.id)
     duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau
     duplicated.destroy!
   end
