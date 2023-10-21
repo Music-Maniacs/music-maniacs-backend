@@ -68,8 +68,7 @@ class Report < ApplicationRecord
   end
 
   def penalize_author
-    user = User.with_deleted.find(reportable.author_id)
-    user.increment_penalization_score!(penalization_score)
+    User.with_deleted.find_by(id: reportable.author_id)&.increment_penalization_score!(penalization_score)
   end
 
   def reject(resolver, moderator_comment)
