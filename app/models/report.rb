@@ -105,6 +105,9 @@ class Report < ApplicationRecord
     reportable.destroy!
   end
 
+  # no se hace nada, solo se penaliza
+  def resolve_version_report; end
+
   def merge_profile(duplicated:, original:)
     profile_type = reportble.class.to_s.downcase # artist, venue, producer
     duplicated.events.update_all("#{profile_type}_id" => original.id)
