@@ -10,7 +10,7 @@ class VenuesController < ApplicationController
                                                include: { user: { only: %i[id full_name] } },
                                                methods: :anonymous },
                                versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
-                    methods: %i[rating past_events next_events] }.freeze
+                    methods: %i[rating past_events next_events address] }.freeze
 
   def show
     venue = Venue.find(params[:id])
