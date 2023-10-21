@@ -59,7 +59,7 @@ class Report < ApplicationRecord
   end
 
   def reject(resolver, moderator_comment)
-    update!(status: :resolved, resolver:, moderator_comment:)
+    update!(status: :ignored, resolver:, moderator_comment:)
     true
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:base, e.message)
