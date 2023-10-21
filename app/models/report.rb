@@ -107,7 +107,9 @@ class Report < ApplicationRecord
   end
 
   # no se hace nada, solo se penaliza
-  def resolve_version_report; end
+  def resolve_version_report
+    reportable.reports.pending.update_all(status: :resolved, resolver_id: resolver.id)
+  end
 
   def merge_profile(duplicated:, original:)
     profile_type = reportble.class.to_s.downcase # artist, venue, producer
