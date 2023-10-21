@@ -141,6 +141,10 @@ class User < ApplicationRecord
     end
   end
 
+  def increment_penalization_score!(score)
+    user_stat.increment!(:penalty_score, score)
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################

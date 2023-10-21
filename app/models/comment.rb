@@ -35,6 +35,10 @@ class Comment < ApplicationRecord
   end
   alias anonymous anonymous?
 
+  def author_id
+    user_id
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################

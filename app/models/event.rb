@@ -57,6 +57,7 @@ class Event < ApplicationRecord
   ##############################################################################
   scope :most_popular, -> { order(popularity_score: :desc) }
   scope :by_artist, ->(artist_id) { where(artist_id:) }
+
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
@@ -109,6 +110,10 @@ class Event < ApplicationRecord
 
   def calculate_popularity_score
     created_at.to_i + (views_count || 0) * VISIT_VALUE
+  end
+
+  def author_id
+    author_id_by_versions
   end
 
   ##############################################################################

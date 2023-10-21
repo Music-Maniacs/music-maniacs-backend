@@ -44,13 +44,20 @@ class Report < ApplicationRecord
       self.resolver = resolver
       self.penalization_score = penalization_score
       self.moderator_comment = moderator_comment
-      # TODO: penalizar usuario
+
+      penalize_author if penalization_score.present?
 
       case reportable.class.to_s
       when 'Comment'
         resolve_comment_report
       when 'Artist', 'Venue', 'Producer'
         resolve_event_profile_report
+      when 'Event'
+        resolve_event_report
+      when 'Video'
+        resolve_video_report
+      when 'Review'
+        resolve_review_report
       else
         raise 'Invalid reportable'
       end
@@ -60,7 +67,12 @@ class Report < ApplicationRecord
     errors.add(:base, e.message)
   end
 
-  def reject
+  def penalize_author
+    user = User.with_deleted.find(reportable.author_id)
+    user.increment_penalization_score!(penalization_score)
+  end
+
+  def reject(resolver, moderator_comment)
     self.status = :ignored
     self.resolver = resolver
     self.moderator_comment = moderator_comment
@@ -99,8 +111,16 @@ class Report < ApplicationRecord
     end
   end
 
+  def resolve_video_report
+    reportable.destroy!
+    reportable.reports.update_all(status: :resolved, resolver_id: resolver.id)
+  end
+
   def merge_profile(duplicated:, original:)
-    duplicated.events.update_all(artist_id: original)
+    profile_type = reportble.class.to_s.downcase # artist, venue, producer
+    duplicated.events.update_all("#{profile_type}_id" => original.id)
+
+    # duplicated.events.update_all(artist_id: original)
     duplicated.reviews.update_all(reviewable_id: original)
     duplicated.follows.update_all(followable_id: original)
     duplicated.reports.pending.destroy_all # reportes pendientes asociados al duplicado chau

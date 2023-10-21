@@ -24,5 +24,9 @@ module PaperTrail
       klass = key.gsub('_id', '').capitalize.constantize
       klass.find_by(id: value).try(:name)
     end
+
+    def author_id
+      whodunnit
+    end
   end
 end

@@ -3,8 +3,8 @@ class Producer < ApplicationRecord
   include Followable
   include ProfileCommonMethods
   include Reportable
+  include Versionable
   acts_as_paranoid
-  has_paper_trail
 
   ##############################################################################
   # ASSOCIATIONS
@@ -23,6 +23,13 @@ class Producer < ApplicationRecord
   ##############################################################################
   validates :name, uniqueness: true
   validates :name, :nationality, :description, presence: true
+
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def author_id
+    author_id_by_versions
+  end
 
   ##############################################################################
   # CLASS METHODS

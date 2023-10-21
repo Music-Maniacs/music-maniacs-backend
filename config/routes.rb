@@ -147,4 +147,10 @@ Rails.application.routes.draw do
       get :search_venues
     end
   end
+
+  resources :versions, only: %i[] do
+    member do
+      post :report
+    end
+  end
 end

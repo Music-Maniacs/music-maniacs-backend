@@ -1,5 +1,6 @@
 class Review < ApplicationRecord
   include Reportable
+  include Versionable
 
   TO_JSON = { only: %i[id rating description created_at reviewable_type],
               include: { user: { only: %i[id full_name] } },
@@ -33,6 +34,10 @@ class Review < ApplicationRecord
 
   def reviewable_name
     reviewable.name
+  end
+
+  def author_id
+    user_id
   end
 
   ##############################################################################

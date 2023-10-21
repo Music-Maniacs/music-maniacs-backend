@@ -3,7 +3,7 @@ class Artist < ApplicationRecord
   include Followable
   include ProfileCommonMethods
   include Reportable
-  has_paper_trail
+  include Versionable
   acts_as_paranoid
 
   ##############################################################################
@@ -23,6 +23,13 @@ class Artist < ApplicationRecord
   ##############################################################################
   validates :name, uniqueness: true
   validates :name, :nationality, :description, presence: true
+
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def author_id
+    author_by_versions
+  end
 
   ##############################################################################
   # CLASS METHODS
