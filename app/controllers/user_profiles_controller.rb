@@ -14,9 +14,8 @@ class UserProfilesController < ApplicationController
   USER_TO_JSON = { only: %i[username full_name biography email],
                    include: { links: { only: %i[id url title] },
                               last_reviews: { only: %i[id rating description created_at reviewable_type],
-                                              include: { user: { only: %i[id full_name] } },
-                                              methods: :anonymous },
-                              user_stat: { except: %i[id user_id created_at updated_at] },
+                                              include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
+                                              methods: %i[anonymous reviewable_name] },
                               profile_image: {
                                 only: %i[id created_at],
                                 methods: :full_url
@@ -49,7 +48,9 @@ class UserProfilesController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    render json: user.as_json(USER_TO_JSON), status: :ok
+    json_serializer = USER_TO_JSON
+    json_serializer[:include].merge!(user_stat: { except: %i[id user_id created_at updated_at] }) if current_user&.id == params[:id]
+    render json: user.as_json(json_serializer), status: :ok
   end
 
   def reviews

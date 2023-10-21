@@ -149,6 +149,10 @@ class User < ApplicationRecord
     role.name.match?(/moderator/i)
   end
 
+  def profile_image_full_url
+    profile_image&.full_url
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################

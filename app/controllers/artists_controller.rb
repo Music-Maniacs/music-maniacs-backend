@@ -8,9 +8,9 @@ class ArtistsController < ApplicationController
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[full_url] },
                                 last_reviews: { only: %i[id rating description created_at reviewable_type],
-                                                include: { user: { only: %i[id full_name] } },
+                                                include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } },
                                                 methods: :anonymous },
-                                versions: { methods: :anonymous, include: { user: { only: %i[id full_name] } } } },
+                                versions: { except: :object_changes, methods: %i[anonymous named_object_changes], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
                      methods: %i[rating past_events next_events] }.freeze
 
   def show

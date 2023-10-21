@@ -46,6 +46,10 @@ gem 'kaminari'
 
 gem 'paper_trail'
 gem 'sidekiq'
+
+
+# Backup
+gem 'backup'
 gem 'whenever'
 gem 'cancancan'
 
