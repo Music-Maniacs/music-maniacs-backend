@@ -80,18 +80,19 @@ class Report < ApplicationRecord
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
     when 'duplicated'
       # TODO: ver que hacer cuando no existe mas el sugerido como duplicado
-      merge_profile(duplicated: reportable, original: reportable.class.find(original_reportable_id).id)
       reportable.reports.where(category:, original_reportable_id:).update_all(status: :resolved, resolver_id: resolver.id)
+      merge_profile(duplicated: reportable, original: reportable.class.find(original_reportable_id).id)
     end
   end
 
   def resolve_event_report
     case category
     when 'fake', 'spam', 'other'
-      reportable.destroy!
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
+      reportable.destroy!
     when 'incorrect_artist', 'incorrect_venue', 'incorrect_producer'
       # TODO: ver que hacer cuando no existe mas el sugerido como duplicado
+      # marcar como resueltos los reportes con la misma categoría y el mismo original_reportable_id
       reportable.update!("#{category.split('_').last}_id" => original_reportable_id)
     when 'duplicated'
       # TODO: validar que el evento tenga asociado los mismos perfiles
