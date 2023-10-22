@@ -4,6 +4,11 @@ class Admin::ProducersController < ApplicationController
                                   links: { only: %i[id url title] },
                                   image: { methods: %i[full_url] } } }.freeze
 
+  SHOW_PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
+                                       links: { only: %i[id url title] },
+                                       image: { methods: %i[full_url] },
+                                       versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } } }.freeze
+
   def index
     producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
@@ -13,7 +18,7 @@ class Admin::ProducersController < ApplicationController
   def show
     producer = Producer.find(params[:id])
 
-    render json: producer.as_json(PRODUCER_TO_JSON)
+    render json: producer.as_json(SHOW_PRODUCER_TO_JSON)
   end
 
   def create
@@ -22,7 +27,7 @@ class Admin::ProducersController < ApplicationController
     producer.image = Image.new(file: params[:image]) if params[:image].present?
 
     if producer.save
-      render json: producer.as_json(PRODUCER_TO_JSON), status: :ok
+      render json: producer.as_json(SHOW_PRODUCER_TO_JSON), status: :ok
     else
       render json: { errors: producer.errors.details }, status: :unprocessable_entity
     end
@@ -41,7 +46,7 @@ class Admin::ProducersController < ApplicationController
     end
 
     if producer.update(producer_params)
-      render json: producer.as_json(PRODUCER_TO_JSON), status: :ok
+      render json: producer.as_json(SHOW_PRODUCER_TO_JSON), status: :ok
     else
       render json: { errors: producer.errors.details }, status: :unprocessable_entity
     end

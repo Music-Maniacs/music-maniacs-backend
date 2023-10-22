@@ -2,18 +2,24 @@ class Admin::VenuesController < ApplicationController
   include Search
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
                                links: { only: %i[id url title] },
-                               image: { methods: %i[full_url] } } }.freeze
+                               image: { methods: %i[full_url] } },
+                    methods: [:address] }.freeze
+
+  SHOW_VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
+                                    links: { only: %i[id url title] },
+                                    image: { methods: %i[full_url] },
+                                    versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
+                         methods: %i[address] }.freeze
 
   def index
     venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
-    render json: { data: venues.as_json(only: %i[id name description],
-                                        methods: [:address]), pagination: pagination_info(venues) }
+    render json: { data: venues.as_json(VENUE_TO_JSON), pagination: pagination_info(venues) }
   end
 
   def show
     venue = Venue.find(params[:id])
 
-    render json: venue.as_json(VENUE_TO_JSON)
+    render json: venue.as_json(SHOW_VENUE_TO_JSON)
   end
 
   def create
@@ -22,7 +28,7 @@ class Admin::VenuesController < ApplicationController
     venue.image = Image.new(file: params[:image]) if params[:image].present?
 
     if venue.save
-      render json: venue.as_json(VENUE_TO_JSON), status: :ok
+      render json: venue.as_json(SHOW_VENUE_TO_JSON), status: :ok
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity
     end
@@ -41,7 +47,7 @@ class Admin::VenuesController < ApplicationController
     end
 
     if venue.update(venue_params)
-      render json: venue.as_json(VENUE_TO_JSON), status: :ok
+      render json: venue.as_json(SHOW_VENUE_TO_JSON), status: :ok
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity
     end

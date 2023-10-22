@@ -4,6 +4,11 @@ class Admin::ArtistsController < ApplicationController
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[full_url] } } }.freeze
 
+  SHOW_ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
+                                     links: { only: %i[id url title] },
+                                     image: { methods: %i[full_url] },
+                                     versions: { except: :object_changes, methods: %i[anonymous named_object_changes], include: { user: { only: %i[id full_name] } } } } }.freeze
+
   def index
     artists = Artist.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
@@ -13,7 +18,7 @@ class Admin::ArtistsController < ApplicationController
   def show
     artist = Artist.find(params[:id])
 
-    render json: artist.as_json(ARTIST_TO_JSON)
+    render json: artist.as_json(SHOW_ARTIST_TO_JSON)
   end
 
   def create
@@ -22,7 +27,7 @@ class Admin::ArtistsController < ApplicationController
     artist.image = Image.new(file: params[:image]) if params[:image].present?
 
     if artist.save
-      render json: artist.as_json(ARTIST_TO_JSON), status: :ok
+      render json: artist.as_json(SHOW_ARTIST_TO_JSON), status: :ok
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
     end
@@ -41,7 +46,7 @@ class Admin::ArtistsController < ApplicationController
     end
 
     if artist.update(artist_params)
-      render json: artist.as_json(ARTIST_TO_JSON), status: :ok
+      render json: artist.as_json(SHOW_ARTIST_TO_JSON), status: :ok
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
     end
