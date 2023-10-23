@@ -140,4 +140,9 @@ Rails.application.routes.draw do
       get :search_venues
     end
   end
+
+  resource :metrics, only: %i[] do
+    get :index
+    get :metrics_and_user_type
+  end
 end
