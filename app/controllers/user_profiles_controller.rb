@@ -27,7 +27,7 @@ class UserProfilesController < ApplicationController
                               role: { only: %i[id name] } } }.freeze
 
   def info
-    render json: current_user.as_json(include: :role), status: :ok
+    render json: current_user.as_json(include: :role, methods: :profile_image_full_url), status: :ok
   end
 
   def change_password

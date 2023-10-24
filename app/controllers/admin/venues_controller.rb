@@ -1,11 +1,11 @@
 class Admin::VenuesController < ApplicationController
   include Search
-  VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
+  VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] } },
                     methods: [:address] }.freeze
 
-  SHOW_VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
+  SHOW_VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                     links: { only: %i[id url title] },
                                     image: { methods: %i[full_url] },
                                     versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },

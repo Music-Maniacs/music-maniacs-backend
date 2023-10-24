@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_27_014725) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_23_234705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -145,8 +145,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_014725) do
   create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "zip_code"
     t.string "street"
-    t.string "department"
-    t.string "locality"
     t.string "latitude"
     t.string "longitude"
     t.integer "number"
@@ -155,6 +153,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_014725) do
     t.uuid "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "city"
     t.index ["venue_id"], name: "index_locations_on_venue_id"
   end
 
