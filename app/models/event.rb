@@ -42,6 +42,10 @@ class Event < ApplicationRecord
   before_create :set_popularity_score
   before_update :set_popularity_score, if: :will_save_change_to_views_count?
 
+  def artist_change
+    reviews.where(reviewable_type: 'Artist').update_all(reviewable_id: artist_id)
+  end
+
   def notify_changes_to_followers
     changes = parsed_previous_changes
     return unless changes.present? || followers.count.zero?

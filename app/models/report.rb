@@ -42,7 +42,7 @@ class Report < ApplicationRecord
     ActiveRecord::Base.transaction do
       update!(status: :resolved, resolver:, penalization_score:, moderator_comment:)
 
-      # cuando la categoría es incorrect_profile, siempre se va a penalizar al autor y quizá otro usuario fue el que hizo el cambio de perfil
+      # cuando la categoría es incorrect_profile, siempre se va a penalizar al autor (creador) y quizá otro usuario fue el que hizo el cambio de perfil
       penalize_author if penalization_score.present?
 
       send("resolve_#{reportable.class.to_s.downcase}_report")
@@ -92,7 +92,7 @@ class Report < ApplicationRecord
       reportable.destroy!
     when 'incorrect_artist', 'incorrect_venue', 'incorrect_producer'
       # TODO: ver que hacer cuando no existe mas el sugerido como duplicado
-      # marcar como resueltos los reportes con la misma categoría y el mismo original_reportable_id
+      reportable.reports.where(category:, original_reportable_id:).update_all(status: :resolved, resolver_id: resolver.id)
       reportable.update!("#{category.split('_').last}_id" => original_reportable_id)
     when 'duplicated'
       # TODO: validar que el evento tenga asociado los mismos perfiles
