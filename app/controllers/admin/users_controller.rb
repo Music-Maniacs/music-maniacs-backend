@@ -1,4 +1,9 @@
 class Admin::UsersController < ApplicationController
+  USER_AS_JSON = { methods: [:state],
+                   include: { links: { only: %i[id url title] },
+                              role: { only: %i[id name] },
+                              user_stat: { except: %i[id user_id created_at updated_at] } } }.freeze
+
   def index
     q = users_scope.ransack(params[:q])
     users = q.result(distinct: true).page(params[:page]).per(params[:per_page])
@@ -8,7 +13,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     user = users_scope.find(params[:id])
-    render json: user.as_json(methods: :state, include: %i[links role])
+    render json: user.as_json(USER_AS_JSON)
   end
 
   def create
@@ -25,7 +30,7 @@ class Admin::UsersController < ApplicationController
     user = users_scope.find(params[:id])
 
     if user.update(user_params_update)
-      render json: user.as_json(methods: :state, include: %i[links role]), status: :ok
+      render json: user.as_json(USER_AS_JSON), status: :ok
     else
       render json: { errors: user.errors.details }, status: :unprocessable_entity
     end

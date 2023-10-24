@@ -108,6 +108,8 @@ GEM
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
     erubi (1.12.0)
+    faker (3.2.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -256,6 +258,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  faker
   image_processing (~> 1.2)
   kaminari
   letter_opener

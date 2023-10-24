@@ -154,4 +154,9 @@ Rails.application.routes.draw do
       post :report
     end
   end
+
+  resource :metrics, only: %i[] do
+    get :index
+    get :metrics_and_user_type
+  end
 end

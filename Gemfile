@@ -47,6 +47,8 @@ gem 'kaminari'
 gem 'paper_trail'
 gem 'sidekiq'
 
+gem 'faker'
+
 
 # Backup
 gem 'whenever'

@@ -78,6 +78,20 @@ namespace :populate do
     Genre.find_or_create_by(name: "Metal")
     Genre.find_or_create_by(name: "Punk")
     Genre.find_or_create_by(name: "Indie")
+    Genre.find_or_create_by(name: "Reggaeton")
+    Genre.find_or_create_by(name: "Rock Alternativo")
+    Genre.find_or_create_by(name: "Electropop")
+    Genre.find_or_create_by(name: "Funk")
+    Genre.find_or_create_by(name: "Soul")
+    Genre.find_or_create_by(name: "Techno")
+    Genre.find_or_create_by(name: "Hip Hop Latino")
+    Genre.find_or_create_by(name: "Disco")
+    Genre.find_or_create_by(name: "Indie Pop")
+    Genre.find_or_create_by(name: "Ska")
+    Genre.find_or_create_by(name: "Reggae Roots")
+    Genre.find_or_create_by(name: "Blues Rock")
+    Genre.find_or_create_by(name: "Country Pop")
+    
 
     PenaltyThreshold.find_or_create_by(penalty_score: 50, days_blocked: 15)
     PenaltyThreshold.find_or_create_by(penalty_score: 100, days_blocked: 25)
@@ -99,10 +113,159 @@ namespace :populate do
                       role_id: admin_role.id })
     end
 
-    [{ name: 'Usted Señalemelo', nationality: 'Argentina', description: 'Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el guitarrista Gabriel "Cocó" Orozco y el baterista Lucca Beguerie Petrich.' },
-     { name: 'Enanitos Verdes', nationality: 'Argentina', description: 'Los Enanitos Verdes o simplemente Enanitos Verdes, a veces abreviado EV, es una banda argentina de rock en español de Mendoza. Organizado originalmente como un trío con Marciano Cantero, Felipe Staiti y Daniel Piccolo en 1979, luego se les unieron Sergio Embrioni y Tito Dávila.' },
-     { name: 'Soda Estereo', nationality: 'Argentina', description: 'Soda Stereo es una banda de rock argentina formada en 1982 por Gustavo Cerati, Zeta Bosio y Charly Alberti, ​considerada ampliamente por la crítica especializada como la banda más importante, popular e influyente del rock en español y una leyenda de la música latinoamericana.' },
-     { name: 'Sui Generis', nationality: 'Argentina', description: 'Sui Generis fue una banda argentina de rock formada principalmente por Charly García (teclados, guitarra acústica, voz y composiciones) y Nito Mestre (flauta, guitarra acústica y voz), considerada como una de las más importantes de los orígenes del rock latinoamericano. Sus canciones (en particular las de sus dos primeros álbumes) se convirtieron virtualmente en himnos cantados por generaciones de argentinos, formando hoy parte del paisaje cultural nacional de ese país. Si bien a lo largo de su carrera la banda contó con otros miembros, fue el dúo García/Mestre el que quedó asociado con el nombre, y al que debieron su enorme fama posterior.' },
+    # Crea un arreglo de 40 usuarios ficticios
+    users_to_create = [
+      { email: 'user1@example.com', username: 'user1', full_name: 'Usuario Uno' },
+      { email: 'user2@example.com', username: 'user2', full_name: 'Usuario Dos' },
+      { email: 'user3@example.com', username: 'user3', full_name: 'Usuario Tres' },
+      { email: 'user4@example.com', username: 'user4', full_name: 'Usuario Cuatro' },
+      { email: 'user5@example.com', username: 'user5', full_name: 'Usuario Cinco' },
+      { email: 'user6@example.com', username: 'user6', full_name: 'Usuario Seis' },
+      { email: 'user7@example.com', username: 'user7', full_name: 'Usuario Siete' },
+      { email: 'user8@example.com', username: 'user8', full_name: 'Usuario Ocho' },
+      { email: 'user9@example.com', username: 'user9', full_name: 'Usuario Nueve' },
+      { email: 'user10@example.com', username: 'user10', full_name: 'Usuario Diez' },
+      { email: 'user11@example.com', username: 'user11', full_name: 'Usuario Once' },
+      { email: 'user12@example.com', username: 'user12', full_name: 'Usuario Doce' },
+      { email: 'user13@example.com', username: 'user13', full_name: 'Usuario Trece' },
+      { email: 'user14@example.com', username: 'user14', full_name: 'Usuario Catorce' },
+      { email: 'user15@example.com', username: 'user15', full_name: 'Usuario Quince' },
+      { email: 'user16@example.com', username: 'user16', full_name: 'Usuario Dieciséis' },
+      { email: 'user17@example.com', username: 'user17', full_name: 'Usuario Diecisiete' },
+      { email: 'user18@example.com', username: 'user18', full_name: 'Usuario Dieciocho' },
+      { email: 'user19@example.com', username: 'user19', full_name: 'Usuario Diecinueve' },
+      { email: 'user20@example.com', username: 'user20', full_name: 'Usuario Veinte' },
+      { email: 'user21@example.com', username: 'user21', full_name: 'Usuario Veintiuno' },
+      { email: 'user22@example.com', username: 'user22', full_name: 'Usuario Veintidós' },
+      { email: 'user23@example.com', username: 'user23', full_name: 'Usuario Veintitrés' },
+      { email: 'user24@example.com', username: 'user24', full_name: 'Usuario Veinticuatro' },
+      { email: 'user25@example.com', username: 'user25', full_name: 'Usuario Veinticinco' },
+      { email: 'user26@example.com', username: 'user26', full_name: 'Usuario Veintiséis' },
+      { email: 'user27@example.com', username: 'user27', full_name: 'Usuario Veintisiete' },
+      { email: 'user28@example.com', username: 'user28', full_name: 'Usuario Veintiocho' },
+      { email: 'user29@example.com', username: 'user29', full_name: 'Usuario Veintinueve' },
+      { email: 'user30@example.com', username: 'user30', full_name: 'Usuario Treinta' },
+      { email: 'user31@example.com', username: 'user31', full_name: 'Usuario Treinta y Uno' },
+      { email: 'user32@example.com', username: 'user32', full_name: 'Usuario Treinta y Dos' },
+      { email: 'user33@example.com', username: 'user33', full_name: 'Usuario Treinta y Tres' },
+      { email: 'user34@example.com', username: 'user34', full_name: 'Usuario Treinta y Cuatro' },
+      { email: 'user35@example.com', username: 'user35', full_name: 'Usuario Treinta y Cinco' },
+      { email: 'user36@example.com', username: 'user36', full_name: 'Usuario Treinta y Seis' },
+      { email: 'user37@example.com', username: 'user37', full_name: 'Usuario Treinta y Siete' },
+      { email: 'user38@example.com', username: 'user38', full_name: 'Usuario Treinta y Ocho' },
+      { email: 'user39@example.com', username: 'user39', full_name: 'Usuario Treinta y Nueve' },
+      { email: 'user40@example.com', username: 'user40', full_name: 'Usuario Cuarenta' }
+    ]
+
+    users_to_create.each do |user_data|
+      next if User.find_by(email: user_data[:email]) || User.find_by(username: user_data[:username])
+
+      User.create(
+        email: user_data[:email],
+        username: user_data[:username],
+        full_name: user_data[:full_name],
+        password: 'password123',
+        password_confirmation: 'password123',
+        role_id: user_role.id
+      )
+    end
+
+    [
+      {
+        name: 'Usted Señalemelo',
+        nationality: 'Argentina',
+        description: 'Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el guitarrista Gabriel "Cocó" Orozco y el baterista Lucca Beguerie Petrich.'
+      },
+      {
+        name: 'Enanitos Verdes',
+        nationality: 'Argentina',
+        description: 'Los Enanitos Verdes o simplemente Enanitos Verdes, a veces abreviado EV, es una banda argentina de rock en español de Mendoza. Organizado originalmente como un trío con Marciano Cantero, Felipe Staiti y Daniel Piccolo en 1979, luego se les unieron Sergio Embrioni y Tito Dávila.'
+      },
+      {
+        name: 'Soda Stereo',
+        nationality: 'Argentina',
+        description: 'Soda Stereo es una banda de rock argentina formada en 1982 por Gustavo Cerati, Zeta Bosio y Charly Alberti, ​considerada ampliamente por la crítica especializada como la banda más importante, popular e influyente del rock en español y una leyenda de la música latinoamericana.'
+      },
+      {
+        name: 'Sui Generis',
+        nationality: 'Argentina',
+        description: 'Sui Generis fue una banda argentina de rock formada principalmente por Charly García (teclados, guitarra acústica, voz y composiciones) y Nito Mestre (flauta, guitarra acústica y voz), considerada como una de las más importantes de los orígenes del rock latinoamericano. Sus canciones (en particular las de sus dos primeros álbumes) se convirtieron virtualmente en himnos cantados por generaciones de argentinos, formando hoy parte del paisaje cultural nacional de ese país. Si bien a lo largo de su carrera la banda contó con otros miembros, fue el dúo García/Mestre el que quedó asociado con el nombre, y al que debieron su enorme fama posterior.'
+      },
+      {
+        name: 'Gustavo Cerati',
+        nationality: 'Argentina',
+        description: 'Gustavo Cerati fue un músico, cantante y compositor argentino, conocido por ser el líder de la banda Soda Stereo. Su trabajo en la música rock en español lo convirtió en una figura icónica de la música latinoamericana.'
+      },
+      {
+        name: 'Fito Páez',
+        nationality: 'Argentina',
+        description: 'Fito Páez es un cantante, compositor y músico argentino, una de las figuras más destacadas de la música pop y rock en español. A lo largo de su carrera, ha lanzado numerosos álbumes exitosos y ha ganado reconocimiento tanto a nivel nacional como internacional.'
+      },
+      {
+        name: 'Charly García',
+        nationality: 'Argentina',
+        description: 'Charly García es un músico, compositor y productor argentino. Ha tenido una influencia significativa en la música rock y pop en español y es conocido por su trabajo con bandas como Sui Generis, Serú Girán y como solista.'
+      },
+      {
+        name: 'Los Fabulosos Cadillacs',
+        nationality: 'Argentina',
+        description: 'Los Fabulosos Cadillacs es una banda argentina de rock en español y ska, formada en 1985. Han fusionado una variedad de estilos musicales y son conocidos por sus letras políticas y sociales.'
+      },
+      {
+        name: 'Andrés Calamaro',
+        nationality: 'Argentina',
+        description: 'Andrés Calamaro es un músico y compositor argentino, conocido por su trabajo en Los Rodríguez y su carrera en solitario. Su música abarca géneros como el rock, el pop y el tango.'
+      },
+      {
+        name: 'Gustavo Santaolalla',
+        nationality: 'Argentina',
+        description: 'Gustavo Santaolalla es un músico, compositor y productor argentino. Ha trabajado en una amplia variedad de estilos musicales y ha sido galardonado con múltiples premios, incluyendo el Óscar a la Mejor Banda Sonora Original.'
+      },
+      {
+        name: 'Los Auténticos Decadentes',
+        nationality: 'Argentina',
+        description: 'Los Auténticos Decadentes es una banda argentina de rock y pop en español. Han ganado popularidad por su estilo festivo y letras pegajosas.'
+      },
+      {
+        name: 'Cerati y Melero',
+        nationality: 'Argentina',
+        description: 'Cerati y Melero fue un dúo musical conformado por Gustavo Cerati y Daniel Melero. Juntos crearon música electrónica experimental y lanzaron el álbum "Colores Santos".'
+      },
+      {
+        name: 'Luis Alberto Spinetta',
+        nationality: 'Argentina',
+        description: 'Luis Alberto Spinetta, también conocido como "El Flaco", fue un influyente músico y compositor argentino. Es considerado una de las figuras más importantes del rock argentino y latinoamericano.'
+      },
+      {
+        name: 'Los Piojos',
+        nationality: 'Argentina',
+        description: 'Los Piojos fue una banda argentina de rock y blues, conocida por su energética música en vivo y sus letras poéticas.'
+      },
+      {
+        name: 'Mercedes Sosa',
+        nationality: 'Argentina',
+        description: 'Mercedes Sosa fue una cantante de folklore argentina, reconocida por su poderosa voz y su contribución a la música folklórica y latinoamericana.'
+      },
+      {
+        name: 'Los Pericos',
+        nationality: 'Argentina',
+        description: 'Los Pericos es una banda argentina de reggae y ska, una de las más influyentes en América Latina en su género.'
+      },
+      {
+        name: 'Divididos',
+        nationality: 'Argentina',
+        description: 'Divididos es una banda argentina de rock, formada por Ricardo Mollo, Diego Arnedo y Catriel Ciavarella. Han sido pioneros en la mezcla de géneros musicales.'
+      },
+      {
+        name: 'Attaque 77',
+        nationality: 'Argentina',
+        description: 'Attaque 77 es una banda argentina de punk rock, una de las más icónicas de su género en América Latina.'
+      },
+      {
+        name: 'Illya Kuryaki and the Valderramas',
+        nationality: 'Argentina',
+        description: 'Illya Kuryaki and the Valderramas, también conocidos como IKV, es un dúo musical argentino de rap y funk.'
+      },
     ].each do |artist|
       next if Artist.find_by(name: artist[:name]).present?
 
@@ -111,10 +274,138 @@ namespace :populate do
                         description: artist[:description] })
      end
 
-     [{ name: 'Maratone Studios', nationality: 'Suceia', description: 'Maratone es una compañía de producción musical y fue iniciada por dos productores musicales y compositores, Max Martin y Tom Talomaa. Con sede en Estocolmo, Suecia, se inició en enero de 2001 después del cierre de Cheiron Studios.' },
-      { name: 'Custard Records', nationality: 'Estados Unidos de América', description: 'Custard Records es un sello discográfico estadounidense, mejor conocido por su éxito con el cantautor inglés James Blunt. El sello está dirigido por la ex miembro de 4 Non Blondes, Linda Perry, y tiene una asociación con la división Atlantic Records de Warner Music Group.' },
-      { name: 'American Recordings', nationality: 'Estados Unidos de América', description: 'American Recordings es un sello discográfico creado por el productor Rick Rubin en 1988. Su sede se encuentra en Los Ángeles. Entre sus artistas más famosos se encuentran Slayer, The Black Crowes, Danzig, Johnny Cash y System of a Down.' },
-     ].each do |producer|
+     [
+      {
+        name: 'Maratone Studios',
+        nationality: 'Suecia',
+        description: 'Maratone es una compañía de producción musical y fue iniciada por dos productores musicales y compositores, Max Martin y Tom Talomaa. Con sede en Estocolmo, Suecia, se inició en enero de 2001 después del cierre de Cheiron Studios.'
+      },
+      {
+        name: 'Custard Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Custard Records es un sello discográfico estadounidense, mejor conocido por su éxito con el cantautor inglés James Blunt. El sello está dirigido por la ex miembro de 4 Non Blondes, Linda Perry, y tiene una asociación con la división Atlantic Records de Warner Music Group.'
+      },
+      {
+        name: 'American Recordings',
+        nationality: 'Estados Unidos de América',
+        description: 'American Recordings es un sello discográfico creado por el productor Rick Rubin en 1988. Su sede se encuentra en Los Ángeles. Entre sus artistas más famosos se encuentran Slayer, The Black Crowes, Danzig, Johnny Cash y System of a Down.'
+      },
+      {
+        name: 'Abbey Road Studios',
+        nationality: 'Reino Unido',
+        description: 'Abbey Road Studios es un famoso estudio de grabación en Londres, Reino Unido. Ha sido utilizado por muchos artistas icónicos de todo el mundo, incluidos The Beatles. Es conocido por su excelencia en la grabación de música clásica y pop.'
+      },
+      {
+        name: 'Sony Music Entertainment',
+        nationality: 'Estados Unidos de América',
+        description: 'Sony Music Entertainment es una de las principales compañías discográficas a nivel mundial. Representa a una amplia gama de artistas de diferentes géneros y es conocida por su presencia global en la industria musical.'
+      },
+      {
+        name: 'EMI Music',
+        nationality: 'Reino Unido',
+        description: 'EMI Music fue una importante compañía discográfica con sede en el Reino Unido. A lo largo de su historia, ha trabajado con artistas destacados como The Beatles, Queen y Pink Floyd.'
+      },
+      {
+        name: 'Interscope Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Interscope Records es una discográfica estadounidense que ha lanzado música de una variedad de géneros, incluyendo pop, hip-hop y rock. Ha representado a artistas como U2, Lady Gaga y Eminem.'
+      },
+      {
+        name: 'Universal Music Group',
+        nationality: 'Francia',
+        description: 'Universal Music Group es una de las principales compañías discográficas y de entretenimiento en el mundo. Tiene una amplia presencia internacional y representa a artistas de diversos géneros musicales.'
+      },
+      {
+        name: 'Warner Music Group',
+        nationality: 'Estados Unidos de América',
+        description: 'Warner Music Group es una de las principales compañías discográficas y de entretenimiento. Tiene un catálogo diverso de artistas que abarcan géneros como el pop, el rock y el hip-hop.'
+      },
+      {
+        name: 'Capitol Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Capitol Records es una discográfica estadounidense con una rica historia en la música popular. Ha trabajado con artistas icónicos como The Beach Boys y Frank Sinatra.'
+      },
+      {
+        name: 'Motown Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Motown Records es un sello discográfico legendario que desempeñó un papel fundamental en el desarrollo del soul y el R&B. Ha representado a artistas como Marvin Gaye, Stevie Wonder y The Jackson 5.'
+      },
+      {
+        name: 'Atlantic Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Atlantic Records es una discográfica estadounidense que ha lanzado música en diversos géneros, incluyendo el rock, el pop y el hip-hop. Ha trabajado con artistas como Led Zeppelin, Aretha Franklin y Bruno Mars.'
+      },
+      {
+        name: 'Def Jam Recordings',
+        nationality: 'Estados Unidos de América',
+        description: 'Def Jam Recordings es una discográfica estadounidense especializada en hip-hop y música urbana. Ha representado a artistas influyentes como LL Cool J, Jay-Z y Kanye West.'
+      },
+      {
+        name: 'RCA Records',
+        nationality: 'Estados Unidos de América',
+        description: 'RCA Records es una discográfica estadounidense que ha lanzado música en una variedad de géneros. Ha trabajado con artistas como Elvis Presley, Whitney Houston y Justin Timberlake.'
+      },
+      {
+        name: 'Sub Pop Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Sub Pop Records es un sello discográfico independiente conocido por su papel en el movimiento grunge de Seattle. Ha representado a bandas como Nirvana, Soundgarden y Pearl Jam.'
+      },
+      {
+        name: 'Island Records',
+        nationality: 'Reino Unido',
+        description: 'Island Records es una discográfica británica con una historia notable en la música rock y pop. Ha trabajado con artistas como U2, Bob Marley y Amy Winehouse.'
+      },
+      {
+        name: 'Columbia Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Columbia Records es una discográfica estadounidense con una larga historia en la industria musical. Ha lanzado música de artistas icónicos como Bruce Springsteen, Beyoncé y Adele.'
+      },
+      {
+        name: 'Parlophone Records',
+        nationality: 'Reino Unido',
+        description: 'Parlophone Records es una discográfica británica con un catálogo que incluye a The Beatles, Coldplay y David Bowie. Ha tenido un impacto significativo en la música británica.'
+      },
+      {
+        name: 'Mute Records',
+        nationality: 'Reino Unido',
+        description: 'Mute Records es un sello discográfico independiente conocido por su trabajo con artistas en el ámbito de la música electrónica y experimental. Ha representado a Depeche Mode, Moby y Goldfrapp.'
+      },
+      {
+        name: 'XL Recordings',
+        nationality: 'Reino Unido',
+        description: 'XL Recordings es un sello discográfico británico que ha tenido un papel destacado en la música electrónica y el indie. Ha lanzado música de The Prodigy, Adele y Radiohead.'
+      },
+      {
+        name: 'Domino Recording Company',
+        nationality: 'Reino Unido',
+        description: 'Domino Recording Company es un sello discográfico independiente con sede en el Reino Unido. Ha representado a bandas como Arctic Monkeys, Franz Ferdinand y Animal Collective.'
+      },
+      {
+        name: 'Merge Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Merge Records es un sello discográfico independiente con sede en Carolina del Norte. Ha trabajado con bandas indie notables como Arcade Fire, Spoon y Neutral Milk Hotel.'
+      },
+      {
+        name: 'Jagjaguwar',
+        nationality: 'Estados Unidos de América',
+        description: 'Jagjaguwar es un sello discográfico independiente con sede en Indiana. Ha lanzado música de artistas como Bon Iver, Dinosaur Jr. y Angel Olsen.'
+      },
+      {
+        name: 'Fat Possum Records',
+        nationality: 'Estados Unidos de América',
+        description: 'Fat Possum Records es un sello discográfico independiente especializado en blues y rock. Ha trabajado con artistas como R.L. Burnside, The Black Keys y Andrew Bird.'
+      },
+      {
+        name: '4AD',
+        nationality: 'Reino Unido',
+        description: '4AD es un sello discográfico británico que ha lanzado música en el ámbito del indie y el rock alternativo. Ha representado a bandas como The National, Cocteau Twins y Pixies.'
+      },
+      {
+        name: 'Nuclear Blast',
+        nationality: 'Alemania',
+        description: 'Nuclear Blast es un sello discográfico alemán especializado en música metal. Ha trabajado con bandas de diversos subgéneros del metal, incluyendo Dimmu Borgir, Slayer y Nightwish.'
+      }
+      ].each do |producer|
        next if Producer.find_by(name: producer[:name]).present?
  
        Producer.create({ name: producer[:name],
@@ -167,135 +458,391 @@ namespace :populate do
           province: "Mendoza",
         })
 
+        venue4 = Venue.create(
+          name: "Teatro Colón",
+          description: "El Teatro Colón es un teatro de ópera de Buenos Aires considerado uno de los cinco mejores del mundo por la acústica. Es un edificio con más de 100 años de historia y una rica tradición artística.",
+          location_attributes: {
+            zip_code: "C1063",
+            street: "Cerrito",
+            department: "CABA",
+            locality: "CABA",
+            latitude: "-34.60145621632879",
+            longitude: "-58.3857798574496",
+            number: "628",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+        
+        venue5 = Venue.create(
+          name: "Estadio Monumental",
+          description: "El Estadio Monumental es el estadio del Club Atlético River Plate en Buenos Aires. Es uno de los estadios más icónicos de Argentina y ha sido sede de eventos deportivos y conciertos de renombre.",
+          location_attributes: {
+            zip_code: "C1428",
+            street: "Av. Pres. Figueroa Alcorta",
+            department: "CABA",
+            locality: "CABA",
+            latitude: "-34.54500182387441",
+            longitude: "-58.454702153696195",
+            number: "7597",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+        
+        venue6 = Venue.create(
+          name: "Teatro Gran Rex",
+          description: "El Teatro Gran Rex es un teatro y sala de conciertos ubicado en Buenos Aires. Ha albergado actuaciones de músicos locales e internacionales y es conocido por su excelente acústica.",
+          location_attributes: {
+            zip_code: "C1011",
+            street: "Av. Corrientes",
+            department: "CABA",
+            locality: "CABA",
+            latitude: "-34.60480149464147",
+            longitude: "-58.38205598885234",
+            number: "857",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+
+        venue7 = Venue.create(
+          name: "Estadio Monumental",
+          description: "El Estadio Monumental es un estadio de fútbol en Buenos Aires, Argentina, donde se celebran importantes eventos deportivos y conciertos.",
+          location_attributes: {
+            zip_code: "C1428",
+            street: "Av. Figueroa Alcorta",
+            department: "CABA",
+            locality: "CABA",
+            latitude: "-34.545775",
+            longitude: "-58.452760",
+            number: "7597",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+        
+        venue8 = Venue.create(
+          name: "Teatro Opera",
+          description: "El Teatro Opera es un teatro histórico en Buenos Aires, Argentina, que ha sido un escenario para una variedad de actuaciones en vivo.",
+          location_attributes: {
+            zip_code: "C1061",
+            street: "Av. Corrientes",
+            department: "CABA",
+            locality: "CABA",
+            latitude: "-34.608276",
+            longitude: "-58.394451",
+            number: "860",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+        
+        venue9 = Venue.create(
+          name: "Teatro Gran Splendid",
+          description: "El Teatro Gran Splendid es una famosa librería ubicada en un antiguo teatro en Buenos Aires, Argentina. Los visitantes pueden explorar libros en un entorno teatral impresionante.",
+          location_attributes: {
+            zip_code: "C1010",
+            street: "Av. Santa Fe",
+            department: "CABA",
+            locality: "CABA",
+            latitude: "-34.595189",
+            longitude: "-58.389042",
+            number: "1860",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+        
+        venue10 = Venue.create(
+          name: "Estadio Único de La Plata",
+          description: "El Estadio Único de La Plata es un estadio en La Plata, Argentina, utilizado para eventos deportivos y conciertos. Es conocido por su arquitectura distintiva.",
+          location_attributes: {
+            zip_code: "B1900",
+            street: "Calle 25",
+            department: "Buenos Aires",
+            locality: "La Plata",
+            latitude: "-34.921869",
+            longitude: "-57.995502",
+            number: "1675",
+            country: "Argentina",
+            province: "Buenos Aires",
+          }
+        )
+        
+        venue11 = Venue.create(
+          name: "Teatro Solís",
+          description: "El Teatro Solís es un teatro histórico en Montevideo, Uruguay, que alberga una variedad de actuaciones culturales y artísticas.",
+          location_attributes: {
+            zip_code: "11100",
+            street: "Calle Buenos Aires",
+            department: "Montevideo",
+            locality: "Montevideo",
+            latitude: "-34.906498",
+            longitude: "-56.194155",
+            number: "468",
+            country: "Uruguay",
+            province: "Montevideo",
+          }
+        )
+        
+        venue12 = Venue.create(
+          name: "Teatro de la Ciudad",
+          description: "El Teatro de la Ciudad es un teatro en México City, México, que presenta una amplia gama de eventos culturales y teatrales.",
+          location_attributes: {
+            zip_code: "06300",
+            street: "Av. Donceles",
+            department: "Ciudad de México",
+            locality: "Ciudad de México",
+            latitude: "19.434012",
+            longitude: "-99.140388",
+            number: "97",
+            country: "Mexico",
+            province: "Ciudad de México",
+          }
+        )
+        
+        venue13 = Venue.create(
+          name: "Auditorio Nacional",
+          description: "El Auditorio Nacional es un importante centro de espectáculos en Ciudad de México, México, que acoge conciertos y eventos en vivo de alto perfil.",
+          location_attributes: {
+            zip_code: "11550",
+            street: "Paseo de la Reforma",
+            department: "Ciudad de México",
+            locality: "Ciudad de México",
+            latitude: "19.425032",
+            longitude: "-99.180609",
+            number: "50",
+            country: "Mexico",
+            province: "Ciudad de México",
+          }
+        )
+        
+        venue14 = Venue.create(
+          name: "Palacio de los Deportes",
+          description: "El Palacio de los Deportes es un recinto deportivo y de entretenimiento en Ciudad de México, México, que alberga eventos deportivos y conciertos.",
+          location_attributes: {
+            zip_code: "15090",
+            street: "Viaducto Río Piedad",
+            department: "Ciudad de México",
+            locality: "Ciudad de México",
+            latitude: "19.400445",
+            longitude: "-99.106376",
+            number: "9",
+            country: "Mexico",
+            province: "Ciudad de México",
+          }
+        )
+        
+        venue15 = Venue.create(
+          name: "Foro Sol",
+          description: "El Foro Sol es un estadio en Ciudad de México, México, utilizado para eventos deportivos y conciertos. Es uno de los estadios más grandes de América Latina.",
+          location_attributes: {
+            zip_code: "08400",
+            street: "Viaducto Río Piedad",
+            department: "Ciudad de México",
+            locality: "Ciudad de México",
+            latitude: "19.404725",
+            longitude: "-99.090733",
+            number: "504",
+            country: "Mexico",
+            province: "Ciudad de México",
+          }
+        )
+
+        venue16 = Venue.create(
+          name: "Nave Cultural",
+          description: "La Nave Cultural es un espacio cultural en Mendoza que alberga una variedad de eventos artísticos y culturales, desde conciertos hasta exposiciones de arte.",
+          location_attributes: {
+            zip_code: "5500",
+            street: "Av. España",
+            department: "Mendoza",
+            locality: "Mendoza",
+            latitude: "-32.899620",
+            longitude: "-68.837873",
+            number: "430",
+            country: "Argentina",
+            province: "Mendoza",
+          }
+        )
+        
+        venue17 = Venue.create(
+          name: "Arena Maipú",
+          description: "Arena Maipú es un centro de eventos en Maipú, Mendoza, donde se realizan conciertos, exposiciones y otros espectáculos en vivo.",
+          location_attributes: {
+            zip_code: "5515",
+            street: "Ruta 20",
+            department: "Mendoza",
+            locality: "Maipú",
+            latitude: "-32.945080",
+            longitude: "-68.761327",
+            number: "2245",
+            country: "Argentina",
+            province: "Mendoza",
+          }
+        )
+        
+        venue18 = Venue.create(
+          name: "Plaza Independencia",
+          description: "La Plaza Independencia es una plaza histórica en el centro de Mendoza, conocida por su belleza y su uso para eventos al aire libre y actividades culturales.",
+          location_attributes: {
+            zip_code: "5500",
+            street: "Sarmiento",
+            department: "Mendoza",
+            locality: "Mendoza",
+            latitude: "-32.888489",
+            longitude: "-68.818592",
+            number: "350",
+            country: "Argentina",
+            province: "Mendoza",
+          }
+        )
+        
+        venue19 = Venue.create(
+          name: "Espacio Trapiche",
+          description: "Espacio Trapiche es una bodega en Mendoza que a menudo organiza eventos relacionados con el vino, como degustaciones y festivales.",
+          location_attributes: {
+            zip_code: "5517",
+            street: "Costa Flores",
+            department: "Mendoza",
+            locality: "Maipú",
+            latitude: "-32.973944",
+            longitude: "-68.787981",
+            number: "1",
+            country: "Argentina",
+            province: "Mendoza",
+          }
+        )
+        
+        venue20 = Venue.create(
+          name: "Museo Fundacional",
+          description: "El Museo Fundacional es un museo en Mendoza que presenta la historia y la cultura de la ciudad, además de albergar eventos y exposiciones.",
+          location_attributes: {
+            zip_code: "5500",
+            street: "Pedro Molina",
+            department: "Mendoza",
+            locality: "Mendoza",
+            latitude: "-32.883973",
+            longitude: "-68.821511",
+            number: "1820",
+            country: "Argentina",
+            province: "Mendoza",
+          }
+        )
+
         [
           {
-            name: 'Domingo de música',
-            datetime: '2023-09-14T19:21:00.000Z',
+            name: 'Noche de Flamenco',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-            description: 'Disfruta de una emocionante tarde de música en vivo con artistas sorpresa. ¡No te lo pierdas!'
+            description: 'Sumérgete en el apasionante mundo del flamenco con una noche llena de baile y música en vivo.'
           },
           {
-            name: 'Gira federal',
-            datetime: '2023-09-18T19:21:00.000Z',
+            name: 'Concierto de Rock Progresivo',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-            description: '¡La gira federal llega a tu ciudad con un espectáculo musical imperdible!'
+            description: 'Experimenta la complejidad y la innovación del rock progresivo en un concierto inolvidable.'
           },
           {
-            name: 'Concierto en Vivo',
-            datetime: '2024-09-12T19:21:00.000Z',
+            name: 'Tarde de Boleros',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-            description: 'Una noche llena de energía y música en vivo que te hará vibrar de emoción.'
+            description: 'Déjate llevar por la pasión de los boleros en una tarde romántica llena de melodías conmovedoras.'
           },
           {
-            name: 'Noche de Música en Vivo',
-            datetime: '2023-10-07T19:21:00.000Z',
+            name: 'Festival de Electrónica en la Playa',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-            description: 'Únete a nosotros para una emocionante noche llena de música en vivo y entretenimiento.'
+            description: 'Disfruta de la música electrónica en un escenario de playa con los mejores DJ internacionales.'
           },
           {
-            name: 'Presentacion musical',
-            datetime: '2023-12-12T19:21:00.000Z',
+            name: 'Concierto de Música Latina',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-            description: 'Una presentación musical especial que te llevará a un viaje a través de diferentes estilos musicales.'
+            description: 'Baila al ritmo de la música latina con una noche de reguetón, salsa y más géneros latinos.'
           },
           {
-            name: 'Noche de Jazz',
-            datetime: '2023-09-28T19:21:00.000Z',
+            name: 'Noche de Ópera',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-            description: 'Disfruta de una noche de jazz en un ambiente relajado y sofisticado.'
+            description: 'Experimenta la majestuosidad de la ópera en una noche que te llevará a mundos de emoción y drama.'
           },
           {
-    name: 'Noche de Rock en Vivo',
-    datetime: '2023-10-15T20:00:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            name: 'Fiesta de Ska en la Calle',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Una noche llena de potente rock en vivo que te hará vibrar. ¡Únete a nosotros y sé parte de la historia del rock!'
-  },
-  {
-    name: 'Fiesta de Reggae bajo las Estrellas',
-    datetime: '2023-11-05T21:30:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: '¡Baila y diviértete en una fiesta callejera con la mejor música ska en vivo!'
+          },
+          {
+            name: 'Concierto de Rap Nacional',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Sumérgete en el ritmo relajante del reggae en una fiesta al aire libre bajo las estrellas. ¡Vive la buena vibra!'
-  },
-  {
-    name: 'Concierto de Orquesta Sinfónica',
-    datetime: '2023-11-20T19:00:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: 'Celebra el rap nacional con actuaciones en vivo de los mejores artistas de la escena.'
+          },
+          {
+            name: 'Festival de Reggaetón',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Una velada elegante y emocionante con una interpretación magistral de la orquesta sinfónica. Una experiencia musical única.'
-  },
-  {
-    name: 'Noche de Hip-Hop Urbano',
-    datetime: '2023-12-03T22:00:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: 'Perrea y disfruta de la música reggaetón en un festival lleno de ritmo y sensualidad.'
+          },
+          {
+            name: 'Concierto de Metal Sinfónico',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Descubre la cultura del hip-hop en una noche llena de ritmo, baile y líricas impactantes. ¡El hip-hop toma el escenario!'
-  },
-  {
-    name: 'Festival de Indie Rock Alternativo',
-    datetime: '2024-01-15T17:00:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: 'Sumérgete en el mundo épico del metal sinfónico con un concierto lleno de poder y melodía.'
+          },
+          {
+            name: 'Noche de R&B Sensual',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Un festival para los amantes del indie rock alternativo. Bandas emergentes y sonidos vanguardistas te esperan.'
-  },
-  {
-    name: 'Tarde de Música Clásica',
-    datetime: '2024-02-05T15:30:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: 'Disfruta de una noche de música R&B sensual y romántica que te hará mover el cuerpo.'
+          },
+          {
+            name: 'Concierto de Pop Rock',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Disfruta de una tarde de música clásica interpretada por virtuosos músicos en un entorno íntimo y acogedor.'
-  },
-  {
-    name: 'Concierto de Pop Latino',
-    datetime: '2024-03-10T20:30:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: 'Baila y canta con las mejores canciones del pop rock en un concierto lleno de energía y diversión.'
+          },
+          {
+            name: 'Festival de Country al Aire Libre',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Baila y canta al ritmo de las mejores canciones del pop latino en un concierto lleno de energía y pasión.'
-  },
-  {
-    name: 'Festival de Folk Tradicional',
-    datetime: '2024-04-22T18:00:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
+            description: 'Vive la auténtica experiencia del country en un festival al aire libre con música en vivo y actividades.'
+          },
+          {
+            name: 'Noche de Tango en Buenos Aires',
+            datetime: (DateTime.now + rand(1..6).months).to_s,
+            artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
             venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Explora la riqueza de la música folk tradicional de diferentes culturas en este festival lleno de autenticidad y tradición.'
-  },
-  {
-    name: 'Noche de Blues en la Ciudad',
-    datetime: '2024-05-07T21:00:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
-            producer_id: Producer.order("RANDOM()").first.id,
-            venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Deja que el blues te atrape en una noche de música emocional y expresiva en el corazón de la ciudad.'
-  },
-  {
-    name: 'Concierto de Piano Solo',
-    datetime: '2024-06-18T19:30:00.000Z',
-    artist_id: Artist.order("RANDOM()").first.id,
-            producer_id: Producer.order("RANDOM()").first.id,
-            venue_id: Venue.order("RANDOM()").first.id,
-    description: 'Una velada íntima y conmovedora con un talentoso pianista que te llevará a través de las notas del piano.'
-  }
+            description: 'Déjate llevar por el tango en una noche romántica en la capital del tango, Buenos Aires.'
+          }
         ].each do |event|
         evento = Event.find_or_create_by(event)
         
@@ -436,7 +983,61 @@ namespace :populate do
         end
                 
        end
-      
+
+# Crear comentarios y asociarlos a eventos
+Event.all.each do |event|
+  # Genera un número aleatorio de comentarios para cada evento (entre 1 y 5)
+  num_comments = rand(1..9)
+
+  num_comments.times do
+    Comment.create(
+      body: Faker::Lorem.sentence,
+      user_id: User.order("RANDOM()").first.id, # Asigna un usuario aleatorio
+      event_id: event.id
+    )
+  end
+end
+
         
+  end
+
+  desc "Edit created_at attribute for records in the last 6 months"
+  task edit_created_at: :environment do
+    # Calcula la fecha hace 6 meses
+    six_months_ago = 6.months.ago
+  
+    # Encuentra y actualiza Eventos
+    events_to_update = Event.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(events_to_update)
+  
+    # Encuentra y actualiza Likes
+    likes_to_update = Like.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(likes_to_update)
+  
+    # Encuentra y actualiza Comentarios
+    comments_to_update = Comment.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(comments_to_update)
+  
+    # Encuentra y actualiza Reseñas
+    reviews_to_update = Review.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(reviews_to_update)
+  
+    # Encuentra y actualiza Artistas
+    artists_to_update = Artist.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(artists_to_update)
+
+     # Encuentra y actualiza Users
+     artists_to_update = User.where("created_at >= ?", six_months_ago)
+     update_created_at_for_records(artists_to_update)
+  
+    puts "Updated created_at for records in multiple entities."
+  end
+  
+  # Esta función actualiza el atributo created_at para un conjunto de registros
+  def update_created_at_for_records(records)
+    records.each do |record|
+      random_date = 6.months.ago + rand(6.months)
+      record.update(created_at: random_date)
+    end
   end
 end

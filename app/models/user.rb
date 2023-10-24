@@ -150,6 +150,10 @@ class User < ApplicationRecord
     user_stat.increment_penalization_score!(score)
   end
 
+  def profile_image_full_url
+    profile_image&.full_url
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################

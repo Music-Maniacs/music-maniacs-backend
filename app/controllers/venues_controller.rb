@@ -7,9 +7,9 @@ class VenuesController < ApplicationController
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] },
                                last_reviews: { only: %i[id rating description created_at reviewable_type],
-                                               include: { user: { only: %i[id full_name] } },
+                                               include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
                                                methods: :anonymous },
-                               versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
+                               versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url } } } },
                     methods: %i[rating past_events next_events address] }.freeze
 
   def show
