@@ -21,6 +21,14 @@ Rails.application.routes.draw do
     get '/:id', action: :show
   end
 
+  constraints(id: /[^\/]+/) do
+    resources :backups, only: %i[index destroy create] do
+      member do
+        post :restore_backup
+      end
+    end
+  end
+
   resources :artists, only: %i[show create update]
   resources :producers, only: %i[show create update]
   resources :venues, only: %i[show create update]
