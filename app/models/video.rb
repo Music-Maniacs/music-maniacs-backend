@@ -1,6 +1,7 @@
 class Video < Multimedia
   include Likeable
   include Reportable
+  acts_as_paranoid
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################

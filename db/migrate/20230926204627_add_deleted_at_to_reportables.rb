@@ -12,5 +12,9 @@ class AddDeletedAtToReportables < ActiveRecord::Migration[7.0]
     add_index :producers, :deleted_at
     add_column :users, :deleted_at, :datetime
     add_index :users, :deleted_at
+    add_column :videos, :deleted_at, :datetime
+    add_index :videos, :deleted_at
+    add_column :reviews, :deleted_at, :datetime
+    add_index :reviews, :deleted_at
   end
 end
