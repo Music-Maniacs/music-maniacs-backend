@@ -111,8 +111,8 @@ class Event < ApplicationRecord
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
-  def self.discover_by_location(department:, province:, country:)
-    events = all.ransack(venue_location_department: department).result(distinct: true)
+  def self.discover_by_location(city:, province:, country:)
+    events = all.ransack(venue_location_city: city).result(distinct: true)
     if events.size < 10
       events += all.ransack(venue_location_province: province).result(distinct: true)
       if events.size < 10

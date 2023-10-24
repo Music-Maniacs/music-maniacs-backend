@@ -2,7 +2,7 @@ class VenuesController < ApplicationController
   include FollowableActions
   include ReviewableActions
 
-  VENUE_TO_JSON = { include: { location: { only: %i[zip_code street department locality latitude longitude number country province] },
+  VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] },
                                last_reviews: { only: %i[id rating description created_at reviewable_type],
