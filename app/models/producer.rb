@@ -20,7 +20,7 @@ class Producer < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :name, uniqueness: true
-  validates :name, :nationality, :description, presence: true
+  validates :name, :nationality, presence: true
 
   ##############################################################################
   # CLASS METHODS
