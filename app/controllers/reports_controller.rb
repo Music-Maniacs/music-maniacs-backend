@@ -7,6 +7,17 @@ class ReportsController < ApplicationController
 
   before_action :authenticate_user!, only: %i[resolve]
 
+  ARTIST_TO_JSON = { only: %i[id name created_at] }.freeze
+  VENUE_TO_JSON = { only: %i[id name created_at] }.freeze
+  PRODUCER_TO_JSON = { only: %i[id name created_at] }.freeze
+  EVENT_TO_JSON = { only: %i[id name created_at] }.freeze
+  COMMENT_TO_JSON = { only: %i[id body created_at] }.freeze
+  VIDEO_TO_JSON = { only: %i[id name created_at recorded_at], methods: %i[full_url] }.freeze
+  REVIEW_TO_JSON = { only: %i[id description created_at] }.freeze
+  VERSION_TO_JSON = { except: :object_changes, methods: %i[anonymous named_object_changes] }.freeze
+
+  AUTHOR_TO_JSON = { only: %i[id email username full_name] }.freeze
+
   def index
     reports = Report.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
     render json: { data: reports.as_json(REPORTS_TO_JSON), pagination: pagination_info(reports) }
@@ -14,7 +25,13 @@ class ReportsController < ApplicationController
 
   def show
     report = Report.find(params[:id])
-    render json: report.as_json(REPORTS_TO_JSON_SHOW)
+    result = report.as_json(REPORTS_TO_JSON_SHOW.merge({ include: { reportable: reportable_serializer(report.reportable_type) } }))
+    result.merge!(author: report.author.as_json(AUTHOR_TO_JSON))
+    render json: result
+  end
+
+  def reportable_serializer(reportable_type)
+    self.class.const_get("#{reportable_type.upcase}_TO_JSON")
   end
 
   def resolve
