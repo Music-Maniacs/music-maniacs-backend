@@ -55,7 +55,11 @@ class Report < ApplicationRecord
 
   def penalize_author
     # si el reportable se crea por consola no va a tener whodunnit y por ende tampoco autor a penalizar
-    User.with_deleted.find_by(id: reportable.author_id)&.increment_penalization_score!(penalization_score)
+    author&.increment_penalization_score!(penalization_score)
+  end
+
+  def author
+    User.with_deleted.find_by(id: reportable.author_id)
   end
 
   def reject(resolver, moderator_comment)
