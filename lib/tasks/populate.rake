@@ -420,8 +420,7 @@ namespace :populate do
         location_attributes: {
           zip_code: "5500",
           street: "Olascoaga",
-          department: "Mendoza",
-          locality: "Mendoza",
+          city: "Mendoza",
           latitude: "-32.88042883193109",
           longitude: "-68.8516026751349",
           number: "1783",
@@ -434,8 +433,7 @@ namespace :populate do
         location_attributes: {
           zip_code: "C1106",
           street: "Av. Eduardo Madero",
-          department: "CABA",
-          locality: "CABA",
+          city: "CABA",
           latitude: "-34.60217641615085",
           longitude: "-58.36973861326939",
           number: "470",
@@ -449,8 +447,7 @@ namespace :populate do
         location_attributes: {
           zip_code: "5500",
           street: "Virgen del Carmen de Cuyo",
-          department: "Mendoza",
-          locality: "Mendoza",
+          city: "Mendoza",
           latitude: "-32.89806635814529",
           longitude: "-68.85010249275496",
           number: "610",
@@ -464,8 +461,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1063",
             street: "Cerrito",
-            department: "CABA",
-            locality: "CABA",
+            city: "CABA",
             latitude: "-34.60145621632879",
             longitude: "-58.3857798574496",
             number: "628",
@@ -480,8 +476,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1428",
             street: "Av. Pres. Figueroa Alcorta",
-            department: "CABA",
-            locality: "CABA",
+            city: "CABA",
             latitude: "-34.54500182387441",
             longitude: "-58.454702153696195",
             number: "7597",
@@ -496,8 +491,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1011",
             street: "Av. Corrientes",
-            department: "CABA",
-            locality: "CABA",
+            city: "CABA",
             latitude: "-34.60480149464147",
             longitude: "-58.38205598885234",
             number: "857",
@@ -512,8 +506,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1428",
             street: "Av. Figueroa Alcorta",
-            department: "CABA",
-            locality: "CABA",
+            city: "CABA",
             latitude: "-34.545775",
             longitude: "-58.452760",
             number: "7597",
@@ -528,8 +521,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1061",
             street: "Av. Corrientes",
-            department: "CABA",
-            locality: "CABA",
+            city: "CABA",
             latitude: "-34.608276",
             longitude: "-58.394451",
             number: "860",
@@ -544,8 +536,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1010",
             street: "Av. Santa Fe",
-            department: "CABA",
-            locality: "CABA",
+            city: "CABA",
             latitude: "-34.595189",
             longitude: "-58.389042",
             number: "1860",
@@ -560,8 +551,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "B1900",
             street: "Calle 25",
-            department: "Buenos Aires",
-            locality: "La Plata",
+            city: "Buenos Aires",
             latitude: "-34.921869",
             longitude: "-57.995502",
             number: "1675",
@@ -576,8 +566,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "11100",
             street: "Calle Buenos Aires",
-            department: "Montevideo",
-            locality: "Montevideo",
+            city: "Montevideo",
             latitude: "-34.906498",
             longitude: "-56.194155",
             number: "468",
@@ -592,8 +581,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "06300",
             street: "Av. Donceles",
-            department: "Ciudad de México",
-            locality: "Ciudad de México",
+            city: "Ciudad de México",
             latitude: "19.434012",
             longitude: "-99.140388",
             number: "97",
@@ -608,8 +596,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "11550",
             street: "Paseo de la Reforma",
-            department: "Ciudad de México",
-            locality: "Ciudad de México",
+            city: "Ciudad de México",
             latitude: "19.425032",
             longitude: "-99.180609",
             number: "50",
@@ -624,8 +611,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "15090",
             street: "Viaducto Río Piedad",
-            department: "Ciudad de México",
-            locality: "Ciudad de México",
+            city: "Ciudad de México",
             latitude: "19.400445",
             longitude: "-99.106376",
             number: "9",
@@ -640,8 +626,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "08400",
             street: "Viaducto Río Piedad",
-            department: "Ciudad de México",
-            locality: "Ciudad de México",
+            city: "Ciudad de México",
             latitude: "19.404725",
             longitude: "-99.090733",
             number: "504",
@@ -656,8 +641,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5500",
             street: "Av. España",
-            department: "Mendoza",
-            locality: "Mendoza",
+            city: "Mendoza",
             latitude: "-32.899620",
             longitude: "-68.837873",
             number: "430",
@@ -672,8 +656,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5515",
             street: "Ruta 20",
-            department: "Mendoza",
-            locality: "Maipú",
+            city: "Mendoza",
             latitude: "-32.945080",
             longitude: "-68.761327",
             number: "2245",
@@ -688,8 +671,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5500",
             street: "Sarmiento",
-            department: "Mendoza",
-            locality: "Mendoza",
+            city: "Mendoza",
             latitude: "-32.888489",
             longitude: "-68.818592",
             number: "350",
@@ -704,8 +686,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5517",
             street: "Costa Flores",
-            department: "Mendoza",
-            locality: "Maipú",
+            city: "Mendoza",
             latitude: "-32.973944",
             longitude: "-68.787981",
             number: "1",
@@ -720,8 +701,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5500",
             street: "Pedro Molina",
-            department: "Mendoza",
-            locality: "Mendoza",
+            city: "Mendoza",
             latitude: "-32.883973",
             longitude: "-68.821511",
             number: "1820",

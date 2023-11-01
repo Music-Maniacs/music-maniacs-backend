@@ -86,13 +86,13 @@ class EventsController < ApplicationController
 
   def discover
     result = if current_user.present?
-               { by_location: discover_order_limit_and_to_json(Event.discover_by_location(department: params[:department], province: params[:province], country: params[:country])),
+               { by_location: discover_order_limit_and_to_json(Event.discover_by_location(city: params[:city], province: params[:province], country: params[:country])),
                  most_popular: discover_order_limit_and_to_json(Event.most_popular),
                  by_followed_artists: discover_order_limit_and_to_json(Event.where(artist_id: current_user.followed_artists.pluck(:id)).order(created_at: :desc)),
                  by_followed_producers: discover_order_limit_and_to_json(Event.where(producer_id: current_user.followed_producers.pluck(:id)).order(created_at: :desc)),
                  by_followed_venues: discover_order_limit_and_to_json(Event.where(venue_id: current_user.followed_venues.pluck(:id)).order(created_at: :desc)) }
              else
-               { by_location: discover_order_limit_and_to_json(Event.discover_by_location(department: params[:department], province: params[:province], country: params[:country])),
+               { by_location: discover_order_limit_and_to_json(Event.discover_by_location(city: params[:city], province: params[:province], country: params[:country])),
                  most_popular: discover_order_limit_and_to_json(Event.most_popular) }
              end
     render json: result, status: :ok

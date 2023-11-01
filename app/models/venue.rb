@@ -28,7 +28,7 @@ class Venue < ApplicationRecord
   # INSTANCE METHODS
   ##############################################################################
   def address
-    "#{location.street} #{location.number}, #{location.locality}, #{location.province}, #{location.country}"
+    "#{location.street} #{location.number}, #{location.city}, #{location.province}, #{location.country}"
   end
 
   def short_address
