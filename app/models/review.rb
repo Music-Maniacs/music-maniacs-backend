@@ -5,7 +5,7 @@ class Review < ApplicationRecord
 
   TO_JSON = { only: %i[id rating description created_at reviewable_type],
               include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
-              methods: :anonymous }.freeze
+              methods: %i[anonymous reviewable_name] }.freeze
   ##############################################################################
   # VALIDATIONS
   ##############################################################################

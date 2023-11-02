@@ -7,14 +7,21 @@ class ReportsController < ApplicationController
 
   before_action :authenticate_user!, only: %i[resolve]
 
-  ARTIST_TO_JSON = { only: %i[id name created_at] }.freeze
-  VENUE_TO_JSON = { only: %i[id name created_at] }.freeze
-  PRODUCER_TO_JSON = { only: %i[id name created_at] }.freeze
-  EVENT_TO_JSON = { only: %i[id name created_at] }.freeze
-  COMMENT_TO_JSON = { only: %i[id body created_at] }.freeze
+  ARTIST_TO_JSON = { only: %i[id name created_at], include: { image: { methods: %i[full_url] } } }.freeze
+  VENUE_TO_JSON = { only: %i[id name created_at], include: { image: { methods: %i[full_url] } } }.freeze
+  PRODUCER_TO_JSON = { only: %i[id name created_at], include: { image: { methods: %i[full_url] } } }.freeze
+  EVENT_TO_JSON = { only: %i[id name created_at], include: { image: { methods: %i[full_url] },
+                                                             artist: { only: %i[id name] },
+                                                             producer: { only: %i[id name] },
+                                                             venue: { only: %i[id name] } } }.freeze
+  COMMENT_TO_JSON = { only: %i[id body created_at],
+                      include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
+                      methods: %i[anonymous] }.freeze
   VIDEO_TO_JSON = { only: %i[id name created_at recorded_at], methods: %i[full_url] }.freeze
-  REVIEW_TO_JSON = { only: %i[id description created_at] }.freeze
-  VERSION_TO_JSON = { except: :object_changes, methods: %i[anonymous named_object_changes] }.freeze
+  REVIEW_TO_JSON = Review::TO_JSON
+  VERSION_TO_JSON = { except: :object_changes,
+                      methods: %i[anonymous named_object_changes],
+                      include: { user: { only: %i[id full_name] } } }.freeze
 
   AUTHOR_TO_JSON = { only: %i[id email username full_name] }.freeze
 
