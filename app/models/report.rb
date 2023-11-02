@@ -155,10 +155,10 @@ class Report < ApplicationRecord
   end
 
   def merge_profile(duplicated:, original:)
-    profile_type = reportble.class.to_s.downcase # artist, venue, producer
-    duplicated.events.update_all("#{profile_type}_id" => original.id)
-    duplicated.reviews.update_all(reviewable_id: original.id)
-    duplicated.follows.update_all(followable_id: original.id)
+    profile_type = reportable.class.to_s.downcase # artist, venue, producer
+    duplicated.events.update_all("#{profile_type}_id" => original)
+    duplicated.reviews.update_all(reviewable_id: original)
+    duplicated.follows.update_all(followable_id: original)
     duplicated.destroy!
   end
 
