@@ -1,6 +1,7 @@
 class Report < ApplicationRecord
   enum status: { pending: 0, resolved: 1, ignored: 2 }
   enum category: { inappropriate_content: 0, spam: 1, other: 2, fake: 3, duplicated: 4, incorrect_artist: 5, incorrect_venue: 6, incorrect_producer: 7, does_not_belong_to_event: 8 }
+  CATEGORIES_WITH_SUGGESTIONS = %w[incorrect_artist incorrect_venue incorrect_producer duplicated].freeze
 
   ##############################################################################
   # ASSOCIATIONS
@@ -15,6 +16,7 @@ class Report < ApplicationRecord
   # que el original_reportable_id sea distinto que el reportable_id
   # que la categoría sea valida para el reportable
   # que el reportador no pueda resolver su propio reporte
+  # para la categoria duplicated de eventos validar que el evento tenga asociado los mismos perfiles
 
   ##############################################################################
   # CALLBACKS
@@ -25,6 +27,36 @@ class Report < ApplicationRecord
     self.status ||= :pending
   end
 
+  ##############################################################################
+  # INSTANCE METHODS
+  ##############################################################################
+  def suggestable?
+    CATEGORIES_WITH_SUGGESTIONS.include?(category)
+  end
+
+  def suggestion
+    case category
+    when 'incorrect_artist'
+      Artist.find(original_reportable_id)
+    when 'incorrect_venue'
+      Venue.find(original_reportable_id)
+    when 'incorrect_producer'
+      Producer.find(original_reportable_id)
+    when 'duplicated'
+      reportable_type.constantize.find(original_reportable_id)
+    end
+  end
+
+  ##############################################################################
+  # CLASS METHODS
+  ##############################################################################
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[category reportable_type status created_at]
+  end
+
+  ##############################################################################
+  # RESOLVE REPORTS LOGIC
+  ##############################################################################
   def resolve(action:, resolver:, penalization_score: nil, moderator_comment: nil)
     raise 'already resolved' if resolved? || ignored?
 
@@ -74,6 +106,12 @@ class Report < ApplicationRecord
     # no importa la categoría hay que eliminarlo
     reportable.reports.pending.update_all(status: :resolved, resolver_id: resolver.id)
     reportable.destroy!
+  end
+
+  %w[artist venue producer].each do |profile|
+    define_method("resolve_#{profile}_report") do
+      resolve_event_profile_report
+    end
   end
 
   def resolve_event_profile_report
@@ -129,9 +167,5 @@ class Report < ApplicationRecord
     duplicated.follows.update_all(followable_id: original.id)
     duplicated.videos.update_all(event_id: original.id)
     duplicated.destroy!
-  end
-
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[category reportable_type status created_at]
   end
 end

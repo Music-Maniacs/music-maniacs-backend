@@ -37,6 +37,9 @@ class ReportsController < ApplicationController
     report = Report.find(params[:id])
     result = report.as_json(REPORTS_TO_JSON_SHOW.deep_merge({ include: { reportable: reportable_serializer(report.reportable_type) } }))
     result.merge!(author: report.author.as_json(AUTHOR_TO_JSON))
+    if report.suggestable?
+      result.merge!(suggestion: report.suggestion.as_json(reportable_serializer(report.suggestion.class.name)))
+    end
     render json: result
   end
 
