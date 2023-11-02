@@ -21,4 +21,8 @@ class Video < Multimedia
     user.nil?
   end
   alias anonymous anonymous?
+
+  def author_id
+    user_id
+  end
 end
