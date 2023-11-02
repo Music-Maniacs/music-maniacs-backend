@@ -28,7 +28,7 @@ class Artist < ApplicationRecord
   # INSTANCE METHODS
   ##############################################################################
   def author_id
-    author_by_versions
+    author_id_by_versions
   end
 
   ##############################################################################
