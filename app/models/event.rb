@@ -41,9 +41,12 @@ class Event < ApplicationRecord
   # TODO: after_commit :notify_changes_to_followers, on: :destroy
   before_create :set_popularity_score
   before_update :set_popularity_score, if: :will_save_change_to_views_count?
+  before_update :update_reviews, if: proc { |event| event.artist_id_changed? || event.venue_id_changed? || event.producer_id_changed? }
 
-  def artist_change
-    reviews.where(reviewable_type: 'Artist').update_all(reviewable_id: artist_id)
+  def update_reviews
+    reviews.where(reviewable_type: 'Artist').update_all(reviewable_id: artist_id) if artist_id_changed?
+    reviews.where(reviewable_type: 'Venue').update_all(reviewable_id: venue_id) if venue_id_changed?
+    reviews.where(reviewable_type: 'Producer').update_all(reviewable_id: producer_id) if producer_id_changed?
   end
 
   def notify_changes_to_followers
