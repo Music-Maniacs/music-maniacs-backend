@@ -102,6 +102,7 @@ Rails.application.routes.draw do
 
   resources :videos, only: %i[destroy] do
     member do
+      post :report
       post :like
       post :remove_like
     end

@@ -1,6 +1,6 @@
 class Report < ApplicationRecord
   enum status: { pending: 0, resolved: 1, ignored: 2 }
-  enum category: { inappropriate_content: 0, spam: 1, other: 2, fake: 3, duplicated: 4, incorrect_artist: 5, incorrect_venue: 6, incorrect_producer: 7 }
+  enum category: { inappropriate_content: 0, spam: 1, other: 2, fake: 3, duplicated: 4, incorrect_artist: 5, incorrect_venue: 6, incorrect_producer: 7, does_not_belong_to_event: 8 }
 
   ##############################################################################
   # ASSOCIATIONS
