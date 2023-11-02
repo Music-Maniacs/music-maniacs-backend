@@ -1,11 +1,11 @@
 class ReportsController < ApplicationController
-  REPORTS_TO_JSON = { include: [reporter: { only: %i[id full_name] },
-                                resolver: { only: %i[id full_name] }] }.freeze
-
-  REPORTS_TO_JSON_SHOW = { include: [reporter: { only: %i[id full_name] },
-                                     resolver: { only: %i[id full_name] }] }.freeze
-
   before_action :authenticate_user!, only: %i[resolve]
+
+  REPORTS_TO_JSON = { include: { reporter: { only: %i[id full_name] },
+                                 resolver: { only: %i[id full_name] } } }.freeze
+
+  REPORTS_TO_JSON_SHOW = { include: { reporter: { only: %i[id full_name] },
+                                      resolver: { only: %i[id full_name] } } }.freeze
 
   ARTIST_TO_JSON = { only: %i[id name created_at], include: { image: { methods: %i[full_url] } } }.freeze
   VENUE_TO_JSON = { only: %i[id name created_at], include: { image: { methods: %i[full_url] } } }.freeze
@@ -14,11 +14,14 @@ class ReportsController < ApplicationController
                                                              artist: { only: %i[id name] },
                                                              producer: { only: %i[id name] },
                                                              venue: { only: %i[id name] } } }.freeze
+
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
                       methods: %i[anonymous] }.freeze
+
   VIDEO_TO_JSON = { only: %i[id name created_at recorded_at], methods: %i[full_url] }.freeze
   REVIEW_TO_JSON = Review::TO_JSON
+
   VERSION_TO_JSON = { except: :object_changes,
                       methods: %i[anonymous named_object_changes],
                       include: { user: { only: %i[id full_name] } } }.freeze
@@ -32,7 +35,7 @@ class ReportsController < ApplicationController
 
   def show
     report = Report.find(params[:id])
-    result = report.as_json(REPORTS_TO_JSON_SHOW.merge({ include: { reportable: reportable_serializer(report.reportable_type) } }))
+    result = report.as_json(REPORTS_TO_JSON_SHOW.deep_merge({ include: { reportable: reportable_serializer(report.reportable_type) } }))
     result.merge!(author: report.author.as_json(AUTHOR_TO_JSON))
     render json: result
   end
