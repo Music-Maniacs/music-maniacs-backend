@@ -8,3 +8,18 @@ en:
         venue_id: "Espacio de eventos"
         producer_id: "Productora"
         artist_id: "Artista"
+      permissions:
+        actions:
+          index: "Listar"
+          show: "Ver"
+          new: "Crear"
+          edit: "Editar"
+          create: "Crear"
+          update: "Actualizar"
+          destroy: "Eliminar"
+          manage: "Todas las operaciones"
+          restore_backup: "Restaurar copia de seguridad"
+          metrics_and_user_type: "Consultar métricas"
+          restore: "Restaurar"
+          block: "Bloquear"
+          unblock: "Desbloquear"

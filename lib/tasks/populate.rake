@@ -17,22 +17,20 @@ namespace :populate do
       Rails.application.eager_load!
       ApplicationController.subclasses.each do |controller|
         next unless controller.respond_to?(:permission)
-        next if controller.name.include?('Admin::')
         next if controller.name.include?('Devise')
         next if controller.name.include?('Profile')
-        next if controller.name.include?('Metrics')
 
         klass = controller.permission
-        write_permission(klass.name, :manage, 'All operations')
+        write_permission(klass.name, :manage)
 
         controller.action_methods.each do |action|
-          write_permission(klass.name, action, action)
+          write_permission(klass.name, action)
         end
       end
     end
 
-    def write_permission(subject_class, action, name)
-      Permission.find_or_create_by!(subject_class:, action:, name:)
+    def write_permission(subject_class, action)
+      Permission.find_or_create_by!(subject_class:, action:, name: I18n.t(action, scope: [:activerecord, :attributes, :permissions, :actions]))
     end
 
     setup_actions_controllers_db
@@ -85,14 +83,14 @@ namespace :populate do
      { email: 'ezesalas@gmail.com', username: 'ezeSalas', full_name: 'Eze Salas' },
      { email: 'octalcalde@gmail.com', username: 'octavio', full_name: 'Octa Alcalde' },
      { email: 'lucasmiranda@gmail.com', username: 'lucasMiranda', full_name: 'Lucas Miranda' }].each do |user|
-      next if User.find_by('email= ? OR username= ?', user[:email], user[:username]).present?
+      next if User.find_by(email: user[:email], username: user[:username]).present?
 
-      User.create({ email: user[:email],
+      User.create!({ email: user[:email],
                     username: user[:username],
                     full_name: user[:full_name],
                     password: '123123123',
                     password_confirmation: '123123123',
-                    role_id: Role.find_by(name: 'admin') })
+                    role: Role.find_by(name: 'admin') })
     end
   end
 
