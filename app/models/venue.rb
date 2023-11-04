@@ -15,18 +15,18 @@ class Venue < ApplicationRecord
 
   has_one :image, as: :imageable, dependent: :destroy
 
-  has_many :events
+  has_many :events, dependent: :restrict_with_error
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
   validates :name, presence: true, uniqueness: true
-  validates :description, :location, presence: true
+  validates :location, presence: true
 
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
   def address
-    "#{location.street} #{location.number}, #{location.locality}, #{location.province}, #{location.country}"
+    "#{location.street} #{location.number}, #{location.city}, #{location.province}, #{location.country}"
   end
 
   def short_address

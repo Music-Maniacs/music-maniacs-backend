@@ -15,12 +15,12 @@ class Artist < ApplicationRecord
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
 
-  has_many :events
+  has_many :events, dependent: :restrict_with_error
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
   validates :name, uniqueness: true
-  validates :name, :nationality, :description, presence: true
+  validates :name, :nationality, presence: true
 
   ##############################################################################
   # CLASS METHODS

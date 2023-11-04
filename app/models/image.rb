@@ -7,5 +7,5 @@ class Image < Multimedia
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :file, attached: true, content_type: ['image/png', 'image/jpeg', 'image/jpg']
+  validates :file, attached: true, content_type: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
 end

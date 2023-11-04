@@ -47,11 +47,14 @@ gem 'kaminari'
 gem 'paper_trail'
 gem 'sidekiq'
 
+gem 'faker'
+
 
 # Backup
 gem 'backup'
 gem 'whenever'
 gem 'cancancan'
+gem 'rubyzip'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
