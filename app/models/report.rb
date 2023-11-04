@@ -142,6 +142,12 @@ class Report < ApplicationRecord
     end
   end
 
+  def resolve_review_report
+    # no importa la categoría hay que eliminarlo
+    reportable.reports.pending.update_all(status: :resolved, resolver_id: resolver.id)
+    reportable.destroy!
+  end
+
   def resolve_video_report
     # no importa la categoría hay que eliminarlo
     reportable.reports.pending.update_all(status: :resolved, resolver_id: resolver.id)
