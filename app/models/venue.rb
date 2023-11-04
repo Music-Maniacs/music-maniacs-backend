@@ -17,7 +17,7 @@ class Venue < ApplicationRecord
 
   has_one :image, as: :imageable, dependent: :destroy
 
-  has_many :events, dependent: :restrict_with_error
+  has_many :events
   ##############################################################################
   # VALIDATIONS
   ##############################################################################

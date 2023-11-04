@@ -16,11 +16,11 @@ class Event < ApplicationRecord
   ##############################################################################
   has_one :image, as: :imageable, dependent: :destroy
 
-  has_many :videos
+  has_many :videos, dependent: :destroy
 
-  belongs_to :artist
-  belongs_to :producer
-  belongs_to :venue
+  belongs_to :artist, optional: true
+  belongs_to :producer, optional: true
+  belongs_to :venue, optional: true
 
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
@@ -44,9 +44,9 @@ class Event < ApplicationRecord
   before_update :update_reviews, if: proc { |event| event.artist_id_changed? || event.venue_id_changed? || event.producer_id_changed? }
 
   def update_reviews
-    reviews.where(reviewable_type: 'Artist').update_all(reviewable_id: artist_id) if artist_id_changed?
-    reviews.where(reviewable_type: 'Venue').update_all(reviewable_id: venue_id) if venue_id_changed?
-    reviews.where(reviewable_type: 'Producer').update_all(reviewable_id: producer_id) if producer_id_changed?
+    reviews.where(reviewable_type: 'Artist').update_all(reviewable_id: artist_id) if artist_id_changed? && artist_id.present?
+    reviews.where(reviewable_type: 'Venue').update_all(reviewable_id: venue_id) if venue_id_changed? && venue_id.present?
+    reviews.where(reviewable_type: 'Producer').update_all(reviewable_id: producer_id) if producer_id_changed? && producer_id.present?
   end
 
   def notify_changes_to_followers
@@ -113,8 +113,8 @@ class Event < ApplicationRecord
       next unless changes[attribute].present?
 
       klass = attribute.gsub('_id', '').capitalize.constantize
-      previous_klass_name = klass.find_by(id: changes[attribute][0]).name
-      new_klass_name = klass.find_by(id: changes[attribute][1]).name
+      previous_klass_name = klass.find_by(id: changes[attribute][0])&.name
+      new_klass_name = klass.find_by(id: changes[attribute][1])&.name
       changes[attribute] = [previous_klass_name, new_klass_name]
     end
     changes
