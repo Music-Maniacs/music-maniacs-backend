@@ -1,6 +1,6 @@
 class Admin::GenresController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authorize_action
+  before_action :authenticate_user, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
 
   def index
     genres = Genre.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
@@ -40,6 +40,10 @@ class Admin::GenresController < ApplicationController
 
   def genres_select
     render json: Genre.all.as_json(only: %i[id name]), status: :ok
+  end
+
+  def self.public_endpoints
+    %i[genres_select]
   end
 
   private

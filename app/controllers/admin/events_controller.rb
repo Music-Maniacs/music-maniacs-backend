@@ -1,6 +1,6 @@
 class Admin::EventsController < ApplicationController
-  before_action :authenticate_user!, except: :search_typeahead
-  before_action :authorize_action, except: :search_typeahead
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
 
   EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
@@ -67,6 +67,10 @@ class Admin::EventsController < ApplicationController
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
     end
+  end
+
+  def self.public_endpoints
+    %i[search_typeahead]
   end
 
   private

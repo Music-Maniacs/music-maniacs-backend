@@ -1,7 +1,7 @@
 class Admin::VenuesController < ApplicationController
   include Search
-  before_action :authenticate_user!, except: :search_typeahead
-  before_action :authorize_action, except: :search_typeahead
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
 
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },
@@ -64,6 +64,10 @@ class Admin::VenuesController < ApplicationController
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity
     end
+  end
+
+  def self.public_endpoints
+    %i[search_typeahead]
   end
 
   private

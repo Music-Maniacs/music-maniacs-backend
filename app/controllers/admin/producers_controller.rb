@@ -1,8 +1,8 @@
 class Admin::ProducersController < ApplicationController
   include Search
 
-  before_action :authenticate_user!, except: :search_typeahead
-  before_action :authorize_action, except: :search_typeahead
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
 
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
@@ -64,6 +64,10 @@ class Admin::ProducersController < ApplicationController
     else
       render json: { errors: producer.errors.details }, status: :unprocessable_entity
     end
+  end
+
+  def self.public_endpoints
+    %i[search_typeahead]
   end
 
   private
