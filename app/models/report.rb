@@ -117,7 +117,6 @@ class Report < ApplicationRecord
   def resolve_event_profile_report
     case category
     when 'fake', 'spam', 'other'
-      reportable.events.destroy_all
       reportable.destroy!
       reportable.reports.where(category:).update_all(status: :resolved, resolver_id: resolver.id)
     when 'duplicated'
