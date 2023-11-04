@@ -1,5 +1,6 @@
 class Admin::MetricsController < ApplicationController
-  before_action :validate_user_is_admin
+  before_action :authenticate_user!
+  before_action :authorize_action
 
   def index
     start_date = params[:startDate]
@@ -40,7 +41,6 @@ class Admin::MetricsController < ApplicationController
         new_events: show_metrics('Event', start_date, end_date),
         new_artists: show_metrics('Artist', start_date, end_date)
     }
-
   end
 
   def show_metrics(klass_name, start_date, end_date)

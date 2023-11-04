@@ -1,5 +1,6 @@
 class Admin::EventsController < ApplicationController
-  before_action :validate_user_is_admin
+  before_action :authenticate_user!, except: :search_typeahead
+  before_action :authorize_action, except: :search_typeahead
 
   EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },

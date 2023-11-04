@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
-  before_action :validate_user_is_admin
+  before_action :authenticate_user!
+  before_action :authorize_action
+
   USER_AS_JSON = { methods: [:state],
                    include: { links: { only: %i[id url title] },
                               role: { only: %i[id name] },

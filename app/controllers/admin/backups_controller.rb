@@ -1,5 +1,7 @@
 class Admin::BackupsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_action
+
   BACKUP_DIR = File.expand_path('~/backups/mm_backup').freeze
   MULTIMEDIA_DIR = File.expand_path('./storage').freeze
   CONTAINER_NAME = 'docker_services-db-1'.freeze

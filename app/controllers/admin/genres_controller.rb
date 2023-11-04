@@ -1,5 +1,6 @@
 class Admin::GenresController < ApplicationController
-  before_action :validate_user_is_admin
+  before_action :authenticate_user!
+  before_action :authorize_action
 
   def index
     genres = Genre.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
