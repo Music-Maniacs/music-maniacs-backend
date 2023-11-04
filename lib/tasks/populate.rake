@@ -20,6 +20,7 @@ namespace :populate do
         next if controller.name.include?('Admin::')
         next if controller.name.include?('Devise')
         next if controller.name.include?('Profile')
+        next if controller.name.include?('Metrics')
 
         klass = controller.permission
         write_permission(klass.name, :manage, 'All operations')

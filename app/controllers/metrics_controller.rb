@@ -1,4 +1,6 @@
 class MetricsController < ApplicationController
+  before_action :validate_user_is_admin
+
   def index
     start_date = params[:startDate]
     end_date = params[:endDate]
