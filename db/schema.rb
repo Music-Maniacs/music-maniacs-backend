@@ -68,9 +68,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_234705) do
     t.string "name", null: false
     t.text "description"
     t.datetime "datetime", null: false
-    t.uuid "artist_id", null: false
-    t.uuid "producer_id", null: false
-    t.uuid "venue_id", null: false
+    t.uuid "artist_id"
+    t.uuid "producer_id"
+    t.uuid "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "views_count", default: 0
