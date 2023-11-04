@@ -21,14 +21,6 @@ Rails.application.routes.draw do
     get '/:id', action: :show
   end
 
-  constraints(id: /[^\/]+/) do
-    resources :backups, only: %i[index destroy create] do
-      member do
-        post :restore_backup
-      end
-    end
-  end
-
   resources :artists, only: %i[show create update]
   resources :producers, only: %i[show create update]
   resources :venues, only: %i[show create update]
@@ -73,6 +65,19 @@ Rails.application.routes.draw do
     resources :trust_levels, only: %i[index show create update destroy]
     resources :penalty_thresholds, only: %i[index create update destroy]
     resources :events, only: %i[index show create update destroy]
+
+    constraints(id: /[^\/]+/) do
+      resources :backups, only: %i[index destroy create] do
+        member do
+          post :restore_backup
+        end
+      end
+    end
+
+    resource :metrics, only: %i[] do
+      get :index
+      get :metrics_and_user_type
+    end
   end
 
   resources :reviews, only: %i[update destroy]
@@ -139,10 +144,5 @@ Rails.application.routes.draw do
       get :search_producers
       get :search_venues
     end
-  end
-
-  resource :metrics, only: %i[] do
-    get :index
-    get :metrics_and_user_type
   end
 end

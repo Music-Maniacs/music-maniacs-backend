@@ -1,4 +1,4 @@
-class MetricsController < ApplicationController
+class Admin::MetricsController < ApplicationController
   before_action :validate_user_is_admin
 
   def index

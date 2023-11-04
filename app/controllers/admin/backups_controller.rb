@@ -1,4 +1,4 @@
-class BackupsController < ApplicationController
+class Admin::BackupsController < ApplicationController
   before_action :authenticate_user!
   BACKUP_DIR = File.expand_path('~/backups/mm_backup').freeze
   MULTIMEDIA_DIR = File.expand_path('./storage').freeze
