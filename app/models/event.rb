@@ -114,9 +114,9 @@ class Event < ApplicationRecord
   def self.discover_by_location(city:, province:, country:)
     events = all.ransack(venue_location_city: city).result(distinct: true)
     if events.size < 10
-      events += all.ransack(venue_location_province: province).result(distinct: true)
+      events = all.ransack(venue_location_province: province).result(distinct: true)
       if events.size < 10
-        events += all.ransack(venue_location_country: country).result(distinct: true)
+        events = all.ransack(venue_location_country: country).result(distinct: true)
       end
     end
     events
