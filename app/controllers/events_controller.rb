@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
-  before_action :authorize_action
-
   include FollowableActions
+
+  before_action :authorize_action, except: %i[show search reviews discover follow unfollow]
 
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },

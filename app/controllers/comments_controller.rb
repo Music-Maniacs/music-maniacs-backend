@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index]
-  before_action :authorize_action
-
   include LikeableActions
+
+  before_action :authenticate_user!, except: %i[index]
+  before_action :authorize_action, except: %i[index like unlike]
 
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },

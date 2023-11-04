@@ -1,8 +1,8 @@
 class VenuesController < ApplicationController
-  before_action :authorize_action
-
   include FollowableActions
   include ReviewableActions
+
+  before_action :authorize_action, except: %i[show reviews follow unfollow]
 
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },

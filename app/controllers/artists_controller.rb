@@ -1,8 +1,8 @@
 class ArtistsController < ApplicationController
-  before_action :authorize_action
-
   include FollowableActions
   include ReviewableActions
+
+  before_action :authorize_action, except: %i[show reviews follow unfollow]
 
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
