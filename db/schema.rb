@@ -73,6 +73,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_234705) do
     t.uuid "venue_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "views_count", default: 0
+    t.bigint "popularity_score", default: 0
+    t.datetime "deleted_at"
     t.index ["artist_id"], name: "index_events_on_artist_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
     t.index ["producer_id"], name: "index_events_on_producer_id"
@@ -219,6 +222,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_234705) do
     t.uuid "reviewable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_reviews_on_deleted_at"
     t.index ["event_id"], name: "index_reviews_on_event_id"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
     t.index ["user_id"], name: "index_reviews_on_user_id"
@@ -304,6 +309,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_234705) do
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_videos_on_deleted_at"
     t.index ["event_id"], name: "index_videos_on_event_id"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
