@@ -11,9 +11,8 @@ class ApplicationController < ActionController::API
   #   request.format = :json unless params[:format]
   # end
 
-  # Derive the model name from the controller. UsersController will return User
   def self.permission
-    controller_name.classify.constantize
+    self
   end
 
   protected
@@ -34,13 +33,7 @@ class ApplicationController < ActionController::API
     render json: { error: :record_not_found }, status: :not_found
   end
 
-  def validate_user_is_admin
-    return if current_user&.admin?
-
-    render json: { errors: :unauthorized }, status: :forbidden
-  end
-
   def authorize_action
-    authorize!(params[:action].to_sym, controller_name.classify.constantize) unless current_user&.admin?
+    authorize!(params[:action].to_sym, self.class.permission)
   end
 end
