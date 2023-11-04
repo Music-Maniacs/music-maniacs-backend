@@ -36,7 +36,7 @@ class User < ApplicationRecord
   # CALLBACKS
   ##############################################################################
   after_create :create_user_stat
-  after_initialize :set_default_role
+  before_create :set_default_role
 
   def set_default_role
     self.role = TrustLevel.default_trust_level if role.blank?
