@@ -35,6 +35,10 @@ class Venue < ApplicationRecord
     "#{location.province}, #{location.country}"
   end
 
+  def author_id
+    author_id_by_versions
+  end
+
   ##############################################################################
   # CLASS METHODS
   ##############################################################################
