@@ -15,7 +15,7 @@ class Venue < ApplicationRecord
   has_one :location
   accepts_nested_attributes_for :location # con esto se puede crear una ubicacion al crear un lugar
 
-  has_one :image, as: :imageable, dependent: :destroy
+  has_one :image, as: :imageable
 
   has_many :events
   ##############################################################################

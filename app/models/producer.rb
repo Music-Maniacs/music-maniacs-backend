@@ -12,7 +12,7 @@ class Producer < ApplicationRecord
   has_many :genreable_associations, as: :genreable
   has_many :genres, through: :genreable_associations
 
-  has_one :image, as: :imageable, dependent: :destroy
+  has_one :image, as: :imageable
 
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true

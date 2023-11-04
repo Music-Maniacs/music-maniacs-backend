@@ -14,7 +14,7 @@ class Event < ApplicationRecord
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_one :image, as: :imageable, dependent: :destroy
+  has_one :image, as: :imageable
 
   has_many :videos, dependent: :destroy
 
