@@ -29,6 +29,8 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+    return if user.role.blank? # los guest no tienen permisos (solo endpoints publicos), en el front para simplificar se consultan permisos igual
+
     can :manage, :all if user.admin?
 
     user.role.permissions.each do |permission|
