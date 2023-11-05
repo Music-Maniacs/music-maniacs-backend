@@ -22,7 +22,6 @@ class ArtistsController < ApplicationController
                                               end
     render json: artist_json, status: :ok
   end
-                  
 
   def create
     artist = Artist.new(artist_params)

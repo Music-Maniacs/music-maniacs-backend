@@ -263,6 +263,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   kaminari
   letter_opener
+  mini_magick
   paper_trail
   paranoia
   pg (~> 1.1)
