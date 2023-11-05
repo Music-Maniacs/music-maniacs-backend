@@ -76,16 +76,21 @@ class UserProfilesController < ApplicationController
     image_params_profile = params[:profile_image] if params[:profile_image].present?
 
     #### CREATE UPDATE IMAGES ####
-    update_image(current_user, image_params_cover, 'cover') if image_params_cover.present?
-    update_image(current_user, image_params_profile, 'profile') if image_params_profile.present?
+    if image_params_cover.present?
+      update_image(current_user, image_params_cover, 'cover')
+      current_user.cover_image.convert_to_webp
+    end
+
+    if image_params_profile.present?
+      update_image(current_user, image_params_profile, 'profile')
+      current_user.profile_image.convert_to_webp
+    end
 
     #### DESTROY IMAGES ####
     current_user.cover_image.destroy if params[:destroy_cover_image].present? && current_user.cover_image.present?
     current_user.profile_image.destroy if params[:destroy_profile_image].present? && current_user.profile_image.present?
 
     if current_user.update(user_params_update)
-      current_user.image.convert_to_webp
-
       render json: current_user.reload.as_json(USER_TO_JSON_UPDATE), status: :ok
     else
       render json: { errors: current_user.errors.details }, status: :unprocessable_entity
