@@ -3,7 +3,7 @@ class Admin::GenresController < ApplicationController
     %i[genres_select]
   end
 
-  before_action :authenticate_user, except: public_endpoints
+  before_action :authenticate_user!, except: public_endpoints
   before_action :authorize_action, except: public_endpoints
 
   def index
