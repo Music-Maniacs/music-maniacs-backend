@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
+  include ReportableActions
   include FollowableActions
+  include Search
 
   def self.public_endpoints
     %i[show search reviews discover follow unfollow]

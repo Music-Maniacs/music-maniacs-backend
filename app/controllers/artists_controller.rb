@@ -1,6 +1,7 @@
 class ArtistsController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   def self.public_endpoints
     %i[show reviews follow unfollow]

@@ -80,7 +80,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reviews, only: %i[update destroy]
+  resources :reviews, only: %i[update destroy] do
+    member do
+      post :report
+    end
+  end
 
   resources :events, only: %i[show create update] do
     post 'add_review/:reviewable_klass', to: 'reviews#create'
@@ -88,6 +92,7 @@ Rails.application.routes.draw do
     get :comments, to: 'comments#index'
     collection do
       get :search
+      get :search_typeahead
       get :discover
     end
     member do
@@ -96,11 +101,13 @@ Rails.application.routes.draw do
       post '/videos/add_video', to: 'videos#create'
       get '/videos', to: 'videos#show'
       get :reviews
+      post :report
     end
   end
 
   resources :videos, only: %i[destroy] do
     member do
+      post :report
       post :like
       post :remove_like
     end
@@ -108,6 +115,7 @@ Rails.application.routes.draw do
 
   resources :comments, only: %i[update destroy] do
     member do
+      post :report
       post :like
       post :remove_like
     end
@@ -118,6 +126,7 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
     end
   end
 
@@ -126,6 +135,7 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
     end
   end
 
@@ -134,6 +144,13 @@ Rails.application.routes.draw do
       post :follow
       post :unfollow
       get :reviews
+      post :report
+    end
+  end
+
+  resources :reports, only: %i[index show] do
+    member do
+      post :resolve
     end
   end
 
@@ -143,6 +160,12 @@ Rails.application.routes.draw do
       get :search_artists
       get :search_producers
       get :search_venues
+    end
+  end
+
+  resources :versions, only: %i[] do
+    member do
+      post :report
     end
   end
 

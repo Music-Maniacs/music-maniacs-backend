@@ -1,5 +1,6 @@
 class VideosController < ApplicationController
   include LikeableActions
+  include ReportableActions
 
   def self.public_endpoints
     %i[show like remove_like]

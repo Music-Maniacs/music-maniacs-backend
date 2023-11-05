@@ -18,13 +18,13 @@ class Admin::ProducersController < ApplicationController
                                        versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } } }.freeze
 
   def index
-    producers = Producer.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    producers = producers_scope.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
     render json: { data: producers.as_json(PRODUCER_TO_JSON), pagination: pagination_info(producers) }
   end
 
   def show
-    producer = Producer.find(params[:id])
+    producer = producers_scope.find(params[:id])
 
     render json: producer.as_json(SHOW_PRODUCER_TO_JSON)
   end
@@ -42,7 +42,7 @@ class Admin::ProducersController < ApplicationController
   end
 
   def update
-    producer = Producer.find(params[:id])
+    producer = producers_scope.find(params[:id])
 
     if params[:image].present?
       if producer.image.present?
@@ -61,7 +61,7 @@ class Admin::ProducersController < ApplicationController
   end
 
   def destroy
-    producer = Producer.find(params[:id])
+    producer = producers_scope.find(params[:id])
 
     if producer.destroy
       head :no_content, status: :ok
@@ -71,6 +71,10 @@ class Admin::ProducersController < ApplicationController
   end
 
   private
+
+  def producers_scope
+    Producer.with_deleted
+  end
 
   def producer_params
     JSON.parse(params.require(:producer)).deep_symbolize_keys.slice(:name, :description, :nationality, :links_attributes, :genre_ids)

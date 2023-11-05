@@ -2,7 +2,9 @@ class Venue < ApplicationRecord
   include Reviewable
   include Followable
   include ProfileCommonMethods
-  has_paper_trail # para soporte de versionado
+  include Reportable
+  include Versionable
+  acts_as_paranoid
 
   ##############################################################################
   # ASSOCIATIONS
@@ -10,12 +12,12 @@ class Venue < ApplicationRecord
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
 
-  has_one :location, dependent: :destroy
+  has_one :location
   accepts_nested_attributes_for :location # con esto se puede crear una ubicacion al crear un lugar
 
-  has_one :image, as: :imageable, dependent: :destroy
+  has_one :image, as: :imageable
 
-  has_many :events, dependent: :restrict_with_error
+  has_many :events
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -31,6 +33,10 @@ class Venue < ApplicationRecord
 
   def short_address
     "#{location.province}, #{location.country}"
+  end
+
+  def author_id
+    author_id_by_versions
   end
 
   ##############################################################################

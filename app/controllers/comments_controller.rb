@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include ReportableActions
   include LikeableActions
 
   def self.public_endpoints

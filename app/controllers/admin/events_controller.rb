@@ -21,13 +21,13 @@ class Admin::EventsController < ApplicationController
                          methods: %i[reviews_info] }.freeze
 
   def index
-    events = Event.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    events = events_scope.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 
     render json: { data: events.as_json(EVENT_TO_JSON), pagination: pagination_info(events) }
   end
 
   def show
-    event = Event.find(params[:id])
+    event = events_scope.find(params[:id])
 
     render json: event.as_json(SHOW_EVENT_TO_JSON)
   end
@@ -45,7 +45,7 @@ class Admin::EventsController < ApplicationController
   end
 
   def update
-    event = Event.find(params[:id])
+    event = events_scope.find(params[:id])
 
     if params[:image].present?
       if event.image.present?
@@ -64,7 +64,7 @@ class Admin::EventsController < ApplicationController
   end
 
   def destroy
-    event = Event.find(params[:id])
+    event = events_scope.find(params[:id])
 
     if event.destroy
       head :no_content, status: :ok
@@ -74,6 +74,10 @@ class Admin::EventsController < ApplicationController
   end
 
   private
+
+  def events_scope
+    Event.with_deleted
+  end
 
   def event_params
     JSON.parse(params.require(:event)).deep_symbolize_keys.slice(:name,
