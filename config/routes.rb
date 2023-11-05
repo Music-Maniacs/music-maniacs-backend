@@ -145,4 +145,6 @@ Rails.application.routes.draw do
       get :search_venues
     end
   end
+
+  get '/check_policy', to: 'policies#check_policy', as: :check_policy
 end
