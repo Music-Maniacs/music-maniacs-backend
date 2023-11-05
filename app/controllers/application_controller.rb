@@ -16,7 +16,16 @@ class ApplicationController < ActionController::API
   end
 
   def self.authorizable_endpoints
-    controller.action_methods.to_a.map(&:to_sym) - (controller.try(:public_endpoints) || [])
+    self.class.action_methods.to_a.map(&:to_sym) - (controller.try(:public_endpoints) || [])
+  end
+
+  def self.controllers
+    subclasses.map do |controller|
+      next unless controller.respond_to?(:permission)
+      next if controller.name.include?('Devise')
+      next if controller.name.include?('Profile')
+      next if controller.name.include?('Policies')
+    end.compact
   end
 
   protected

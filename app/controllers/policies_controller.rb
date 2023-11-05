@@ -24,6 +24,8 @@ class PoliciesController < ApplicationController
   def resolve_navigation_policy
     return [] if current_user.blank?
 
-    current_user.role.permissions.where(action: :index).pluck(:subject_class)
+    self.class.controllers.map do |controller|
+      can?(:index, controller.permission)
+    end
   end
 end
