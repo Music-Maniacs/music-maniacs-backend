@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   include Search
 
   def self.public_endpoints
-    %i[show search reviews discover follow unfollow]
+    %i[show search_typeahead reviews discover follow unfollow]
   end
 
   before_action :authenticate_user!, except: %i[show search reviews discover]

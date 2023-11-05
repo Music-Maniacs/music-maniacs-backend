@@ -23,3 +23,5 @@ en:
           restore: "Restaurar"
           block: "Bloquear"
           unblock: "Desbloquear"
+          report: "Reportar"
+          resolve: "Resolver"

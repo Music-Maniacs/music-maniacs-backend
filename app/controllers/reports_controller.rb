@@ -43,10 +43,6 @@ class ReportsController < ApplicationController
     render json: result
   end
 
-  def reportable_serializer(reportable_type)
-    self.class.const_get("#{reportable_type.upcase}_TO_JSON")
-  end
-
   def resolve
     report = Report.find(params[:id])
     report.resolver = current_user
@@ -65,5 +61,9 @@ class ReportsController < ApplicationController
 
   def resolve_report_params
     params.require(:report).permit(:moderator_comment, :penalization_score)
+  end
+
+  def reportable_serializer(reportable_type)
+    self.class.const_get("#{reportable_type.upcase}_TO_JSON")
   end
 end
