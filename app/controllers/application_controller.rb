@@ -15,6 +15,10 @@ class ApplicationController < ActionController::API
     self
   end
 
+  def self.authorizable_endpoints
+    controller.action_methods.to_a.map(&:to_sym) - (controller.try(:public_endpoints) || [])
+  end
+
   protected
 
   def configure_permitted_parameters

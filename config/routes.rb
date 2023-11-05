@@ -170,4 +170,5 @@ Rails.application.routes.draw do
   end
 
   get '/check_policy', to: 'policies#check_policy', as: :check_policy
+  get '/navigation_policy', to: 'policies#navigation_policy', as: :navigation_policy
 end
