@@ -48,6 +48,8 @@ class EventsController < ApplicationController
     event.image = Image.new(file: params[:image]) if params[:image].present?
 
     if event.save
+      event.image.convert_to_webp
+
       render json: event.as_json(EVENT_TO_JSON), status: :ok
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
@@ -67,6 +69,8 @@ class EventsController < ApplicationController
     end
 
     if event.update(event_edit_params)
+      event.image.convert_to_webp
+
       render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity

@@ -29,6 +29,8 @@ class VenuesController < ApplicationController
     venue.image = Image.new(file: params[:image]) if params[:image].present?
 
     if venue.save
+      venue.image.convert_to_webp
+
       render json: venue.as_json(VENUE_TO_JSON), status: :ok
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity
@@ -48,6 +50,8 @@ class VenuesController < ApplicationController
     end
 
     if venue.update(venue_params)
+      venue.image.convert_to_webp
+
       render json: venue.as_json(VENUE_TO_JSON), status: :ok
     else
       render json: { errors: venue.errors.details }, status: :unprocessable_entity

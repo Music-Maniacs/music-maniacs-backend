@@ -84,6 +84,8 @@ class UserProfilesController < ApplicationController
     current_user.profile_image.destroy if params[:destroy_profile_image].present? && current_user.profile_image.present?
 
     if current_user.update(user_params_update)
+      current_user.image.convert_to_webp
+
       render json: current_user.reload.as_json(USER_TO_JSON_UPDATE), status: :ok
     else
       render json: { errors: current_user.errors.details }, status: :unprocessable_entity
@@ -113,4 +115,3 @@ class UserProfilesController < ApplicationController
     end
   end
 end
-

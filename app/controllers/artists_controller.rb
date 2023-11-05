@@ -29,6 +29,8 @@ class ArtistsController < ApplicationController
     artist.image = Image.new(file: params[:image]) if params[:image].present?
 
     if artist.save
+      artist.image.convert_to_webp
+
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
@@ -48,6 +50,8 @@ class ArtistsController < ApplicationController
     end
 
     if artist.update(artist_params)
+      artist.image.convert_to_webp
+
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
