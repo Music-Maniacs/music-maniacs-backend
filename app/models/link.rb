@@ -7,6 +7,8 @@ class Link < ApplicationRecord
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
-  validates :url, presence: true, uniqueness: true
-  validates :title, presence: true
+  validates :url, :title, presence: true
+
+  # Scope que valida la unicidad de la URL por linkeable_id
+  validates_uniqueness_of :url, scope: [:linkeable_id]
 end
