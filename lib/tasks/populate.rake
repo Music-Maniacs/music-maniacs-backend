@@ -19,11 +19,14 @@ namespace :populate do
         next unless controller.respond_to?(:permission)
         next if controller.name.include?('Devise')
         next if controller.name.include?('Profile')
+        next if controller.name.include?('Policies')
+
 
         klass = controller.permission
         write_permission(klass.name, :manage)
 
-        controller.action_methods.each do |action|
+        public_endpoints = controller.try(:public_endpoints) || []
+        (controller.action_methods.to_a.map(&:to_sym) - public_endpoints).each do |action|
           write_permission(klass.name, action)
         end
       end

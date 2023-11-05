@@ -2,6 +2,11 @@ class VenuesController < ApplicationController
   include FollowableActions
   include ReviewableActions
 
+  def self.public_endpoints
+    %i[show reviews follow unfollow]
+  end
+
+  before_action :authenticate_user!, except: %i[show reviews]
   before_action :authorize_action, except: %i[show reviews follow unfollow]
 
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },

@@ -1,5 +1,10 @@
 class Admin::ArtistsController < ApplicationController
   include Search
+
+  def self.public_endpoints
+    %i[search_typeahead]
+  end
+
   before_action :authenticate_user!, except: public_endpoints
   before_action :authorize_action, except: public_endpoints
 
@@ -63,10 +68,6 @@ class Admin::ArtistsController < ApplicationController
     else
       render json: { errors: artist.errors.details }, status: :unprocessable_entity
     end
-  end
-
-  def self.public_endpoints
-    %i[search_typeahead]
   end
 
   private

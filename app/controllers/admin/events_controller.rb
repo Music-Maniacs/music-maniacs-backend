@@ -1,4 +1,8 @@
 class Admin::EventsController < ApplicationController
+  def self.public_endpoints
+    %i[search_typeahead]
+  end
+
   before_action :authenticate_user!, except: public_endpoints
   before_action :authorize_action, except: public_endpoints
 
@@ -67,10 +71,6 @@ class Admin::EventsController < ApplicationController
     else
       render json: { errors: event.errors.details }, status: :unprocessable_entity
     end
-  end
-
-  def self.public_endpoints
-    %i[search_typeahead]
   end
 
   private

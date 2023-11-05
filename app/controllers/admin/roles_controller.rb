@@ -1,6 +1,10 @@
 class Admin::RolesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authorize_action
+  def self.public_endpoints
+    %i[roles_select permissions_select]
+  end
+
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
 
   def index
     roles = roles_scope.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])

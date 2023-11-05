@@ -1,4 +1,8 @@
 class Admin::GenresController < ApplicationController
+  def self.public_endpoints
+    %i[genres_select]
+  end
+
   before_action :authenticate_user, except: public_endpoints
   before_action :authorize_action, except: public_endpoints
 
@@ -40,10 +44,6 @@ class Admin::GenresController < ApplicationController
 
   def genres_select
     render json: Genre.all.as_json(only: %i[id name]), status: :ok
-  end
-
-  def self.public_endpoints
-    %i[genres_select]
   end
 
   private
