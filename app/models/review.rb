@@ -1,7 +1,11 @@
 class Review < ApplicationRecord
+  include Reportable
+  include Versionable
+  acts_as_paranoid
+
   TO_JSON = { only: %i[id rating description created_at reviewable_type],
               include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
-              methods: :anonymous }.freeze
+              methods: %i[anonymous reviewable_name] }.freeze
   ##############################################################################
   # VALIDATIONS
   ##############################################################################
@@ -31,6 +35,10 @@ class Review < ApplicationRecord
 
   def reviewable_name
     reviewable.name
+  end
+
+  def author_id
+    user_id
   end
 
   ##############################################################################

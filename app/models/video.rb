@@ -1,5 +1,7 @@
 class Video < Multimedia
   include Likeable
+  include Reportable
+  acts_as_paranoid
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -19,4 +21,8 @@ class Video < Multimedia
     user.nil?
   end
   alias anonymous anonymous?
+
+  def author_id
+    user_id
+  end
 end

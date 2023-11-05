@@ -113,6 +113,11 @@ class User < ApplicationRecord
     update!(blocked_until:)
   end
 
+  def increment_block_date_by_days!(days)
+    new_blocked_until_date = blocked_until ? blocked_until + days.days : days.days.from_now
+    update!(blocked_until: new_blocked_until_date)
+  end
+
   def unblock!
     update!(blocked_until: nil)
   end
@@ -139,6 +144,10 @@ class User < ApplicationRecord
         break
       end
     end
+  end
+
+  def increment_penalization_score!(score)
+    user_stat.increment_penalization_score!(score)
   end
 
   def profile_image_full_url

@@ -48,6 +48,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_artists_on_deleted_at"
   end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -56,6 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.uuid "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_comments_on_deleted_at"
     t.index ["event_id"], name: "index_comments_on_event_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -64,14 +68,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.string "name", null: false
     t.text "description"
     t.datetime "datetime", null: false
-    t.uuid "artist_id", null: false
-    t.uuid "producer_id", null: false
-    t.uuid "venue_id", null: false
+    t.uuid "artist_id"
+    t.uuid "producer_id"
+    t.uuid "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "views_count", default: 0
     t.bigint "popularity_score", default: 0
+    t.datetime "deleted_at"
     t.index ["artist_id"], name: "index_events_on_artist_id"
+    t.index ["deleted_at"], name: "index_events_on_deleted_at"
     t.index ["producer_id"], name: "index_events_on_producer_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end
@@ -188,6 +194,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_producers_on_deleted_at"
+  end
+
+  create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "moderator_comment"
+    t.text "user_comment"
+    t.integer "penalization_score"
+    t.integer "status", default: 0
+    t.integer "category"
+    t.uuid "reporter_id", null: false
+    t.uuid "resolver_id"
+    t.uuid "reportable_id", null: false
+    t.string "reportable_type", null: false
+    t.uuid "original_reportable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -199,6 +222,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.uuid "reviewable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_reviews_on_deleted_at"
     t.index ["event_id"], name: "index_reviews_on_event_id"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
     t.index ["user_id"], name: "index_reviews_on_user_id"
@@ -262,6 +287,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_venues_on_deleted_at"
   end
 
   create_table "version_associations", force: :cascade do |t|
@@ -293,6 +320,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_videos_on_deleted_at"
     t.index ["event_id"], name: "index_videos_on_event_id"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end

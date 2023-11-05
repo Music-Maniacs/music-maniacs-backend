@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include ReportableActions
   include LikeableActions
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
