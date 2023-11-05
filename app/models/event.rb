@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   include Followable
-  has_paper_trail ignore: %i[popularity_score views_count]
+  has_paper_trail ignore: %i[popularity_score views_count id created_at updated_at deleted_at]
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   VISIT_VALUE = 10.minutes.to_i
@@ -15,7 +15,7 @@ class Event < ApplicationRecord
   belongs_to :producer
   belongs_to :venue
 
-  has_many :links, as: :linkeable
+  has_many :links, as: :linkeable, autosave: true
   accepts_nested_attributes_for :links, allow_destroy: true
 
   has_many :reviews, dependent: :destroy
