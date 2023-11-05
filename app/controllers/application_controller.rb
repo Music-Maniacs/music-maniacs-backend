@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
   end
 
   def self.authorizable_endpoints
-    action_methods.to_a.map(&:to_sym) - (controller.try(:public_endpoints) || [])
+    action_methods.to_a.map(&:to_sym) - (try(:public_endpoints) || [])
   end
 
   def self.controllers
