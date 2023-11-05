@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  include ReportableActions
   before_action :authenticate_user!
 
   def create

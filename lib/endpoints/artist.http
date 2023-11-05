@@ -4,15 +4,41 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtO
 content-type: application/json
 
 ### FOLLOW ###
-POST http://localhost:3000/artists/f68d289b-a5df-4296-8859-a14a51690460/follow
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
-content-type: application/json
+POST http://localhost:3000/artists/b7cff469-c072-4328-bf3f-0271445948a8/follow
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTYxMDI0MjAsImV4cCI6MTY5OTEyNjQyMCwianRpIjoiNTc3MTY3NDUtZWRhYi00Njg2LWI1NzMtMzQ2ZjkxNDM0MmM5In0.aIO3L0odUl-GKg6ajuaFlAiOUFlyOi0x9LLT0iFZN7s
+
 
 ### UNFOLLOW ###
-POST http://localhost:3000/artists/f68d289b-a5df-4296-8859-a14a51690460/unfollow
+POST http://localhost:3000/artists/b7cff469-c072-4328-bf3f-0271445948a8/unfollow
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
 ### SHOW ###
 GET http://localhost:3000/artists/cf208e28-c716-4d7e-a5a0-26f027ab21ea
 content-type: application/json
+
+### REPORT ###
+POST http://localhost:3000/artists/c1546a74-7ad7-4a8d-bb57-d05dc789d6ec/report
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU4NTc0NTMsImV4cCI6MTY5ODg4MTQ1MywianRpIjoiMTVlM2RjYWQtZWJmYi00YTE4LTgxYjQtMDUyYWJkYTNkZWZmIn0.CojSkwqHaBHaNGS8O1cfjE1x4T_wJpU77ib6NkAsxdM
+content-type: application/json
+
+{
+    "report": {
+        "category": "fake",
+        "user_comment": "el artista es falso"
+    }
+}
+
+
+### REPORT DUPLICATED ###
+POST http://localhost:3000/artists/c1546a74-7ad7-4a8d-bb57-d05dc789d6ec/report
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU4NTc0NTMsImV4cCI6MTY5ODg4MTQ1MywianRpIjoiMTVlM2RjYWQtZWJmYi00YTE4LTgxYjQtMDUyYWJkYTNkZWZmIn0.CojSkwqHaBHaNGS8O1cfjE1x4T_wJpU77ib6NkAsxdM
+content-type: application/json
+
+{
+    "report": {
+        "category": "duplicated",
+        "user_comment": "",
+        "original_reportable_id": "b7cff469-c072-4328-bf3f-0271445948a8"
+    }
+}

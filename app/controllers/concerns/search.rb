@@ -2,9 +2,9 @@ module Search
   extend ActiveSupport::Concern
 
   def search_typeahead
-    artists = search_model_scope.ransack(params[:q]).result(distinct: true).limit(10).pluck(:id, :name)
+    collection = search_model_scope.ransack(params[:q]).result(distinct: true).limit(10).pluck(:id, :name)
 
-    render json: artists.map { |artist| { value: artist[0], label: artist[1] } }
+    render json: collection.map { |element| { value: element[0], label: element[1] } }
   end
 
   private

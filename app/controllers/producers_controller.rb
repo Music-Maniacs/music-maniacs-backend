@@ -1,6 +1,7 @@
 class ProducersController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },

@@ -1,5 +1,7 @@
 class Comment < ApplicationRecord
+  include Reportable
   include Likeable
+  acts_as_paranoid
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
@@ -32,6 +34,10 @@ class Comment < ApplicationRecord
     user.nil?
   end
   alias anonymous anonymous?
+
+  def author_id
+    user_id
+  end
 
   ##############################################################################
   # CLASS METHODS

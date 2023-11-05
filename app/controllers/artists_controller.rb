@@ -1,6 +1,7 @@
 class ArtistsController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
@@ -22,7 +23,6 @@ class ArtistsController < ApplicationController
                                               end
     render json: artist_json, status: :ok
   end
-                  
 
   def create
     artist = Artist.new(artist_params)
