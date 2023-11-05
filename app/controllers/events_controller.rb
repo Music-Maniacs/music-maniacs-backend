@@ -69,7 +69,7 @@ class EventsController < ApplicationController
     end
 
     if event.update(event_edit_params)
-      event.image.convert_to_webp
+      event.image.convert_to_webp if event.image.present?
 
       render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
     else

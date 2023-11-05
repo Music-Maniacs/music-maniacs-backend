@@ -50,7 +50,7 @@ class ProducersController < ApplicationController
     end
 
     if producer.update(producer_params)
-      producer.image.convert_to_webp
+      producer.image.convert_to_webp if producer.image.present?
 
       render json: producer.as_json(PRODUCER_TO_JSON), status: :ok
     else
