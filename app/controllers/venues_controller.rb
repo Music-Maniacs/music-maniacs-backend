@@ -1,6 +1,7 @@
 class VenuesController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },
@@ -29,7 +30,7 @@ class VenuesController < ApplicationController
     venue.image = Image.new(file: params[:image]) if params[:image].present?
 
     if venue.save
-      venue.image.convert_to_webp
+      venue.image.convert_to_webp if venue.image.present?
 
       render json: venue.as_json(VENUE_TO_JSON), status: :ok
     else

@@ -1,5 +1,8 @@
 class EventsController < ApplicationController
+  include ReportableActions
   include FollowableActions
+  include Search
+
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
@@ -48,7 +51,7 @@ class EventsController < ApplicationController
     event.image = Image.new(file: params[:image]) if params[:image].present?
 
     if event.save
-      event.image.convert_to_webp
+      event.image.convert_to_webp if event.image.present?
 
       render json: event.as_json(EVENT_TO_JSON), status: :ok
     else

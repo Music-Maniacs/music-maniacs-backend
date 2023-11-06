@@ -1,19 +1,26 @@
 class Event < ApplicationRecord
   include Followable
-  has_paper_trail ignore: %i[popularity_score views_count]
+  include Reportable
+
+  def self.ignored_version_attrs
+    %i[popularity_score views_count]
+  end
+
+  include Versionable
+  acts_as_paranoid
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
   VISIT_VALUE = 10.minutes.to_i
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
-  has_one :image, as: :imageable, dependent: :destroy
+  has_one :image, as: :imageable
 
-  has_many :videos
+  has_many :videos, dependent: :destroy
 
-  belongs_to :artist
-  belongs_to :producer
-  belongs_to :venue
+  belongs_to :artist, optional: true
+  belongs_to :producer, optional: true
+  belongs_to :venue, optional: true
 
   has_many :links, as: :linkeable
   accepts_nested_attributes_for :links, allow_destroy: true
@@ -31,8 +38,16 @@ class Event < ApplicationRecord
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
   after_commit :notify_changes_to_followers, on: :update
+  # TODO: after_commit :notify_changes_to_followers, on: :destroy
   before_create :set_popularity_score
   before_update :set_popularity_score, if: :will_save_change_to_views_count?
+  before_update :update_reviews, if: proc { |event| event.artist_id_changed? || event.venue_id_changed? || event.producer_id_changed? }
+
+  def update_reviews
+    reviews.where(reviewable_type: 'Artist').update_all(reviewable_id: artist_id) if artist_id_changed? && artist_id.present?
+    reviews.where(reviewable_type: 'Venue').update_all(reviewable_id: venue_id) if venue_id_changed? && venue_id.present?
+    reviews.where(reviewable_type: 'Producer').update_all(reviewable_id: producer_id) if producer_id_changed? && producer_id.present?
+  end
 
   def notify_changes_to_followers
     changes = parsed_previous_changes
@@ -54,6 +69,7 @@ class Event < ApplicationRecord
   ##############################################################################
   scope :most_popular, -> { order(popularity_score: :desc) }
   scope :by_artist, ->(artist_id) { where(artist_id:) }
+
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
@@ -97,8 +113,8 @@ class Event < ApplicationRecord
       next unless changes[attribute].present?
 
       klass = attribute.gsub('_id', '').capitalize.constantize
-      previous_klass_name = klass.find_by(id: changes[attribute][0]).name
-      new_klass_name = klass.find_by(id: changes[attribute][1]).name
+      previous_klass_name = klass.find_by(id: changes[attribute][0])&.name
+      new_klass_name = klass.find_by(id: changes[attribute][1])&.name
       changes[attribute] = [previous_klass_name, new_klass_name]
     end
     changes
@@ -106,6 +122,10 @@ class Event < ApplicationRecord
 
   def calculate_popularity_score
     created_at.to_i + (views_count || 0) * VISIT_VALUE
+  end
+
+  def author_id
+    author_id_by_versions
   end
 
   ##############################################################################

@@ -12,12 +12,12 @@ class Admin::VenuesController < ApplicationController
                          methods: %i[address] }.freeze
 
   def index
-    venues = Venue.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
+    venues = venues_scope.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
     render json: { data: venues.as_json(VENUE_TO_JSON), pagination: pagination_info(venues) }
   end
 
   def show
-    venue = Venue.find(params[:id])
+    venue = venues_scope.find(params[:id])
 
     render json: venue.as_json(SHOW_VENUE_TO_JSON)
   end
@@ -28,7 +28,7 @@ class Admin::VenuesController < ApplicationController
     venue.image = Image.new(file: params[:image]) if params[:image].present?
 
     if venue.save
-      venue.image.convert_to_webp
+      venue.image.convert_to_webp if venue.image.present?
 
       render json: venue.as_json(SHOW_VENUE_TO_JSON), status: :ok
     else
@@ -37,7 +37,7 @@ class Admin::VenuesController < ApplicationController
   end
 
   def update
-    venue = Venue.find(params[:id])
+    venue = venues_scope.find(params[:id])
 
     if params[:image].present?
       if venue.image.present?
@@ -58,7 +58,7 @@ class Admin::VenuesController < ApplicationController
   end
 
   def destroy
-    venue = Venue.find(params[:id])
+    venue = venues_scope.find(params[:id])
 
     if venue.destroy
       render status: :ok
@@ -68,6 +68,10 @@ class Admin::VenuesController < ApplicationController
   end
 
   private
+
+  def venues_scope
+    Venue.with_deleted
+  end
 
   def venue_params
     JSON.parse(params.require(:venue)).deep_symbolize_keys.slice(:name, :description, :location_attributes, :links_attributes, :image_attributes)

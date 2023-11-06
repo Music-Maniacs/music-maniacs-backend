@@ -1,6 +1,7 @@
 class ProducersController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                   links: { only: %i[id url title] },
@@ -29,7 +30,7 @@ class ProducersController < ApplicationController
     producer.image = Image.new(file: params[:image]) if params[:image].present?
 
     if producer.save
-      producer.image.convert_to_webp
+      producer.image.convert_to_webp if producer.image.present?
 
       render json: producer.as_json(PRODUCER_TO_JSON), status: :ok
     else

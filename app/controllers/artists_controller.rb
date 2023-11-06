@@ -1,6 +1,7 @@
 class ArtistsController < ApplicationController
   include FollowableActions
   include ReviewableActions
+  include ReportableActions
 
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
@@ -29,7 +30,7 @@ class ArtistsController < ApplicationController
     artist.image = Image.new(file: params[:image]) if params[:image].present?
 
     if artist.save
-      artist.image.convert_to_webp
+      artist.image.convert_to_webp if artist.image.present?
 
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
     else

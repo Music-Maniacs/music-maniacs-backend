@@ -13,3 +13,14 @@ POST http://localhost:3000/producers/c77e7e52-c520-4841-ae21-52fc2b213314/unfoll
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODA2NDQ1OS1jMzlmLTQ4YTUtOTUyNy01MzkyYzNmZTRlNWUiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTUxNjQ3MzUsImV4cCI6MTY5ODE4ODczNSwianRpIjoiMGJjNDg4M2UtNmQxNC00ZmUxLWFhOTQtODU1NzExMWYwNTI5In0.O3Fu1vQTS7TqFpgDl3UetUo7KydgScrt9WtxVc7graM
 content-type: application/json
 
+### REPORT ###
+POST http://localhost:3000/producers/e1cae2a0-66b9-4191-911e-52638b522675/report
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNThjM2Y3Ni1lNWE5LTRkZDUtOTVlMi1lYWE3NmI0OTAzMDMiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2OTU4NTc0NTMsImV4cCI6MTY5ODg4MTQ1MywianRpIjoiMTVlM2RjYWQtZWJmYi00YTE4LTgxYjQtMDUyYWJkYTNkZWZmIn0.CojSkwqHaBHaNGS8O1cfjE1x4T_wJpU77ib6NkAsxdM
+content-type: application/json
+
+{
+    "report": {
+        "category": "fake",
+        "user_comment": "lap roductora es falsa"
+    }
+}
