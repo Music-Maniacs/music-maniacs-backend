@@ -7,7 +7,7 @@ class Admin::ProducersController < ApplicationController
   SHOW_PRODUCER_TO_JSON = { include: { genres: { only: %i[id name] },
                                        links: { only: %i[id url title] },
                                        image: { methods: %i[full_url] },
-                                       versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } } }.freeze
+                                       history: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } } }.freeze
 
   def index
     producers = producers_scope.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])

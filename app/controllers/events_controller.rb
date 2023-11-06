@@ -8,7 +8,7 @@ class EventsController < ApplicationController
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
                                     venue: { only: %i[id name] },
-                                    versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
+                                    history: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
                          methods: %i[reviews_info] }.freeze
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
