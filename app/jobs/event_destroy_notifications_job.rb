@@ -4,7 +4,7 @@ class EventDestroyNotificationsJob < ApplicationJob
     return unless event
 
     event.followers.find_each do |user|
-      EventsNotificationMailer.with(user: user, event: event, deleted: true).event_destroys_to_followers.deliver_now
+      EventsNotificationMailer.with(user: user, event: event).event_destroys_to_followers.deliver_now
     end
   end
 end
