@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Cambios en el evento</title>
+    <title>Ha sido borrado el evento</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -38,12 +38,6 @@
   </head>
   <body>
     <p>Hola <%= @user.username %>,</p>
-    <p>Estos son los cambios realizados al evento <%= @event.name %>:</p>
-    <ul>
-      <% @changes.each do |key, value| %>
-        <li><strong><%= Event.human_attribute_name(key) %>:</strong> <%= value[0] %> &rarr; <%= value[1] %></li>
-      <% end %>
-    </ul>
-    <p><%= link_to 'Ver evento', "#{REACT_HOST}/events/#{@event.id}" %></p>
+    <p>Lamentamos informarte que el evento "<%= @event.name %>" fue borrado</p>
   </body>
 </html>

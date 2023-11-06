@@ -31,7 +31,6 @@ class Event < ApplicationRecord
   ##############################################################################
   after_commit :notify_profiles_followers, on: :create
   after_commit :notify_changes_to_followers, on: :update
-  after_commit :notify_destroys_to_followers, on: :destroy
   before_create :set_popularity_score
   before_update :set_popularity_score, if: :will_save_change_to_views_count?
 
@@ -40,10 +39,6 @@ class Event < ApplicationRecord
     return unless changes.present? || followers.count.zero?
 
     EventUpdateNotificationsJob.perform_later(id, changes)
-  end
-
-  def notify_destroys_to_followers
-    EventDestroyNotificationsJob.perform_later(id)
   end
 
   def notify_profiles_followers
