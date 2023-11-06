@@ -12,7 +12,7 @@ class EventsNotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: "cambios en el evento: #{@event.name}")
   end
 
-  def event_destroy_to_followers
+  def event_destroys_to_followers
     @user = params[:user]
     @event = params[:event]
     mail(to: @user.email, subject: "El evento #{@event.name} fue eliminado")
