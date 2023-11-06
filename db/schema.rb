@@ -68,9 +68,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
     t.string "name", null: false
     t.text "description"
     t.datetime "datetime", null: false
-    t.uuid "artist_id", null: false
-    t.uuid "producer_id", null: false
-    t.uuid "venue_id", null: false
+    t.uuid "artist_id"
+    t.uuid "producer_id"
+    t.uuid "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "views_count", default: 0
@@ -294,13 +294,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_002553) do
   create_table "version_associations", force: :cascade do |t|
     t.integer "version_id"
     t.string "foreign_key_name", null: false
-    t.integer "foreign_key_id"
+    t.uuid "foreign_key_id"
     t.string "foreign_type"
     t.index ["foreign_key_name", "foreign_key_id", "foreign_type"], name: "index_version_associations_on_foreign_key"
     t.index ["version_id"], name: "index_version_associations_on_version_id"
   end
 
-  create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.string "item_id", null: false
     t.string "event", null: false

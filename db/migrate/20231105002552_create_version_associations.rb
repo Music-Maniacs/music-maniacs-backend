@@ -5,7 +5,7 @@ class CreateVersionAssociations < ActiveRecord::Migration[7.0]
     create_table :version_associations do |t|
       t.integer  :version_id
       t.string   :foreign_key_name, null: false
-      t.integer  :foreign_key_id
+      t.uuid  :foreign_key_id
       t.string   :foreign_type
     end
     add_index :version_associations, [:version_id]

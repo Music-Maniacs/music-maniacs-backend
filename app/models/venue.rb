@@ -3,12 +3,9 @@ class Venue < ApplicationRecord
   include Followable
   include ProfileCommonMethods
   include Reportable
-
-  def self.ignored_version_attrs
-    %i[id created_at updated_at deleted_at]
-  end
-
   include Versionable
+
+  has_paper_trail versions: { class_name: 'Version' }, ignore: %i[id created_at updated_at deleted_at]
   acts_as_paranoid
 
   ##############################################################################
@@ -42,6 +39,25 @@ class Venue < ApplicationRecord
 
   def author_id
     author_id_by_versions
+  end
+
+  def location_versions
+    Version.where(item_type: 'Location')
+           .joins(:version_associations)
+           .where(version_associations: { foreign_key_name: 'venue_id', foreign_key_id: id })
+  end
+
+  def links_versions
+    Version.where(item_type: 'Link')
+           .joins(:version_associations)
+           .where(version_associations: { foreign_key_name: 'linkeable_id', foreign_key_id: id })
+  end
+
+  def history
+    location_versions_ids = location_versions.pluck(:id)
+    links_versions_ids = links_versions.pluck(:id)
+    version_ids = versions.pluck(:id)
+    Version.where(id: version_ids + location_versions_ids + links_versions_ids).order(created_at: :desc)
   end
 
   ##############################################################################

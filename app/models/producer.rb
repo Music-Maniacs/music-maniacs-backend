@@ -3,12 +3,9 @@ class Producer < ApplicationRecord
   include Followable
   include ProfileCommonMethods
   include Reportable
-
-  def self.ignored_version_attrs
-    %i[id created_at updated_at deleted_at]
-  end
-
   include Versionable
+
+  has_paper_trail versions: { class_name: 'Version' }, ignore: %i[id created_at updated_at deleted_at]
   acts_as_paranoid
 
   ##############################################################################
@@ -34,6 +31,18 @@ class Producer < ApplicationRecord
   ##############################################################################
   def author_id
     author_id_by_versions
+  end
+
+  def links_versions
+    Version.where(item_type: 'Link')
+           .joins(:version_associations)
+           .where(version_associations: { foreign_key_name: 'linkeable_id', foreign_key_id: id })
+  end
+
+  def history
+    links_versions_ids = links_versions.pluck(:id)
+    version_ids = versions.pluck(:id)
+    Version.where(id: version_ids + links_versions_ids).order(created_at: :desc)
   end
 
   ##############################################################################

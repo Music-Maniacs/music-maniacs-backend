@@ -1,5 +1,6 @@
 class Location < ApplicationRecord
   include Versionable
+  has_paper_trail versions: { class_name: 'Version' }, ignore: %i[id created_at updated_at deleted_at]
   ##############################################################################
   # ASSOCIATIONS
   ##############################################################################
