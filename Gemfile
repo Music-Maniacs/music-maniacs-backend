@@ -51,11 +51,13 @@ gem 'sidekiq'
 
 gem 'faker'
 
-
 # Backup
 gem 'whenever'
 gem 'backup'
 gem 'rubyzip'
+
+# Image utils
+gem 'mini_magick'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

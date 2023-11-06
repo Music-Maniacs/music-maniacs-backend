@@ -265,6 +265,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   kaminari
   letter_opener
+  mini_magick
   paper_trail
   paper_trail-association_tracking
   paranoia
