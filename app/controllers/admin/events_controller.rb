@@ -61,7 +61,7 @@ class Admin::EventsController < ApplicationController
   end
 
   def destroy
-    event = Event.find(params[:id])
+    event = events_scope.find(params[:id])
     notify_destroys_to_followers(event.id) if event.present?
 
     if event.destroy
