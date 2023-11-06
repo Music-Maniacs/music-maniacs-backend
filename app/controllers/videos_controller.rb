@@ -3,7 +3,7 @@ class VideosController < ApplicationController
   include ReportableActions
 
   def self.public_endpoints
-    %i[show like remove_like]
+    %i[show like remove_like destroy]
   end
 
   before_action :authenticate_user!, except: %i[show]

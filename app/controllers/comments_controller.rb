@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   include LikeableActions
 
   def self.public_endpoints
-    %i[index like remove_like]
+    %i[index like remove_like update destroy]
   end
 
   before_action :authenticate_user!, except: %i[index]

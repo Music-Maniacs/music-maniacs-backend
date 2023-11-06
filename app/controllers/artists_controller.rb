@@ -7,6 +7,7 @@ class ArtistsController < ApplicationController
     %i[show reviews follow unfollow]
   end
 
+  before_action :authenticate_user!, except: public_endpoints
   before_action :authorize_action, except: public_endpoints
 
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
