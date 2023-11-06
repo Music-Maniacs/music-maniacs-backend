@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
-  before_action :authenticate_user!, only: %i[resolve]
+  before_action :authenticate_user!
+  before_action :authorize_user!
 
   REPORTS_TO_JSON = { include: { reporter: { only: %i[id full_name] },
                                  resolver: { only: %i[id full_name] } } }.freeze
