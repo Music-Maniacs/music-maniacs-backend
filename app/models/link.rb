@@ -10,6 +10,7 @@ class Link < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :url, :title, presence: true
+  validates :url, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]) }
 
   # Scope que valida la unicidad de la URL por linkeable_id
   validates_uniqueness_of :url, scope: [:linkeable_id]
