@@ -36,7 +36,7 @@ class Admin::VenuesController < ApplicationController
     venue.image = Image.new(file: params[:image]) if params[:image].present?
 
     if venue.save
-      venue.image.convert_to_webp
+      venue.image.convert_to_webp if venue.image.present?
 
       render json: venue.as_json(SHOW_VENUE_TO_JSON), status: :ok
     else
@@ -57,7 +57,7 @@ class Admin::VenuesController < ApplicationController
     end
 
     if venue.update(venue_params)
-      venue.image.convert_to_webp
+      venue.image.convert_to_webp if venue.image.present?
 
       render json: venue.as_json(SHOW_VENUE_TO_JSON), status: :ok
     else

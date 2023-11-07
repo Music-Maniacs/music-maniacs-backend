@@ -37,7 +37,7 @@ class ArtistsController < ApplicationController
     artist.image = Image.new(file: params[:image]) if params[:image].present?
 
     if artist.save
-      artist.image.convert_to_webp
+      artist.image.convert_to_webp if artist.image.present?
 
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
     else
@@ -58,7 +58,7 @@ class ArtistsController < ApplicationController
     end
 
     if artist.update(artist_params)
-      artist.image.convert_to_webp
+      artist.image.convert_to_webp if artist.image.present?
 
       render json: artist.as_json(ARTIST_TO_JSON), status: :ok
     else

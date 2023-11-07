@@ -59,7 +59,7 @@ class Admin::EventsController < ApplicationController
     end
 
     if event.update(event_params)
-      event.image.convert_to_webp
+      event.image.convert_to_webp if event.image.present?
 
       render json: event.as_json(SHOW_EVENT_TO_JSON), status: :ok
     else
@@ -69,6 +69,7 @@ class Admin::EventsController < ApplicationController
 
   def destroy
     event = events_scope.find(params[:id])
+    notify_destroys_to_followers(event.id) if event.present?
 
     if event.destroy
       head :no_content, status: :ok
@@ -91,5 +92,9 @@ class Admin::EventsController < ApplicationController
                                                                  :producer_id,
                                                                  :venue_id,
                                                                  :links_attributes)
+  end
+
+  def notify_destroys_to_followers(id)
+    EventDestroyNotificationsJob.perform_later(id)
   end
 end

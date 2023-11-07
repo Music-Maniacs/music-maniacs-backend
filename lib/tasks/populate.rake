@@ -408,7 +408,7 @@ namespace :populate do
         location_attributes: {
           zip_code: "5500",
           street: "Olascoaga",
-          city: "Mendoza",
+          city: "Capital",
           latitude: "-32.88042883193109",
           longitude: "-68.8516026751349",
           number: "1783",
@@ -421,7 +421,7 @@ namespace :populate do
         location_attributes: {
           zip_code: "C1106",
           street: "Av. Eduardo Madero",
-          city: "CABA",
+          city: "Comuna 1",
           latitude: "-34.60217641615085",
           longitude: "-58.36973861326939",
           number: "470",
@@ -435,7 +435,7 @@ namespace :populate do
         location_attributes: {
           zip_code: "5500",
           street: "Virgen del Carmen de Cuyo",
-          city: "Mendoza",
+          city: "Capital",
           latitude: "-32.89806635814529",
           longitude: "-68.85010249275496",
           number: "610",
@@ -449,7 +449,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1063",
             street: "Cerrito",
-            city: "CABA",
+            city: "Comuna 1",
             latitude: "-34.60145621632879",
             longitude: "-58.3857798574496",
             number: "628",
@@ -464,7 +464,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1428",
             street: "Av. Pres. Figueroa Alcorta",
-            city: "CABA",
+            city: "Comuna 1",
             latitude: "-34.54500182387441",
             longitude: "-58.454702153696195",
             number: "7597",
@@ -479,7 +479,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1011",
             street: "Av. Corrientes",
-            city: "CABA",
+            city: "Comuna 1",
             latitude: "-34.60480149464147",
             longitude: "-58.38205598885234",
             number: "857",
@@ -494,7 +494,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1428",
             street: "Av. Figueroa Alcorta",
-            city: "CABA",
+            city: "Comuna 1",
             latitude: "-34.545775",
             longitude: "-58.452760",
             number: "7597",
@@ -509,7 +509,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1061",
             street: "Av. Corrientes",
-            city: "CABA",
+            city: "Comuna 1",
             latitude: "-34.608276",
             longitude: "-58.394451",
             number: "860",
@@ -524,7 +524,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "C1010",
             street: "Av. Santa Fe",
-            city: "CABA",
+            city: "Comuna 1",
             latitude: "-34.595189",
             longitude: "-58.389042",
             number: "1860",
@@ -554,12 +554,12 @@ namespace :populate do
           location_attributes: {
             zip_code: "11100",
             street: "Calle Buenos Aires",
-            city: "Montevideo",
+            city: "Departamento de Montevideo",
             latitude: "-34.906498",
             longitude: "-56.194155",
-            number: "468",
+            number: "470",
             country: "Uruguay",
-            province: "Montevideo",
+            province: "Departamento de Montevideo",
           }
         )
         
@@ -573,7 +573,7 @@ namespace :populate do
             latitude: "19.434012",
             longitude: "-99.140388",
             number: "97",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -582,13 +582,13 @@ namespace :populate do
           name: "Auditorio Nacional",
           description: "El Auditorio Nacional es un importante centro de espectáculos en Ciudad de México, México, que acoge conciertos y eventos en vivo de alto perfil.",
           location_attributes: {
-            zip_code: "11550",
+            zip_code: "06500",
             street: "Paseo de la Reforma",
             city: "Ciudad de México",
             latitude: "19.425032",
             longitude: "-99.180609",
-            number: "50",
-            country: "Mexico",
+            number: "110",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -603,7 +603,7 @@ namespace :populate do
             latitude: "19.400445",
             longitude: "-99.106376",
             number: "9",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -618,7 +618,7 @@ namespace :populate do
             latitude: "19.404725",
             longitude: "-99.090733",
             number: "504",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -629,7 +629,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5500",
             street: "Av. España",
-            city: "Mendoza",
+            city: "Capital",
             latitude: "-32.899620",
             longitude: "-68.837873",
             number: "430",
@@ -644,7 +644,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5515",
             street: "Ruta 20",
-            city: "Mendoza",
+            city: "Maipú",
             latitude: "-32.945080",
             longitude: "-68.761327",
             number: "2245",
@@ -659,7 +659,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5500",
             street: "Sarmiento",
-            city: "Mendoza",
+            city: "Capital",
             latitude: "-32.888489",
             longitude: "-68.818592",
             number: "350",
@@ -674,7 +674,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5517",
             street: "Costa Flores",
-            city: "Mendoza",
+            city: "Capital",
             latitude: "-32.973944",
             longitude: "-68.787981",
             number: "1",
@@ -689,7 +689,7 @@ namespace :populate do
           location_attributes: {
             zip_code: "5500",
             street: "Pedro Molina",
-            city: "Mendoza",
+            city: "Capital",
             latitude: "-32.883973",
             longitude: "-68.821511",
             number: "1820",
