@@ -37,13 +37,13 @@ class Report < ApplicationRecord
   def suggestion
     case category
     when 'incorrect_artist'
-      Artist.find(original_reportable_id)
+      Artist.with_deleted.find(original_reportable_id)
     when 'incorrect_venue'
-      Venue.find(original_reportable_id)
+      Venue.with_deleted.find(original_reportable_id)
     when 'incorrect_producer'
-      Producer.find(original_reportable_id)
+      Producer.with_deleted.find(original_reportable_id)
     when 'duplicated'
-      reportable_type.constantize.find(original_reportable_id)
+      reportable_type.constantize.with_deleted.find(original_reportable_id)
     end
   end
 
