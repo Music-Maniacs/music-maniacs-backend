@@ -2,11 +2,11 @@
 # schema for tracking associations.
 class CreateVersionAssociations < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :version_associations do |t|
-      t.integer  :version_id
-      t.string   :foreign_key_name, null: false
-      t.uuid  :foreign_key_id
-      t.string   :foreign_type
+    create_table :version_associations, id: :uuid do |t|
+      t.uuid :version_id
+      t.string :foreign_key_name, null: false
+      t.uuid :foreign_key_id
+      t.string :foreign_type
     end
     add_index :version_associations, [:version_id]
     add_index :version_associations,
