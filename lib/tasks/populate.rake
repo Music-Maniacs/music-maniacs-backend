@@ -585,7 +585,7 @@ namespace :populate do
             latitude: "19.434012",
             longitude: "-99.140388",
             number: "97",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -600,7 +600,7 @@ namespace :populate do
             latitude: "19.425032",
             longitude: "-99.180609",
             number: "50",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -615,7 +615,7 @@ namespace :populate do
             latitude: "19.400445",
             longitude: "-99.106376",
             number: "9",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
@@ -630,7 +630,7 @@ namespace :populate do
             latitude: "19.404725",
             longitude: "-99.090733",
             number: "504",
-            country: "Mexico",
+            country: "México",
             province: "Ciudad de México",
           }
         )
