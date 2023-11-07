@@ -69,7 +69,6 @@ class Admin::EventsController < ApplicationController
 
   def destroy
     event = events_scope.find(params[:id])
-    notify_destroys_to_followers(event.id) if event.present?
 
     if event.destroy
       head :no_content, status: :ok
@@ -92,9 +91,5 @@ class Admin::EventsController < ApplicationController
                                                                  :producer_id,
                                                                  :venue_id,
                                                                  :links_attributes)
-  end
-
-  def notify_destroys_to_followers(id)
-    EventDestroyNotificationsJob.perform_later(id)
   end
 end
