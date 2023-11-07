@@ -6,7 +6,7 @@ class ReviewsController < ApplicationController
   end
 
   before_action :authenticate_user!
-  before_action :authorize_action, public_endpoints
+  before_action :authorize_action, except: public_endpoints
 
   def create
     event = Event.find(params[:event_id])
