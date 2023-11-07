@@ -1,4 +1,11 @@
 class Admin::EventsController < ApplicationController
+  def self.public_endpoints
+    %i[search_typeahead]
+  end
+
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
+
   EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },

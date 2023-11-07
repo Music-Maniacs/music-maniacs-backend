@@ -1,68 +1,59 @@
 namespace :populate do
-  desc "Populate database with roles and permissions"
-  task roles_and_permissions: :environment do
+  desc "Run all tasks"
+  task run_all: :environment do
+    Rake::Task['populate:populate_permissions'].execute
+    Rake::Task['populate:populate_roles'].execute
+    Rake::Task['populate:populate_genres'].execute
+    Rake::Task['populate:populate_thresholds'].execute
+    Rake::Task['populate:populate_admin_users'].execute
+    Rake::Task['populate:populate_fake_users'].execute
+    Rake::Task['populate:populate_artists_producers_venues_events'].execute
+    Rake::Task['populate:edit_created_at'].execute
+  end
+
+  desc 'Populate db with permissions'
+  task populate_permissions: :environment do
+    def setup_actions_controllers_db
+      Rails.application.eager_load!
+      ApplicationController.subclasses.each do |controller|
+        next unless controller.respond_to?(:permission)
+        next if controller.name.include?('Devise')
+        next if controller.name.include?('Profile')
+        next if controller.name.include?('Policies')
+
+
+        klass = controller.permission
+        write_permission(klass.name, :manage)
+
+        controller.authorizable_endpoints.each do |action|
+          write_permission(klass.name, action)
+        end
+      end
+    end
+
+    def write_permission(subject_class, action)
+      Permission.find_or_create_by!(subject_class:, action:, name: I18n.t(action, scope: [:activerecord, :attributes, :permissions, :actions]))
+    end
+
+    setup_actions_controllers_db
+  end
+
+  desc "Populate database with roles"
+  task populate_roles: :environment do
     # por ahora queda así bien tranqui a modo de ejemplo, después se puede mejorar, la idea acá es crear todos los roles
     # que van si o si como admin y moderador y los CRUD de todos los controllers para las permissions
     # Create some roles
-    admin_role = Role.find_or_create_by!(name: 'admin')
-    user_role = Role.find_or_create_by!(name: 'user')
-    moderator_role = Role.find_or_create_by!(name: 'moderator')
-    guest_role = Role.find_or_create_by!(name: 'guest')
-
+    Role.find_or_create_by!(name: 'admin')
+    Role.find_or_create_by!(name: 'moderator')
 
     # Create some trust levels
-    default_trust_level = TrustLevel.find_or_create_by!(name: 'level 1', order: 1, days_visited: 0, viewed_events: 0, likes_received: 0, likes_given: 0, comments_count: 0)
-    trusted_member_level = TrustLevel.find_or_create_by!(name: 'level 2', order: 2, days_visited: 30, viewed_events: 10, likes_received: 50, likes_given: 100, comments_count: 20)
-    vip_level = TrustLevel.find_or_create_by!(name: 'level_3', order: 3, days_visited: 60, viewed_events: 20, likes_received: 100, likes_given: 200, comments_count: 40)
+    TrustLevel.find_or_create_by!(name: 'level 1', order: 1, days_visited: 0, viewed_events: 0, likes_received: 0, likes_given: 0, comments_count: 0)
+    TrustLevel.find_or_create_by!(name: 'level 2', order: 2, days_visited: 30, viewed_events: 10, likes_received: 50, likes_given: 100, comments_count: 20)
+    TrustLevel.find_or_create_by!(name: 'level_3', order: 3, days_visited: 60, viewed_events: 20, likes_received: 100, likes_given: 200, comments_count: 40)
+  end
 
-    # Create some permissions
-    permission1 = Permission.find_or_create_by!(name: 'Ver usuarios', action: 'Index', subject_class: 'User')
-    permission2 = Permission.find_or_create_by!(name: 'Ver info usuario', action: 'Show', subject_class: 'User')
-    permission3 = Permission.find_or_create_by!(name: 'Crear usuario', action: 'Create', subject_class: 'User')
-    permission4 = Permission.find_or_create_by!(name: 'Editar usuario', action: 'Update', subject_class: 'User')
-    permission5 = Permission.find_or_create_by!(name: 'Eliminar usuario', action: 'Delete', subject_class: 'User')
-    
-    permission6 = Permission.find_or_create_by!(name: 'Ver artista', action: 'Index', subject_class: 'Artist')
-    permission7 = Permission.find_or_create_by!(name: 'Ver info artista', action: 'Show', subject_class: 'Artist')
-    permission8 = Permission.find_or_create_by!(name: 'Crear artista', action: 'Create', subject_class: 'Artist')
-    permission9 = Permission.find_or_create_by!(name: 'Editar artista', action: 'Update', subject_class: 'Artist')
-    permission10 = Permission.find_or_create_by!(name: 'Eliminar artista', action: 'Delete', subject_class: 'Artist')
-
-    permission11 = Permission.find_or_create_by!(name: 'Ver genero', action: 'Index', subject_class: 'Genre')
-    permission12 = Permission.find_or_create_by!(name: 'Ver info genero', action: 'Show', subject_class: 'Genre')
-    permission13 = Permission.find_or_create_by!(name: 'Crear genero', action: 'Create', subject_class: 'Genre')
-    permission14 = Permission.find_or_create_by!(name: 'Editar genero', action: 'Update', subject_class: 'Genre')
-    permission15 = Permission.find_or_create_by!(name: 'Eliminar genero', action: 'Delete', subject_class: 'Genre')
-
-    permission16 = Permission.find_or_create_by!(name: 'Ver esapcio de eventos', action: 'Index', subject_class: 'Venue')
-    permission17 = Permission.find_or_create_by!(name: 'Ver info esapcio de evento', action: 'Show', subject_class: 'Venue')
-    permission18 = Permission.find_or_create_by!(name: 'Crear esapcio de eventos', action: 'Create', subject_class: 'Venue')
-    permission19 = Permission.find_or_create_by!(name: 'Editar esapcio de eventos', action: 'Update', subject_class: 'Venue')
-    permission20 = Permission.find_or_create_by!(name: 'Eliminar esapcio de eventos', action: 'Delete', subject_class: 'Venue')
-
-    permission21 = Permission.find_or_create_by!(name: 'Ver eventos', action: 'Index', subject_class: 'Event')
-    permission22 = Permission.find_or_create_by!(name: 'Ver info evento', action: 'Show', subject_class: 'Event')
-    permission23 = Permission.find_or_create_by!(name: 'Crear eventos', action: 'Create', subject_class: 'Event')
-    permission24 = Permission.find_or_create_by!(name: 'Editar eventos', action: 'Update', subject_class: 'Event')
-    permission25 = Permission.find_or_create_by!(name: 'Eliminar eventos', action: 'Delete', subject_class: 'Event')
-
-   # Asocia permisos con roles y niveles de confianza
-   admin_role.permissions << [permission1,permission2,permission3,permission4,permission5,permission6,permission7,permission8,permission9,permission10,permission11,permission12,permission13,permission14,permission15,permission16,permission17,permission18,permission19,permission20,permission21,permission22,permission23,permission24,permission25]
-   user_role.permissions << [permission1,permission6,permission11,permission16,permission21,]
-   moderator_role.permissions << [permission1, permission2, permission3, permission6, permission7, permission8, permission9, permission10]
-   guest_role.permissions << [permission1, permission2, permission3]
-
-   # Asocia permisos con niveles de confianza (si es necesario)
-   default_trust_level.permissions << [permission1, permission2, permission3]
-   trusted_member_level.permissions << [permission1, permission2, permission3, permission6, permission7, permission8, permission9, permission10]
-   vip_level.permissions << [permission1, permission2, permission3, permission6, permission7, permission8, permission9, permission10]
-
-    admin_role.save
-    user_role.save
-    default_trust_level.save
-    trusted_member_level.save
-    vip_level.save
-
+  desc "Populate database with genres"
+  task populate_genres: :environment do
     Genre.find_or_create_by(name: "Rock")
     Genre.find_or_create_by(name: "Pop")
     Genre.find_or_create_by(name: "Hip Hop")
@@ -78,41 +69,35 @@ namespace :populate do
     Genre.find_or_create_by(name: "Metal")
     Genre.find_or_create_by(name: "Punk")
     Genre.find_or_create_by(name: "Indie")
-    Genre.find_or_create_by(name: "Reggaeton")
-    Genre.find_or_create_by(name: "Rock Alternativo")
-    Genre.find_or_create_by(name: "Electropop")
-    Genre.find_or_create_by(name: "Funk")
-    Genre.find_or_create_by(name: "Soul")
-    Genre.find_or_create_by(name: "Techno")
-    Genre.find_or_create_by(name: "Hip Hop Latino")
-    Genre.find_or_create_by(name: "Disco")
-    Genre.find_or_create_by(name: "Indie Pop")
-    Genre.find_or_create_by(name: "Ska")
-    Genre.find_or_create_by(name: "Reggae Roots")
-    Genre.find_or_create_by(name: "Blues Rock")
-    Genre.find_or_create_by(name: "Country Pop")
-    
+  end
 
+  desc "Populate Thresholds"
+  task populate_thresholds: :environment do
     PenaltyThreshold.find_or_create_by(penalty_score: 50, days_blocked: 15)
     PenaltyThreshold.find_or_create_by(penalty_score: 100, days_blocked: 25)
     PenaltyThreshold.find_or_create_by(penalty_score: 150, days_blocked: 35)
+  end
 
+  desc "Populate Admin Users"
+  task populate_admin_users: :environment do
     [{ email: 'tomasespin12@gmail.com', username: 'tomas1646', full_name: 'Tomas Espinosa' },
      { email: 'jokinabarzua@hotmail.com', username: 'jokinAbarzua', full_name: 'Jokin Abarzua' },
      { email: 'ezesalas@gmail.com', username: 'ezeSalas', full_name: 'Eze Salas' },
      { email: 'octalcalde@gmail.com', username: 'octavio', full_name: 'Octa Alcalde' },
      { email: 'lucasmiranda@gmail.com', username: 'lucasMiranda', full_name: 'Lucas Miranda' }].each do |user|
+      next if User.find_by(email: user[:email], username: user[:username]).present?
 
-        next if User.find_by('email= ? OR username= ?', user[:email], user[:username]).present?
-
-        User.create({ email: user[:email],
-                      username: user[:username],
-                      full_name: user[:full_name],
-                      password: '123123123',
-                      password_confirmation:'123123123',
-                      role_id: admin_role.id })
+      User.create!({ email: user[:email],
+                    username: user[:username],
+                    full_name: user[:full_name],
+                    password: '123123123',
+                    password_confirmation: '123123123',
+                    role: Role.find_by(name: 'admin') })
     end
+  end
 
+  desc "Populate Fake Users"
+  task populate_fake_users: :environment do
     # Crea un arreglo de 40 usuarios ficticios
     users_to_create = [
       { email: 'user1@example.com', username: 'user1', full_name: 'Usuario Uno' },
@@ -166,10 +151,13 @@ namespace :populate do
         full_name: user_data[:full_name],
         password: 'password123',
         password_confirmation: 'password123',
-        role_id: user_role.id
+        role_id: TrustLevel.default_trust_level
       )
     end
+  end
 
+  desc "Populate Artists, Producers, Venues, Events"
+  task populate_artists_producers_venues_events: :environment do
     [
       {
         name: 'Usted Señalemelo',
@@ -872,113 +860,111 @@ namespace :populate do
         end
         
         [
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "La productora superó todas mis expectativas. Organizaron el evento de manera impecable y la calidad del sonido fue excepcional.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.producer.id,
-    reviewable_type: "Producer"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "Trabajar con esta productora fue una experiencia increíble. Se preocuparon por cada detalle y el resultado fue un evento espectacular.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.producer.id,
-    reviewable_type: "Producer"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "¡Recomendaría esta productora a cualquiera que busque un evento musical de alta calidad! Su profesionalismo y creatividad son excepcionales.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.producer.id,
-    reviewable_type: "Producer"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "Estamos muy agradecidos por el trabajo de esta productora. Hicieron que nuestro evento musical fuera un verdadero éxito. ¡No podríamos estar más contentos!",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.producer.id,
-    reviewable_type: "Producer"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "La productora demostró un gran compromiso con nuestro evento y se aseguró de que todo saliera a la perfección. Definitivamente los contrataríamos nuevamente.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.producer.id,
-    reviewable_type: "Producer"
-  }
-].each do |review|
-          Review.find_or_create_by(review)
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "La productora superó todas mis expectativas. Organizaron el evento de manera impecable y la calidad del sonido fue excepcional.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.producer.id,
+        reviewable_type: "Producer"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "Trabajar con esta productora fue una experiencia increíble. Se preocuparon por cada detalle y el resultado fue un evento espectacular.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.producer.id,
+        reviewable_type: "Producer"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "¡Recomendaría esta productora a cualquiera que busque un evento musical de alta calidad! Su profesionalismo y creatividad son excepcionales.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.producer.id,
+        reviewable_type: "Producer"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "Estamos muy agradecidos por el trabajo de esta productora. Hicieron que nuestro evento musical fuera un verdadero éxito. ¡No podríamos estar más contentos!",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.producer.id,
+        reviewable_type: "Producer"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "La productora demostró un gran compromiso con nuestro evento y se aseguró de que todo saliera a la perfección. Definitivamente los contrataríamos nuevamente.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.producer.id,
+        reviewable_type: "Producer"
+      }
+    ].each do |review|
+              Review.find_or_create_by(review)
+            end
+
+
+            [
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "Este lugar de eventos es simplemente asombroso. La acústica es perfecta y la atmósfera es inigualable. Fue el escenario perfecto para el concierto.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.venue.id,
+        reviewable_type: "Venue"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "Increíble lugar para conciertos. La ubicación es conveniente y el personal es amable y servicial. Sin duda, volveremos.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.venue.id,
+        reviewable_type: "Venue"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "El espacio es espacioso y cómodo, y la vista desde cualquier asiento es excelente. La experiencia de concierto fue inolvidable gracias a este lugar.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.venue.id,
+        reviewable_type: "Venue"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "La calidad del sonido en este lugar es excepcional. Pudimos disfrutar del concierto sin perder ningún detalle de la música. ¡Altamente recomendado!",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.venue.id,
+        reviewable_type: "Venue"
+      },
+      {
+        rating: (rand(9) + 1) * 0.5,
+        description: "El personal de este lugar de eventos hizo que nuestra experiencia fuera suave y agradable. Nos sentimos bienvenidos y bien atendidos durante todo el concierto.",
+        user_id: User.order("RANDOM()").first.id,
+        event_id: evento.id,
+        reviewable_id: evento.venue.id,
+        reviewable_type: "Venue"
+      }
+    ].each do |review|
+              Review.find_or_create_by(review)
+            end
+                    
+          end
+
+      # Crear comentarios y asociarlos a eventos
+      Event.all.each do |event|
+        # Genera un número aleatorio de comentarios para cada evento (entre 1 y 5)
+        num_comments = rand(1..9)
+
+        num_comments.times do
+          Comment.create(
+            body: Faker::Lorem.sentence,
+            user_id: User.order("RANDOM()").first.id, # Asigna un usuario aleatorio
+            event_id: event.id
+          )
         end
-
-
-        [
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "Este lugar de eventos es simplemente asombroso. La acústica es perfecta y la atmósfera es inigualable. Fue el escenario perfecto para el concierto.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.venue.id,
-    reviewable_type: "Venue"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "Increíble lugar para conciertos. La ubicación es conveniente y el personal es amable y servicial. Sin duda, volveremos.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.venue.id,
-    reviewable_type: "Venue"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "El espacio es espacioso y cómodo, y la vista desde cualquier asiento es excelente. La experiencia de concierto fue inolvidable gracias a este lugar.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.venue.id,
-    reviewable_type: "Venue"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "La calidad del sonido en este lugar es excepcional. Pudimos disfrutar del concierto sin perder ningún detalle de la música. ¡Altamente recomendado!",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.venue.id,
-    reviewable_type: "Venue"
-  },
-  {
-    rating: (rand(9) + 1) * 0.5,
-    description: "El personal de este lugar de eventos hizo que nuestra experiencia fuera suave y agradable. Nos sentimos bienvenidos y bien atendidos durante todo el concierto.",
-    user_id: User.order("RANDOM()").first.id,
-    event_id: evento.id,
-    reviewable_id: evento.venue.id,
-    reviewable_type: "Venue"
-  }
-].each do |review|
-          Review.find_or_create_by(review)
-        end
-                
-       end
-
-# Crear comentarios y asociarlos a eventos
-Event.all.each do |event|
-  # Genera un número aleatorio de comentarios para cada evento (entre 1 y 5)
-  num_comments = rand(1..9)
-
-  num_comments.times do
-    Comment.create(
-      body: Faker::Lorem.sentence,
-      user_id: User.order("RANDOM()").first.id, # Asigna un usuario aleatorio
-      event_id: event.id
-    )
-  end
-end
-
-        
+      end
   end
 
   desc "Edit created_at attribute for records in the last 6 months"

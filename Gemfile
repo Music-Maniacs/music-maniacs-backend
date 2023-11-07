@@ -50,8 +50,9 @@ gem 'sidekiq'
 gem 'faker'
 
 # Backup
-gem 'whenever'
 gem 'backup'
+gem 'whenever'
+gem 'cancancan'
 gem 'rubyzip'
 
 # Image utils

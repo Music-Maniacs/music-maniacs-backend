@@ -3,6 +3,13 @@ class ArtistsController < ApplicationController
   include ReviewableActions
   include ReportableActions
 
+  def self.public_endpoints
+    %i[show reviews follow unfollow]
+  end
+
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
+
   ARTIST_TO_JSON = { include: { genres: { only: %i[id name] },
                                 links: { only: %i[id url title] },
                                 image: { methods: %i[full_url] },

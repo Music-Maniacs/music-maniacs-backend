@@ -1,5 +1,13 @@
 class Admin::VenuesController < ApplicationController
   include Search
+
+  def self.public_endpoints
+    %i[search_typeahead]
+  end
+
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
+
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] } },

@@ -1,7 +1,13 @@
 class VideosController < ApplicationController
-  before_action :authenticate_user!, only: %i[create destroy]
   include LikeableActions
   include ReportableActions
+
+  def self.public_endpoints
+    %i[show like remove_like destroy]
+  end
+
+  before_action :authenticate_user!, except: %i[show]
+  before_action :authorize_action, except: public_endpoints
 
   VIDEO_TO_SHOW = { only: %i[id name created_at recorded_at],
                     methods: %i[full_url anonymous likes_count liked_by_current_user],
