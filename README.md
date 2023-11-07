@@ -35,6 +35,7 @@ Things you may want to cover:
   rails populate:roles_and_permissions
   rails console y luego User.all.each {|u| u.create_user_stat}
   rails populate:edit_created_at
+  bundle exec sidekiq
 ```
 
 
