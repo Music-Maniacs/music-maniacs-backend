@@ -17,7 +17,7 @@ class TrustLevel < Role
     actual_permissions = permissions.map { |permission| "#{permission.subject_class}_#{I18n.t(permission.action, scope: [:activerecord, :attributes, :permissions, :actions])}" }.flatten
     missing_permissions = lower_permissions - actual_permissions
 
-    actual_permissions.select { |permission| permission.to_s.match?(/manage/) }.each do |manage_permission|
+    actual_permissions.select { |permission| permission.to_s.match?(/Todas las operaciones/) }.each do |manage_permission|
       missing_permissions.delete_if { |permission| permission.to_s.match?(/#{manage_permission.split('_').first}/) }
     end
 
