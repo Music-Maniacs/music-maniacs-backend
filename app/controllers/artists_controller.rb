@@ -16,7 +16,7 @@ class ArtistsController < ApplicationController
                                 last_reviews: { only: %i[id rating description created_at reviewable_type],
                                                 include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } },
                                                 methods: :anonymous },
-                                versions: { except: :object_changes, methods: %i[anonymous named_object_changes], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
+                                history: { except: :object_changes, methods: %i[anonymous named_object_changes], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
                      methods: %i[rating past_events next_events] }.freeze
 
   def show
