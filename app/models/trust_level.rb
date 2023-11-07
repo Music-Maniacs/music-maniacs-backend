@@ -9,6 +9,19 @@ class TrustLevel < Role
 
   validates :order, uniqueness: true, numericality: { only_integer: true, greater_than: 0 }, presence: true
 
+  validate :permissions_are_valid
+
+  def permissions_are_valid
+    lower_levels = TrustLevel.where("roles.order < ?", order)
+    lower_permissions = lower_levels.map { |level| level.permissions.map { |permission| "#{permission.subject_class}_#{permission.action}" } }.uniq.flatten
+    actual_permissions = permissions.map { |permission| "#{permission.subject_class}_#{permission.action}" }.flatten
+    missing_permissions = lower_permissions - actual_permissions
+
+    unless missing_permissions.empty?
+      errors.add(:base, :missing_permission_from_lower_trust_level, permissions: missing_permissions)
+    end
+  end
+
   ##############################################################################
   # INSTANCE METHODS
   ##############################################################################
