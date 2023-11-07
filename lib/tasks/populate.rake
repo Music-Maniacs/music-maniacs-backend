@@ -992,9 +992,13 @@ namespace :populate do
     artists_to_update = Artist.where("created_at >= ?", six_months_ago)
     update_created_at_for_records(artists_to_update)
 
-     # Encuentra y actualiza Users
-     artists_to_update = User.where("created_at >= ?", six_months_ago)
-     update_created_at_for_records(artists_to_update)
+    # Encuentra y actualiza Users
+    artists_to_update = User.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(artists_to_update)
+
+    # Encuentra y actualiza Venues
+    venues_to_update = Venue.where("created_at >= ?", six_months_ago)
+    update_created_at_for_records(venues_to_update)
   
     puts "Updated created_at for records in multiple entities."
   end
