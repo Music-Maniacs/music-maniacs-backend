@@ -92,7 +92,8 @@ namespace :populate do
                     full_name: user[:full_name],
                     password: '123123123',
                     password_confirmation: '123123123',
-                    role: Role.find_by(name: 'admin') })
+                    role: Role.find_by(name: 'admin'),
+                    confirmed_at: Time.now })
     end
   end
 
@@ -151,7 +152,8 @@ namespace :populate do
         full_name: user_data[:full_name],
         password: 'password123',
         password_confirmation: 'password123',
-        role_id: TrustLevel.default_trust_level
+        role_id: TrustLevel.default_trust_level,
+        confirmed_at: Time.now
       )
     end
   end
