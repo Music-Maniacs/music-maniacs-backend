@@ -1,11 +1,17 @@
 class CommentsController < ApplicationController
   include ReportableActions
   include LikeableActions
+
+  def self.public_endpoints
+    %i[index like remove_like update destroy]
+  end
+
+  before_action :authenticate_user!, except: %i[index]
+  before_action :authorize_action, except: public_endpoints
+
   COMMENT_TO_JSON = { only: %i[id body created_at],
                       include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
                       methods: %i[anonymous likes_count liked_by_current_user] }.freeze
-
-  before_action :authenticate_user!, except: %i[index]
 
   def index
     event = Event.find(params[:event_id])

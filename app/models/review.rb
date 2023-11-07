@@ -1,6 +1,7 @@
 class Review < ApplicationRecord
   include Reportable
   include Versionable
+  has_paper_trail versions: { class_name: 'Version' }, ignore: %i[id created_at updated_at deleted_at]
   acts_as_paranoid
 
   TO_JSON = { only: %i[id rating description created_at reviewable_type],

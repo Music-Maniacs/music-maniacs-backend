@@ -1,4 +1,11 @@
 class Admin::EventsController < ApplicationController
+  def self.public_endpoints
+    %i[search_typeahead]
+  end
+
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
+
   EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                links: { only: %i[id url title] },
                                artist: { only: %i[id name] },
@@ -10,7 +17,7 @@ class Admin::EventsController < ApplicationController
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
                                     venue: { only: %i[id name] },
-                                    versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
+                                    history: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name] } } } },
                          methods: %i[reviews_info] }.freeze
 
   def index

@@ -3,13 +3,20 @@ class VenuesController < ApplicationController
   include ReviewableActions
   include ReportableActions
 
+  def self.public_endpoints
+    %i[show reviews follow unfollow]
+  end
+
+  before_action :authenticate_user!, except: %i[show reviews]
+  before_action :authorize_action, except: %i[show reviews follow unfollow]
+
   VENUE_TO_JSON = { include: { location: { only: %i[zip_code street city latitude longitude number country province] },
                                links: { only: %i[id url title] },
                                image: { methods: %i[full_url] },
                                last_reviews: { only: %i[id rating description created_at reviewable_type],
                                                include: { user: { only: %i[id full_name], methods: :profile_image_full_url } },
                                                methods: :anonymous },
-                               versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url } } } },
+                               history: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url } } } },
                     methods: %i[rating past_events next_events address] }.freeze
 
   def show

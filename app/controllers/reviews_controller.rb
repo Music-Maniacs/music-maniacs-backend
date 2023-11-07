@@ -1,6 +1,12 @@
 class ReviewsController < ApplicationController
   include ReportableActions
+
+  def self.public_endpoints
+    %i[update destroy]
+  end
+
   before_action :authenticate_user!
+  before_action :authorize_action, public_endpoints
 
   def create
     event = Event.find(params[:event_id])

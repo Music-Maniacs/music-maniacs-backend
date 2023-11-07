@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
-  before_action :authenticate_user!, only: %i[resolve]
+  before_action :authenticate_user!
+  before_action :authorize_action
 
   REPORTS_TO_JSON = { include: { reporter: { only: %i[id full_name] },
                                  resolver: { only: %i[id full_name] } } }.freeze
@@ -43,10 +44,6 @@ class ReportsController < ApplicationController
     render json: result
   end
 
-  def reportable_serializer(reportable_type)
-    self.class.const_get("#{reportable_type.upcase}_TO_JSON")
-  end
-
   def resolve
     report = Report.find(params[:id])
     report.resolver = current_user
@@ -65,5 +62,9 @@ class ReportsController < ApplicationController
 
   def resolve_report_params
     params.require(:report).permit(:moderator_comment, :penalization_score)
+  end
+
+  def reportable_serializer(reportable_type)
+    self.class.const_get("#{reportable_type.upcase}_TO_JSON")
   end
 end

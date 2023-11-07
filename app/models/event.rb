@@ -1,12 +1,9 @@
 class Event < ApplicationRecord
   include Followable
   include Reportable
-
-  def self.ignored_version_attrs
-    %i[popularity_score views_count]
-  end
-
   include Versionable
+
+  has_paper_trail versions: { class_name: 'Version' }, ignore: %i[popularity_score views_count id created_at updated_at deleted_at]
   acts_as_paranoid
 
   NOTIFIABLE_ATTRIBUTES = %i[name datetime artist_id venue_id producer_id].freeze
@@ -22,7 +19,7 @@ class Event < ApplicationRecord
   belongs_to :producer, optional: true
   belongs_to :venue, optional: true
 
-  has_many :links, as: :linkeable
+  has_many :links, as: :linkeable, autosave: true
   accepts_nested_attributes_for :links, allow_destroy: true
 
   has_many :reviews, dependent: :destroy
@@ -126,6 +123,18 @@ class Event < ApplicationRecord
 
   def author_id
     author_id_by_versions
+  end
+
+  def links_versions
+    Version.where(item_type: 'Link')
+           .joins(:version_associations)
+           .where(version_associations: { foreign_key_name: 'linkeable_id', foreign_key_id: id })
+  end
+
+  def history
+    links_versions_ids = links_versions.pluck(:id)
+    version_ids = versions.pluck(:id)
+    Version.where(id: version_ids + links_versions_ids).order(created_at: :desc)
   end
 
   ##############################################################################

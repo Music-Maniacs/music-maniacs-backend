@@ -146,6 +146,14 @@ class User < ApplicationRecord
     end
   end
 
+  def admin?
+    role.name.match?(/admin/i)
+  end
+
+  def moderator?
+    role.name.match?(/moderator/i)
+  end
+
   def increment_penalization_score!(score)
     user_stat.increment_penalization_score!(score)
   end

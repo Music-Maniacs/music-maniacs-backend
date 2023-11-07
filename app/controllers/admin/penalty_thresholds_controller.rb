@@ -1,4 +1,7 @@
 class Admin::PenaltyThresholdsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_action
+
   def index
     penalty_thresholds = PenaltyThreshold.all
 

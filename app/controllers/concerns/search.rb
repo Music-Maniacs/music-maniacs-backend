@@ -1,6 +1,4 @@
 module Search
-  extend ActiveSupport::Concern
-
   def search_typeahead
     collection = search_model_scope.ransack(params[:q]).result(distinct: true).limit(10).pluck(:id, :name)
 

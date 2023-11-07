@@ -1,4 +1,11 @@
 class Admin::GenresController < ApplicationController
+  def self.public_endpoints
+    %i[genres_select]
+  end
+
+  before_action :authenticate_user!, except: public_endpoints
+  before_action :authorize_action, except: public_endpoints
+
   def index
     genres = Genre.ransack(params[:q]).result(distinct: true).page(params[:page]).per(params[:per_page])
 

@@ -45,13 +45,16 @@ gem 'ransack'
 gem 'kaminari'
 
 gem 'paper_trail'
+gem 'paper_trail-association_tracking'
+
 gem 'sidekiq'
 
 gem 'faker'
 
 # Backup
-gem 'whenever'
 gem 'backup'
+gem 'whenever'
+gem 'cancancan'
 gem 'rubyzip'
 
 # Image utils

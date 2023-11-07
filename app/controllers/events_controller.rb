@@ -3,12 +3,19 @@ class EventsController < ApplicationController
   include FollowableActions
   include Search
 
+  def self.public_endpoints
+    %i[show search search_typeahead reviews discover follow unfollow]
+  end
+
+  before_action :authenticate_user!, except: %i[show search search_typeahead reviews discover]
+  before_action :authorize_action, except: public_endpoints
+
   SHOW_EVENT_TO_JSON = { include: { image: { methods: %i[full_url] },
                                     links: { only: %i[id url title] },
                                     artist: { only: %i[id name] },
                                     producer: { only: %i[id name] },
                                     venue: { only: %i[id name] },
-                                    versions: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
+                                    history: { except: :object_changes, methods: %i[named_object_changes anonymous], include: { user: { only: %i[id full_name], methods: :profile_image_full_url  } } } },
                          methods: %i[reviews_info] }.freeze
 
   SEARCH_EVENT_TO_JSON = { only: %i[id name datetime description],
