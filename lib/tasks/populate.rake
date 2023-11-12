@@ -10,6 +10,8 @@ namespace :populate do
     Rake::Task['populate:populate_artists_producers_venues_events'].execute
     Rake::Task['populate:edit_created_at'].execute
     Rake::Task['populate:likes'].execute
+    Rake::Task['populate:update_role_permissions'].execute
+    
   end
 
   desc 'Populate db with permissions'
@@ -1022,6 +1024,44 @@ namespace :populate do
     update_created_at_for_records(venues_to_update)
   
     puts "Updated created_at for records in multiple entities."
+  end
+
+  desc "Update permissions in roles"
+  task update_role_permissions: :environment do 
+    
+    # Buscar el rol por nombre
+    admin_role = Role.find_by(name: "admin")
+    moderator_role = Role.find_by(name: "moderator")
+
+
+    videos_permission = Permission.where(subject_class: "VideosController").pluck(:id)
+    versions_permission = Permission.where(subject_class: "VersionsController").pluck(:id)
+    venues_permission = Permission.where(subject_class: "VenuesController").pluck(:id)
+    reviews_permission = Permission.where(subject_class: "ReviewsController").pluck(:id)
+    comments_permission = Permission.where(subject_class: "CommentsController").pluck(:id)
+    artist_permission = Permission.where(subject_class: "ArtistsController").pluck(:id)
+    event_permission = Permission.where(subject_class: "EventsController").pluck(:id)
+    producer_permission = Permission.where(subject_class: "ProducersController").pluck(:id)
+    reports_controller_permission = Permission.where(subject_class: "ReportsController").pluck(:id)
+
+    ##
+    admin_permissions = Permission.all.pluck(:id)
+    moderator_permissions = videos_permission +
+                            versions_permission +
+                            venues_permission +
+                            reviews_permission +
+                            comments_permission +
+                            artist_permission +
+                            event_permission +
+                            producer_permission +
+                            reports_controller_permission
+
+    # Actualizar los permission_ids
+    admin_role.update(permission_ids: admin_permissions) if admin_role.present?
+    moderator_role.update(permission_ids: moderator_permissions) if moderator_role.present?
+    
+
+
   end
   
   # Esta función actualiza el atributo created_at para un conjunto de registros
