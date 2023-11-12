@@ -9,7 +9,7 @@ class Location < ApplicationRecord
   # VALIDATIONS
   ##############################################################################
   validates :latitude, :longitude, presence: true
-  validates :number, numericality: { only_integer: true, greater_than: 0 }
+  validates :number, numericality: { greater_than: 0, allow_blank: true }
 
   ##############################################################################
   # CLASS METHODS
