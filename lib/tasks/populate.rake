@@ -8,9 +8,9 @@ namespace :populate do
     Rake::Task['populate:populate_admin_users'].execute
     Rake::Task['populate:populate_fake_users'].execute
     Rake::Task['populate:populate_artists_producers_venues_events'].execute
-    Rake::Task['populate:edit_created_at'].execute
+    # Rake::Task['populate:edit_created_at'].execute
     Rake::Task['populate:likes'].execute
-    Rake::Task['populate:update_role_permissions'].execute
+    Rake::Task['populate:update_role_and_trus_levels_permissions'].execute
     
   end
 
@@ -50,9 +50,9 @@ namespace :populate do
     Role.find_or_create_by!(name: 'moderator')
 
     # Create some trust levels
-    TrustLevel.find_or_create_by!(name: 'level 1', order: 1, days_visited: 0, viewed_events: 0, likes_received: 0, likes_given: 0, comments_count: 0)
-    TrustLevel.find_or_create_by!(name: 'level 2', order: 2, days_visited: 30, viewed_events: 10, likes_received: 50, likes_given: 100, comments_count: 20)
-    TrustLevel.find_or_create_by!(name: 'level_3', order: 3, days_visited: 60, viewed_events: 20, likes_received: 100, likes_given: 200, comments_count: 40)
+    TrustLevel.find_or_create_by!(name: 'level_1', order: 1, days_visited: 0, viewed_events: 0, likes_received: 0, likes_given: 0, comments_count: 0)
+    TrustLevel.find_or_create_by!(name: 'level_2', order: 2, days_visited: 5, viewed_events: 10, likes_received: 0, likes_given: 10, comments_count: 3)
+    TrustLevel.find_or_create_by!(name: 'level_3', order: 3, days_visited: 20, viewed_events: 20, likes_received: 10, likes_given: 30, comments_count: 15)
   end
 
   desc "Populate database with genres"
@@ -1027,7 +1027,7 @@ namespace :populate do
   end
 
   desc "Update permissions in roles"
-  task update_role_permissions: :environment do 
+  task update_role_and_trus_levels_permissions: :environment do 
     
     # Buscar el rol por nombre
     admin_role = Role.find_by(name: "admin")
@@ -1044,7 +1044,22 @@ namespace :populate do
     producer_permission = Permission.where(subject_class: "ProducersController").pluck(:id)
     reports_controller_permission = Permission.where(subject_class: "ReportsController").pluck(:id)
 
-    ##
+    ## L3 Actualizar
+    artist_permission_update = Permission.where(subject_class: "ArtistsController", action: "update").pluck(:id)
+    event_permission_update = Permission.where(subject_class: "EventsController", action: "update").pluck(:id)
+    producer_permission_update = Permission.where(subject_class: "ProducersController", action: "update").pluck(:id)
+    venues_permission_update = Permission.where(subject_class: "VenuesController", action: "update").pluck(:id)
+
+    comments_permission_l1 = Permission.where(subject_class: "CommentsController", action: "create").pluck(:id)
+    create_permission_l2 = Permission.where(action: "create").pluck(:id) # cambiar
+    report_permission_l2 = Permission.where(action: "report").pluck(:id)
+    videos_permission_l2 = Permission.where(subject_class: "VideosController", action: "create").pluck(:id)
+    update_persmissions_l3 = artist_permission_update +
+                             event_permission_update +
+                             producer_permission_update +
+                             venues_permission_update
+
+    ## Asignacion de permisos
     admin_permissions = Permission.all.pluck(:id)
     moderator_permissions = videos_permission +
                             versions_permission +
@@ -1055,13 +1070,15 @@ namespace :populate do
                             event_permission +
                             producer_permission +
                             reports_controller_permission
+    level_1_permissions = comments_permission_l1
+    level_2_permissions = level_1_permissions + report_permission_l2 + videos_permission_l2
+    level_3_permissions = level_2_permissions + update_persmissions_l3
+
 
     # Actualizar los permission_ids
     admin_role.update(permission_ids: admin_permissions) if admin_role.present?
     moderator_role.update(permission_ids: moderator_permissions) if moderator_role.present?
     
-
-
   end
   
   # Esta función actualiza el atributo created_at para un conjunto de registros
