@@ -8,7 +8,7 @@ namespace :populate do
     Rake::Task['populate:populate_admin_users'].execute
     Rake::Task['populate:populate_fake_users'].execute
     Rake::Task['populate:populate_artists_producers_venues_events'].execute
-    # Rake::Task['populate:edit_created_at'].execute
+    Rake::Task['populate:edit_created_at'].execute
     Rake::Task['populate:likes'].execute
     Rake::Task['populate:update_role_and_trus_levels_permissions'].execute
     
