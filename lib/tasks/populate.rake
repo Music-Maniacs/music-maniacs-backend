@@ -99,49 +99,31 @@ namespace :populate do
 
   desc "Populate Fake Users"
   task populate_fake_users: :environment do
-    # Crea un arreglo de 40 usuarios ficticios
+    # Crea un arreglo de 20 usuarios ficticios
+    Faker::Config.locale = 'es'
     users_to_create = [
-      { email: 'user1@example.com', username: 'user1', full_name: 'Usuario Uno' },
-      { email: 'user2@example.com', username: 'user2', full_name: 'Usuario Dos' },
-      { email: 'user3@example.com', username: 'user3', full_name: 'Usuario Tres' },
-      { email: 'user4@example.com', username: 'user4', full_name: 'Usuario Cuatro' },
-      { email: 'user5@example.com', username: 'user5', full_name: 'Usuario Cinco' },
-      { email: 'user6@example.com', username: 'user6', full_name: 'Usuario Seis' },
-      { email: 'user7@example.com', username: 'user7', full_name: 'Usuario Siete' },
-      { email: 'user8@example.com', username: 'user8', full_name: 'Usuario Ocho' },
-      { email: 'user9@example.com', username: 'user9', full_name: 'Usuario Nueve' },
-      { email: 'user10@example.com', username: 'user10', full_name: 'Usuario Diez' },
-      { email: 'user11@example.com', username: 'user11', full_name: 'Usuario Once' },
-      { email: 'user12@example.com', username: 'user12', full_name: 'Usuario Doce' },
-      { email: 'user13@example.com', username: 'user13', full_name: 'Usuario Trece' },
-      { email: 'user14@example.com', username: 'user14', full_name: 'Usuario Catorce' },
-      { email: 'user15@example.com', username: 'user15', full_name: 'Usuario Quince' },
-      { email: 'user16@example.com', username: 'user16', full_name: 'Usuario Dieciséis' },
-      { email: 'user17@example.com', username: 'user17', full_name: 'Usuario Diecisiete' },
-      { email: 'user18@example.com', username: 'user18', full_name: 'Usuario Dieciocho' },
-      { email: 'user19@example.com', username: 'user19', full_name: 'Usuario Diecinueve' },
-      { email: 'user20@example.com', username: 'user20', full_name: 'Usuario Veinte' },
-      { email: 'user21@example.com', username: 'user21', full_name: 'Usuario Veintiuno' },
-      { email: 'user22@example.com', username: 'user22', full_name: 'Usuario Veintidós' },
-      { email: 'user23@example.com', username: 'user23', full_name: 'Usuario Veintitrés' },
-      { email: 'user24@example.com', username: 'user24', full_name: 'Usuario Veinticuatro' },
-      { email: 'user25@example.com', username: 'user25', full_name: 'Usuario Veinticinco' },
-      { email: 'user26@example.com', username: 'user26', full_name: 'Usuario Veintiséis' },
-      { email: 'user27@example.com', username: 'user27', full_name: 'Usuario Veintisiete' },
-      { email: 'user28@example.com', username: 'user28', full_name: 'Usuario Veintiocho' },
-      { email: 'user29@example.com', username: 'user29', full_name: 'Usuario Veintinueve' },
-      { email: 'user30@example.com', username: 'user30', full_name: 'Usuario Treinta' },
-      { email: 'user31@example.com', username: 'user31', full_name: 'Usuario Treinta y Uno' },
-      { email: 'user32@example.com', username: 'user32', full_name: 'Usuario Treinta y Dos' },
-      { email: 'user33@example.com', username: 'user33', full_name: 'Usuario Treinta y Tres' },
-      { email: 'user34@example.com', username: 'user34', full_name: 'Usuario Treinta y Cuatro' },
-      { email: 'user35@example.com', username: 'user35', full_name: 'Usuario Treinta y Cinco' },
-      { email: 'user36@example.com', username: 'user36', full_name: 'Usuario Treinta y Seis' },
-      { email: 'user37@example.com', username: 'user37', full_name: 'Usuario Treinta y Siete' },
-      { email: 'user38@example.com', username: 'user38', full_name: 'Usuario Treinta y Ocho' },
-      { email: 'user39@example.com', username: 'user39', full_name: 'Usuario Treinta y Nueve' },
-      { email: 'user40@example.com', username: 'user40', full_name: 'Usuario Cuarenta' }
-    ]
+      { email: 'correo1@example.com', username: 'JuanPerez', full_name: 'Juan Pérez' },
+      { email: 'correo2@example.com', username: 'MariaGomez', full_name: 'María Gómez' },
+      { email: 'correo3@example.com', username: 'CarlosRodriguez', full_name: 'Carlos Rodríguez' },
+      { email: 'correo4@example.com', username: 'AnaMartinez', full_name: 'Ana Martínez' },
+      { email: 'correo5@example.com', username: 'PedroLopez', full_name: 'Pedro López' },
+      { email: 'correo6@example.com', username: 'LauraSanchez', full_name: 'Laura Sánchez' },
+      { email: 'correo7@example.com', username: 'JavierHernandez', full_name: 'Javier Hernández' },
+      { email: 'correo8@example.com', username: 'IsabelGarcia', full_name: 'Isabel García' },
+      { email: 'correo9@example.com', username: 'LuisFernandez', full_name: 'Luis Fernández' },
+      { email: 'correo10@example.com', username: 'MartaDiaz', full_name: 'Marta Díaz' },
+      { email: 'correo11@example.com', username: 'AlejandroTorres', full_name: 'Alejandro Torres' },
+      { email: 'correo12@example.com', username: 'CarmenRuiz', full_name: 'Carmen Ruiz' },
+      { email: 'correo13@example.com', username: 'DanielGonzalez', full_name: 'Daniel González' },
+      { email: 'correo14@example.com', username: 'ElenaLopez', full_name: 'Elena López' },
+      { email: 'correo15@example.com', username: 'FranciscoMartinez', full_name: 'Francisco Martínez' },
+      { email: 'correo16@example.com', username: 'SilviaSanchez', full_name: 'Silvia Sánchez' },
+      { email: 'correo17@example.com', username: 'AntonioGomez', full_name: 'Antonio Gómez' },
+      { email: 'correo18@example.com', username: 'RosaRodriguez', full_name: 'Rosa Rodríguez' },
+      { email: 'correo19@example.com', username: 'ManuelHernandez', full_name: 'Manuel Hernández' },
+      { email: 'correo20@example.com', username: 'PatriciaFernandez', full_name: 'Patricia Fernández' }
+]
+
 
     users_to_create.each do |user_data|
       next if User.find_by(email: user_data[:email]) || User.find_by(username: user_data[:username])
@@ -955,13 +937,31 @@ namespace :populate do
           end
 
       # Crear comentarios y asociarlos a eventos
+      comments = [
+          "¡Increíble actuación, no puedo creer lo bueno que estuvo!",
+          "La energía en este evento es incomparable, ¡lo amé!",
+          "Mis oídos están agradecidos, la música fue sublime.",
+          "Definitivamente, este concierto superó mis expectativas.",
+          "¡Qué noche épica! La banda estuvo en su mejor momento.",
+          "El ambiente musical era mágico, una experiencia inolvidable.",
+          "Cada nota resonó en mi corazón, simplemente maravilloso.",
+          "¡Bravo! Los artistas se lucieron en el escenario.",
+          "Este evento musical es la razón por la que amo la música en vivo.",
+          "Increíble variedad de géneros, todos brillaron en el escenario.",
+          "Mis pies no dejaron de bailar, la mejor fiesta musical.",
+          "Desde la primera canción hasta el bis, no quería que terminara.",
+          "Gracias a los artistas por compartir su talento, ¡fue asombroso!",
+          "Un concierto que quedará grabado en mi memoria para siempre.",
+          "La combinación de luces y sonido fue impresionante, un espectáculo completo."
+      ]
+
       Event.all.each do |event|
         # Genera un número aleatorio de comentarios para cada evento (entre 1 y 5)
         num_comments = rand(1..9)
 
         num_comments.times do
           Comment.create(
-            body: Faker::Lorem.sentence,
+            body: comments[rand(0..14)],
             user_id: User.order("RANDOM()").first.id, # Asigna un usuario aleatorio
             event_id: event.id
           )
