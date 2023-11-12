@@ -68,4 +68,4 @@ test:
 #
 production:
   <<: *default
-  database: music_maniacs_backend_production
+  database: <%= ENV['DB_NAME'] %>
