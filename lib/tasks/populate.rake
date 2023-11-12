@@ -9,6 +9,7 @@ namespace :populate do
     Rake::Task['populate:populate_fake_users'].execute
     Rake::Task['populate:populate_artists_producers_venues_events'].execute
     Rake::Task['populate:edit_created_at'].execute
+    Rake::Task['populate:likes'].execute
   end
 
   desc 'Populate db with permissions'
@@ -967,6 +968,24 @@ namespace :populate do
           )
         end
       end
+  end
+
+  desc "like [Comment,Video]"
+  task likes: :environment do
+    User.all.each do |user|
+      [Comment,Video].each do |likeable_type|
+        likeable_type.all.each do |likeable|
+          # Verifica si el usuario ya ha dado like a esta instancia
+          next if Like.exists?(user_id: user.id, likeable_id: likeable.id, likeable_type: likeable_type.to_s)
+    
+          # Si no ha dado like, crea uno
+          Like.create(
+            user_id: user.id,
+            likeable: likeable
+          )
+        end
+      end
+    end
   end
 
   desc "Edit created_at attribute for records in the last 6 months"
