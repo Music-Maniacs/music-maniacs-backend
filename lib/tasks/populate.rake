@@ -10,8 +10,7 @@ namespace :populate do
     Rake::Task['populate:populate_artists_producers_venues_events'].execute
     Rake::Task['populate:edit_created_at'].execute
     Rake::Task['populate:likes'].execute
-    Rake::Task['populate:update_role_and_trus_levels_permissions'].execute
-    
+    Rake::Task['populate:update_role_and_trust_levels_permissions'].execute
   end
 
   desc 'Populate db with permissions'
@@ -1028,11 +1027,14 @@ namespace :populate do
   end
 
   desc "Update permissions in roles"
-  task update_role_and_trus_levels_permissions: :environment do 
+  task update_role_and_trust_levels_permissions: :environment do 
     
     # Buscar el rol por nombre
     admin_role = Role.find_by(name: "admin")
     moderator_role = Role.find_by(name: "moderator")
+    l1_trust_level = Role.find_by(name: "level_1")
+    l2_trust_level = Role.find_by(name: "level_2")
+    l3_trust_level = Role.find_by(name: "level_3")
 
 
     videos_permission = Permission.where(subject_class: "VideosController").pluck(:id)
@@ -1052,7 +1054,7 @@ namespace :populate do
     venues_permission_update = Permission.where(subject_class: "VenuesController", action: "update").pluck(:id)
 
     comments_permission_l1 = Permission.where(subject_class: "CommentsController", action: "create").pluck(:id)
-    create_permission_l2 = Permission.where(action: "create").pluck(:id) # cambiar
+    create_permission_l2 = Permission.where(action: "create").where.not("subject_class LIKE ?", "%Admin%").pluck(:id)
     report_permission_l2 = Permission.where(action: "report").pluck(:id)
     videos_permission_l2 = Permission.where(subject_class: "VideosController", action: "create").pluck(:id)
     update_persmissions_l3 = artist_permission_update +
@@ -1072,14 +1074,17 @@ namespace :populate do
                             producer_permission +
                             reports_controller_permission
     level_1_permissions = comments_permission_l1
-    level_2_permissions = level_1_permissions + report_permission_l2 + videos_permission_l2
+    level_2_permissions = level_1_permissions + report_permission_l2 + videos_permission_l2 + create_permission_l2
     level_3_permissions = level_2_permissions + update_persmissions_l3
 
 
     # Actualizar los permission_ids
     admin_role.update(permission_ids: admin_permissions) if admin_role.present?
     moderator_role.update(permission_ids: moderator_permissions) if moderator_role.present?
-    
+
+    l1_trust_level.update(permission_ids:level_1_permissions) if l1_trust_level.present?
+    l2_trust_level.update(permission_ids:level_2_permissions) if l2_trust_level.present?
+    l3_trust_level.update(permission_ids:level_3_permissions) if l3_trust_level.present?
   end
   
   # Esta función actualiza el atributo created_at para un conjunto de registros
