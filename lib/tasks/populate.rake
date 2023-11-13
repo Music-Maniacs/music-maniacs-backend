@@ -242,6 +242,16 @@ namespace :populate do
         nationality: 'Argentina',
         description: 'Illya Kuryaki and the Valderramas, también conocidos como IKV, es un dúo musical argentino de rap y funk.'
       },
+      {
+        name: 'Roger Waters',
+        nationality: 'Reino Unido',
+        description: 'Roger Waters es músico y compositor británico, cofundador de la banda Pink Floyd, considerada una de las más influyentes en la historia de la música moderna.'
+      },
+      {
+        name: 'Taylor Swift',
+        nationality: 'Estados Unidos',
+        description: "Taylor Swift, nacida el 13 de diciembre de 1989 en Reading, Pensilvania, es una influyente cantante, compositora y actriz estadounidense. Comenzó su carrera en la música country antes de ampliar su estilo hacia el pop, indie folk y rock alternativo. Reconocida por sus letras personales y emotivas, Swift ha ganado numerosos premios, incluyendo múltiples Grammys, y ha establecido récords en la industria musical. Su impacto va más allá de la música, abarcando la moda, la actuación y el activismo en temas como los derechos de autor y la igualdad de género. Con una carrera versátil y exitosa, Taylor Swift se ha convertido en una de las artistas más destacadas de la escena musical global."
+      }
     ].each do |artist|
       next if Artist.find_by(name: artist[:name]).present?
 
@@ -706,7 +716,7 @@ namespace :populate do
             country: "Argentina",
             province: "Buenos Aires",
           },
-          links_attributes: [{"title":"Página del CLub","url":"https://www.cariverplate.com.ar/"}] )
+          links_attributes: [{"title":"Página del Club","url":"https://www.cariverplate.com.ar/"}] )
 
         [
           {
@@ -1134,19 +1144,10 @@ namespace :populate do
     venue_river = Venue.find_by( name: "Estadio River Plate" )
 
     # Artistas
-    taylor_artist = Artist.create({
-      name: 'Taylor Swift',
-      nationality: 'Estados Unidos',
-      description: "Taylor Swift, nacida el 13 de diciembre de 1989 en Reading, Pensilvania, es una influyente cantante, compositora y actriz estadounidense. Comenzó su carrera en la música country antes de ampliar su estilo hacia el pop, indie folk y rock alternativo. Reconocida por sus letras personales y emotivas, Swift ha ganado numerosos premios, incluyendo múltiples Grammys, y ha establecido récords en la industria musical. Su impacto va más allá de la música, abarcando la moda, la actuación y el activismo en temas como los derechos de autor y la igualdad de género. Con una carrera versátil y exitosa, Taylor Swift se ha convertido en una de las artistas más destacadas de la escena musical global.",
-      genre_ids: [pop_genre.id,country_genre.id]
-    })
-
-    roger_artist = Artist.create({
-      name: 'Roger Waters',
-      nationality: 'Reino Unido',
-      description: 'Roger Waters es músico y compositor británico, cofundador de la banda Pink Floyd, considerada una de las más influyentes en la historia de la música moderna.',
-      genre_ids: [rock_genre.id]
-    })
+    taylor_artist = Artist.find_by(name: 'Taylor Swift')
+    taylor_artist.update(genre_ids: [pop_genre.id,country_genre.id])
+    roger_artist = Artist.find_by(name: 'Roger Waters')
+    roger_artist.update(genre_ids: [rock_genre.id])
    
     # Eventos
     Event.create({
