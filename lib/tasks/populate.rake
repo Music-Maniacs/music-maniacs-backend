@@ -767,7 +767,7 @@ namespace :populate do
             description: 'Sumérgete en el mundo épico del metal sinfónico con un concierto lleno de poder y melodía.'
           },
           {
-            name: 'Noche de R&B Sensual',
+            name: 'Noche de R&B',
             datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
