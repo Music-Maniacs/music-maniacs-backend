@@ -228,6 +228,11 @@ namespace :populate do
         description: 'Los Pericos es una banda argentina de reggae y ska, una de las más influyentes en América Latina en su género.'
       },
       {
+        name: 'Taylor Swift',
+        nationality: 'Estados Unidos',
+        description: "Taylor Swift, nacida el 13 de diciembre de 1989 en Reading, Pensilvania, es una influyente cantante, compositora y actriz estadounidense. Comenzó su carrera en la música country antes de ampliar su estilo hacia el pop, indie folk y rock alternativo. Reconocida por sus letras personales y emotivas, Swift ha ganado numerosos premios, incluyendo múltiples Grammys, y ha establecido récords en la industria musical. Su impacto va más allá de la música, abarcando la moda, la actuación y el activismo en temas como los derechos de autor y la igualdad de género. Con una carrera versátil y exitosa, Taylor Swift se ha convertido en una de las artistas más destacadas de la escena musical global."
+      },
+      {
         name: 'Divididos',
         nationality: 'Argentina',
         description: 'Divididos es una banda argentina de rock, formada por Ricardo Mollo, Diego Arnedo y Catriel Ciavarella. Han sido pioneros en la mezcla de géneros musicales.'
@@ -246,11 +251,6 @@ namespace :populate do
         name: 'Roger Waters',
         nationality: 'Reino Unido',
         description: 'Roger Waters es músico y compositor británico, cofundador de la banda Pink Floyd, considerada una de las más influyentes en la historia de la música moderna.'
-      },
-      {
-        name: 'Taylor Swift',
-        nationality: 'Estados Unidos',
-        description: "Taylor Swift, nacida el 13 de diciembre de 1989 en Reading, Pensilvania, es una influyente cantante, compositora y actriz estadounidense. Comenzó su carrera en la música country antes de ampliar su estilo hacia el pop, indie folk y rock alternativo. Reconocida por sus letras personales y emotivas, Swift ha ganado numerosos premios, incluyendo múltiples Grammys, y ha establecido récords en la industria musical. Su impacto va más allá de la música, abarcando la moda, la actuación y el activismo en temas como los derechos de autor y la igualdad de género. Con una carrera versátil y exitosa, Taylor Swift se ha convertido en una de las artistas más destacadas de la escena musical global."
       }
     ].each do |artist|
       next if Artist.find_by(name: artist[:name]).present?
@@ -393,10 +393,10 @@ namespace :populate do
         description: 'Nuclear Blast es un sello discográfico alemán especializado en música metal. Ha trabajado con bandas de diversos subgéneros del metal, incluyendo Dimmu Borgir, Slayer y Nightwish.'
       },
       {
-      name: 'DF Entertainment',
-      nationality: 'Argentina',
-      description: "DF Entertainment es la empresa líder de entretenimiento en vivo en Argentina. Fundada por Diego Finkelstein, quien cuenta con más de 20 años de trayectoria dentro de la industria, la productora presentó el año pasado shows como Coldplay, Harry Styles, Dua Lipa, Rosalía, Maroon 5,  C. Tangana, Guns N' Roses, Kiss, Metallica, Maneskin, Demi Lovato, entre muchos otros.",
-      links_attributes: [{"title":"Página de la productora","url":"https://dfentertainment.com/"}]
+        name: 'DF Entertainment',
+        nationality: 'Argentina',
+        description: "DF Entertainment es la empresa líder de entretenimiento en vivo en Argentina. Fundada por Diego Finkelstein, quien cuenta con más de 20 años de trayectoria dentro de la industria, la productora presentó el año pasado shows como Coldplay, Harry Styles, Dua Lipa, Rosalía, Maroon 5,  C. Tangana, Guns N' Roses, Kiss, Metallica, Maneskin, Demi Lovato, entre muchos otros.",
+        links_attributes: [{"title":"Página de la productora","url":"https://dfentertainment.com/"}]
       }
       ].each do |producer|
        next if Producer.find_by(name: producer[:name]).present?
