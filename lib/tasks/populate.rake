@@ -963,7 +963,7 @@ namespace :populate do
         num_comments = rand(1..9)
 
         num_comments.times do
-          Comment.create(
+          Comment.create!(
             body: comments[rand(0..14)],
             user_id: User.order("RANDOM()").first.id, # Asigna un usuario aleatorio
             event_id: event.id
@@ -976,12 +976,13 @@ namespace :populate do
   task likes: :environment do
     User.all.each do |user|
       [Comment,Video].each do |likeable_type|
-        likeable_type.all.each do |likeable|
+        random = rand(1..likeable_type.all.size)
+        likeable_type.limit(random).each do |likeable|
           # Verifica si el usuario ya ha dado like a esta instancia
           next if Like.exists?(user_id: user.id, likeable_id: likeable.id, likeable_type: likeable_type.to_s)
     
           # Si no ha dado like, crea uno
-          Like.create(
+          Like.create!(
             user_id: user.id,
             likeable: likeable
           )
