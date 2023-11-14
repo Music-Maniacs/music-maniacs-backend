@@ -1265,12 +1265,28 @@ namespace :populate do
 
     filename = "taylor.jpg"
     path = Rails.root.join('MockData', 'Imagenes', 'Evento Taylor Swift', filename)
-    next unless File.exist?(path)
 
-    content_type = 'image/jpg'
-    image = new_image(path, filename, content_type)
-    taylor_event.update!(image: image)
+    if File.exist?(path)
+      content_type = 'image/jpg'
+      image = new_image(path, filename, content_type)
+      taylor_event.update!(image:)
+    end
   
+    # Videos Taylor
+    i = 1
+    loop do
+      filename = "Taylor#{i}.mp4"
+      path = Rails.root.join('MockData', 'Imagenes','Evento Taylor Swift', 'Videos', filename)
+      break unless File.exist?(path)
+
+      video = new_video(taylor_event, path, filename)
+      video.user = User.order("RANDOM()").first
+      video.save!
+
+      i += 1
+    end
+
+    taylor_event.save!
 
     roger_event = Event.create({
                         name: 'Roger Waters en Argentina',
@@ -1281,6 +1297,7 @@ namespace :populate do
                         description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
                         links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
                         })
+
     filename = "Roger Waters en Argentina.jpg"
     path = Rails.root.join('MockData', 'Imagenes', 'Evento Roger Waters en Argentina', filename)
     next unless File.exist?(path)
@@ -1452,5 +1469,11 @@ namespace :populate do
     image = Image.new
     image.file.attach(io: File.open(path), filename: filename, content_type: content_type)
     image
+  end
+
+  def new_video(event, path, filename)
+    video = event.videos.build(recorded_at: event.datetime + rand(1..100).minutes, name: event.name)
+    video.file.attach(io: File.open(path), filename: filename, content_type: "video/mp4")
+    video
   end
 end
