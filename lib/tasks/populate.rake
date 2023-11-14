@@ -427,10 +427,10 @@ namespace :populate do
                                  nationality: producer[:nationality],
                                  description: producer[:description]})
 
-      filename = "#{producer[:name]}.jpg"
+      filename = "#{producer[:name]}.png"
       path = Rails.root.join('MockData', 'Imagenes', 'Productoras', filename)
        if File.exist?(path)
-          content_type = 'image/jpg'
+          content_type = 'image/png'
           image = new_image(path, filename, content_type)
          producer.image = image
        end
@@ -751,11 +751,11 @@ namespace :populate do
           links_attributes: [{"title":"Página del Club","url":"https://www.cariverplate.com.ar/"}] )
 
           Venue.all.each do |venue|
-            filename = "#{venue.name}.png"
+            filename = "#{venue.name}.jpg"
             path = Rails.root.join('MockData', 'Imagenes', 'EspaciosDeEventos', filename)
             next unless File.exist?(path)
-  
-            content_type = 'image/png'
+
+            content_type = 'image/jpg'
             image = new_image(path, filename, content_type)
             venue.update!(image:)
           end
