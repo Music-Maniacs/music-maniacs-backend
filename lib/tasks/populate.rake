@@ -128,18 +128,34 @@ namespace :populate do
       { email: 'correo20@example.com', username: 'PatriciaFernandez', full_name: 'Patricia Fernández' }
 ]
 
-
-    users_to_create.each do |user_data|
+    users_to_create.each_with_index do |user_data, index|
       next if User.find_by(email: user_data[:email]) || User.find_by(username: user_data[:username])
 
-      User.create(
+      index += 1
+      # Profile Image
+      profile_image = Image.new(image_type: 'profile')
+      profile_image_filename = "user#{index}.jpg"
+      profile_image_content_type = 'image/jpg'
+      profile_path = Rails.root.join('MockData', 'Imagenes', 'Usuarios', profile_image_filename)
+      profile_image.file.attach(filename: profile_image_filename, io: File.open(profile_path), content_type: profile_image_content_type)
+
+      # Cover Image
+      cover_image = Image.new(image_type: 'cover')
+      cover_image_filename = "portada#{index}.jpg"
+      cover_image_content_type = 'image/jpg'
+      cover_path = Rails.root.join('MockData', 'Imagenes', 'PortadaUsuario', cover_image_filename)
+      cover_image.file.attach(filename: cover_image_filename, io: File.open(cover_path), content_type: cover_image_content_type)
+
+      User.create!(
         email: user_data[:email],
         username: user_data[:username],
         full_name: user_data[:full_name],
         password: 'password123',
         password_confirmation: 'password123',
         role_id: TrustLevel.default_trust_level,
-        confirmed_at: Time.now
+        confirmed_at: Time.now,
+        profile_image:,
+        cover_image:
       )
     end
   end
@@ -150,7 +166,9 @@ namespace :populate do
       {
         name: 'Usted Señalemelo',
         nationality: 'Argentina',
-        description: 'Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza. El grupo está compuesto por el vocalista y tecladista Juan Saieg, el guitarrista Gabriel "Cocó" Orozco y el baterista Lucca Beguerie Petrich.'
+        description: "Usted Señalemelo es una banda argentina de indie rock, formada en Mendoza (Argentina). El grupo está compuesto por el vocalista y tecladista Juan Saieg, el guitarrista Gabriel Cocó Orozco y el baterista Lucca Beguerie Petrich.
+        \nSi bien en un comienzo pertenecieron a la escena de rock de Mendoza, luego conformaron el manso indie, una movida musical de la segunda década del siglo xxi conformada por bandas mendocinas como Mi Amigo Invencible, Perras on the Beach o Gauchito Club.
+        \nSaltaron al éxito con su segundo disco de estudio, II, con su hit 'Big Bang', grabado en 2017, que les dio la posibilidad de cerrar festivales argentinos y realizar giras por varios países sudamericanos."
       },
       {
         name: 'Enanitos Verdes',
@@ -255,9 +273,15 @@ namespace :populate do
     ].each do |artist|
       next if Artist.find_by(name: artist[:name]).present?
 
-        Artist.create({ name: artist[:name],
-                        nationality: artist[:nationality],
-                        description: artist[:description] })
+        filename = "#{artist[:name]}.jpg"
+        path = Rails.root.join('MockData', 'Imagenes', 'Artistas', filename)
+        content_type = 'image/jpg'
+        image = new_image(path, filename, content_type)
+  
+        Artist.create!({ name: artist[:name],
+                         nationality: artist[:nationality],
+                         description: artist[:description],
+                         image: })
      end
 
      [
@@ -400,10 +424,20 @@ namespace :populate do
       }
       ].each do |producer|
        next if Producer.find_by(name: producer[:name]).present?
- 
-       Producer.create({ name: producer[:name],
-                         nationality: producer[:nationality],
-                         description: producer[:description] })
+
+       producer = Producer.new({ name: producer[:name],
+                                 nationality: producer[:nationality],
+                                 description: producer[:description]})
+
+      filename = "#{producer[:name]}.png"
+      path = Rails.root.join('MockData', 'Imagenes', 'Productoras', filename)
+       if File.exist?(path)
+          content_type = 'image/png'
+          image = new_image(path, filename, content_type)
+         producer.image = image
+       end
+
+       producer.save!
       end
 
 
@@ -672,7 +706,7 @@ namespace :populate do
             province: "Mendoza",
           }
         )
-        
+
         venue19 = Venue.create(
           name: "Espacio Trapiche",
           description: "Espacio Trapiche es una bodega en Mendoza que a menudo organiza eventos relacionados con el vino, como degustaciones y festivales.",
@@ -687,7 +721,7 @@ namespace :populate do
             province: "Mendoza",
           }
         )
-        
+
         venue20 = Venue.create(
           name: "Museo Fundacional",
           description: "El Museo Fundacional es un museo en Mendoza que presenta la historia y la cultura de la ciudad, además de albergar eventos y exposiciones.",
@@ -717,6 +751,16 @@ namespace :populate do
             province: "Buenos Aires",
           },
           links_attributes: [{"title":"Página del Club","url":"https://www.cariverplate.com.ar/"}] )
+
+          Venue.all.each do |venue|
+            filename = "#{venue.name}.jpg"
+            path = Rails.root.join('MockData', 'Imagenes', 'EspaciosDeEventos', filename)
+            next unless File.exist?(path)
+
+            content_type = 'image/jpg'
+            image = new_image(path, filename, content_type)
+            venue.update!(image:)
+          end
 
         [
           {
@@ -1191,6 +1235,7 @@ namespace :populate do
     metal_genre = Genre.find_by(name: "Metal")
     salsa_genre = Genre.find_by(name: "Salsa")
     reggaeton_genre = Genre.find_by(name: "Reguetón")
+    indie_genre = Genre.find_by(name: "Indie")
 
     # Productoras
     df_producer = Producer.find_by( name: 'DF Entertainment')
@@ -1218,6 +1263,7 @@ namespace :populate do
                           links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/list/taylor%20swift"}]
                           } )
   
+
     roger_event = Event.create({
                         name: 'Roger Waters en Argentina',
                         datetime: ("2023-11-21T21:00:00.000Z"),
@@ -1227,7 +1273,6 @@ namespace :populate do
                         description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
                         links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
                         })
-
 
     # asignacion de comentarios y reviews 
     comments.each do |comment|
@@ -1293,6 +1338,100 @@ namespace :populate do
       })
     end
 
+    Event.create({
+          name: 'Roger Waters en Argentina',
+          datetime: ("2023-11-21T21:00:00.000Z"),
+          artist_id: roger_artist.id,
+          producer_id: df_producer.id,
+          venue_id: venue_river.id,
+          description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
+          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
+          })
+    
+    # Perfil para previsualizar
+    usted_artist = Artist.find_by(name: 'Usted Señalemelo')
+    usted_artist.update(genre_ids: [indie_genre.id, rock_genre.id])
+
+    venue_1 = Venue.find_by(name: 'Nave Cultural')
+    venue_2 = Venue.find_by(name: 'Arena Maipú')
+    venue_3 = Venue.find_by(name: 'Auditorio Ángel Bustelo')
+
+    venue_4 = Venue.find_by(name: 'Luna Park')
+    venue_5 = Venue.find_by(name: 'Teatro Gran Rex')
+    venue_6 = Venue.find_by(name: 'Auditorio Nacional')
+
+    # Eventos Pasados
+    e_1 = Event.create({
+          name: 'Indie Vibes en Mendoza',
+          datetime: Time.now - 1.week,
+          artist_id: usted_artist.id,
+          producer_id: Producer.order("RANDOM()").take.id,
+          venue_id: venue_1.id,
+          description: 'Sumérgete en la vibrante escena indie de Mendoza con una noche épica llena de energía musical. En el evento "Indie Vibes Mendozenses", Usted Señalemelo liderará el escenario con su distintivo indie rock. La fusión de sus cautivadoras melodías y la atmósfera única de Mendoza crearán un evento inolvidable. Disfruta de la magia de la música indie en las alturas mientras la banda presenta sus éxitos en un espectáculo que promete resonar en los corazones de los amantes de la música mendocina.'
+    })
+
+    e_2 = Event.create({
+      name: 'Vino y Rock con Usted Señalemelo',
+      datetime: Time.now - 2.week,
+      artist_id: usted_artist.id,
+      producer_id: Producer.order("RANDOM()").take.id,
+      venue_id: venue_2.id,
+      description: 'Sumérgete en una experiencia única que combina dos de las mejores cosas de Mendoza: el vino y el rock. En "Vino y Rock", Usted Señalemelo ofrece un concierto íntimo en un entorno vinícola, creando una atmósfera íntima y acogedora. Disfruta de la fusión de sabores y sonidos mientras la banda cautiva tus sentidos con su música indie. Una velada que promete deleitar tanto a los amantes del vino como a los apasionados de la escena musical.'
+    })
+
+    e_3 = Event.create({
+      name: 'Rock Mendocino Renace',
+      datetime: Time.now - 3.week,
+      artist_id: usted_artist.id,
+      producer_id: Producer.order("RANDOM()").take.id,
+      venue_id: venue_3.id,
+      description: 'El espíritu del rock resurge en Mendoza con el evento "Rock Mendocino Renace", protagonizado por la aclamada banda Usted Señalemelo. Después de años de ausencia, la banda regresa para ofrecer un concierto que celebra la vitalidad del rock mendocino. Con su repertorio diverso y enérgico, Usted Señalemelo promete una noche inolvidable que revitalizará la escena musical local y emocionará a los amantes del rock en Mendoza.'
+    })
+
+    # Eventos Próximos
+    e_4 = Event.create({
+      name: 'Noches Porteñas de Indie',
+      datetime: Time.now + 2.week,
+      artist_id: usted_artist.id,
+      producer_id: Producer.order("RANDOM()").take.id,
+      venue_id: venue_4.id,
+      description: 'Descubre la magia del indie en pleno corazón de Buenos Aires con "Noches Porteñas de Indie", una serie de conciertos íntimos en el Luna Park. Usted Señalemelo encabeza esta noche especial, ofreciendo una experiencia única para los fanáticos del género. Con su ecléctico repertorio y la atmósfera única , esta noche promete ser un viaje inolvidable a través de los sonidos indie contemporáneos.'
+    })
+
+    e_5 = Event.create({
+      name: 'Sonidos Urbanos Usted Señalemelo',
+      datetime: Time.now + 3.week,
+      artist_id: usted_artist.id,
+      producer_id: Producer.order("RANDOM()").take.id,
+      venue_id: venue_5.id,
+      description: 'Los sonidos urbanos de Buenos Aires cobran vida en este concierto exclusivo de Usted Señalemelo. La banda lleva su indie rock a uno de los escenarios más emblemáticos de la ciudad, prometiendo una experiencia envolvente para los asistentes. Sumérgete en la fusión de los sonidos urbanos y la música indie en un evento que captura la esencia vibrante de la escena musical porteña.'
+    })
+
+    events = [e_1,e_2,e_3,e_4,e_5]
+    events_ids = events.pluck(:id)
+
+    events_ids.each do |event_id|
+      [
+        {
+          rating: rand(2..5),
+          description: "Este artista es simplemente excepcional. Su música me transporta a otro mundo.",
+          user_id: User.order("RANDOM()").first.id,
+          event_id: event_id,
+          reviewable_id: usted_artist.id,
+          reviewable_type: "Artist"
+        },
+        {
+          rating: rand(2..5),
+          description: "No puedo dejar de escuchar las canciones de este artista. Cada una es una obra maestra.",
+          user_id: User.order("RANDOM()").first.id,
+          event_id: event_id,
+          reviewable_id: usted_artist.id,
+          reviewable_type: "Artist"
+        }
+      ].each do |review|
+        Review.find_or_create_by(review)
+      end
+    end
   end
   
   # Esta función actualiza el atributo created_at para un conjunto de registros
@@ -1301,5 +1440,11 @@ namespace :populate do
       random_date = 6.months.ago + rand(6.months)
       record.update(created_at: random_date)
     end
+  end
+
+  def new_image(path, filename, content_type)
+    image = Image.new
+    image.file.attach(io: File.open(path), filename: filename, content_type: content_type)
+    image
   end
 end
