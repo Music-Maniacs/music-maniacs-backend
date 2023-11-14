@@ -497,21 +497,6 @@ namespace :populate do
           }
         )
         
-        venue5 = Venue.create(
-          name: "Estadio Monumental",
-          description: "El Estadio Monumental es el estadio del Club Atlético River Plate en Buenos Aires. Es uno de los estadios más icónicos de Argentina y ha sido sede de eventos deportivos y conciertos de renombre.",
-          location_attributes: {
-            zip_code: "C1428",
-            street: "Av. Pres. Figueroa Alcorta",
-            city: "Comuna 1",
-            latitude: "-34.54500182387441",
-            longitude: "-58.454702153696195",
-            number: "7597",
-            country: "Argentina",
-            province: "Buenos Aires",
-          }
-        )
-        
         venue6 = Venue.create(
           name: "Teatro Gran Rex",
           description: "El Teatro Gran Rex es un teatro y sala de conciertos ubicado en Buenos Aires. Ha albergado actuaciones de músicos locales e internacionales y es conocido por su excelente acústica.",
@@ -522,21 +507,6 @@ namespace :populate do
             latitude: "-34.60480149464147",
             longitude: "-58.38205598885234",
             number: "857",
-            country: "Argentina",
-            province: "Buenos Aires",
-          }
-        )
-
-        venue7 = Venue.create(
-          name: "Estadio Monumental",
-          description: "El Estadio Monumental es un estadio de fútbol en Buenos Aires, Argentina, donde se celebran importantes eventos deportivos y conciertos.",
-          location_attributes: {
-            zip_code: "C1428",
-            street: "Av. Figueroa Alcorta",
-            city: "Comuna 1",
-            latitude: "-34.545775",
-            longitude: "-58.452760",
-            number: "7597",
             country: "Argentina",
             province: "Buenos Aires",
           }
@@ -738,7 +708,7 @@ namespace :populate do
         )
 
         venue_river = Venue.create(
-          name: "Estadio River Plate",
+          name: "Estadio Monumental",
           description: "El Estadio Monumental es un recinto deportivo ubicado en la intersección de las avenidas Figueroa Alcorta y Udaondo del barrio de Belgrano, Buenos Aires, Argentina. Es propiedad del Club Atlético River Plate y fue inaugurado el 26 de mayo de 1938 por el presidente Antonio Vespucio Liberti, quien decidió su construcción. El estadio cuenta con una capacidad de 84,567 espectadores después de las remodelaciones concluidas en 2023. Es el estadio de fútbol con mayor capacidad de Argentina y de América. Además, es el recinto donde Argentina disputa sus partidos de local. El estadio ha sido sede de varios eventos trascendentes, como la final de la Copa Mundial de la FIFA 1978, cuatro finales de la Copa América (1946, 1959, 1987 y 2011), y finales de la Copa Libertadores, la Copa Sudamericana y la Recopa Sudamericana.",
           location_attributes: {
             zip_code: "C1428",
@@ -1244,7 +1214,7 @@ namespace :populate do
     universal_producer.update({ genre_ids: [pop_genre.id, rock_genre.id, hiphop_genre.id, rb_genre.id]} )
    
    # Espacios de eventos
-    venue_river = Venue.find_by( name: "Estadio River Plate" )
+    venue_river = Venue.find_by( name: "Estadio Monumental" )
 
     # Artistas
     taylor_artist = Artist.find_by(name: 'Taylor Swift')
