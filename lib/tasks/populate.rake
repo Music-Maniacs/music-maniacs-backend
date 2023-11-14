@@ -1338,15 +1338,6 @@ namespace :populate do
       })
     end
 
-    Event.create({
-          name: 'Roger Waters en Argentina',
-          datetime: ("2023-11-21T21:00:00.000Z"),
-          artist_id: roger_artist.id,
-          producer_id: df_producer.id,
-          venue_id: venue_river.id,
-          description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
-          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
-          })
     
     # Perfil para previsualizar
     usted_artist = Artist.find_by(name: 'Usted Señalemelo')
