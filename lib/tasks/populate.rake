@@ -1357,6 +1357,9 @@ namespace :populate do
     # Perfil para previsualizar
     usted_artist = Artist.find_by(name: 'Usted Señalemelo')
     usted_artist.update(genre_ids: [indie_genre.id, rock_genre.id])
+    usted_artist.update(links_attributes: [{"title":"Instagram","url":"https://www.instagram.com/ustedsenalemelo/"},
+                                           {"title":"Twitter","url":"https://twitter.com/udsenalemelo"},
+                                           {"title":"Página Web","url":"https://www.ustedsenalemelo.com/"}])
 
     venue_1 = Venue.find_by(name: 'Nave Cultural')
     venue_2 = Venue.find_by(name: 'Arena Maipú')
@@ -1413,7 +1416,7 @@ namespace :populate do
       description: 'Los sonidos urbanos de Buenos Aires cobran vida en este concierto exclusivo de Usted Señalemelo. La banda lleva su indie rock a uno de los escenarios más emblemáticos de la ciudad, prometiendo una experiencia envolvente para los asistentes. Sumérgete en la fusión de los sonidos urbanos y la música indie en un evento que captura la esencia vibrante de la escena musical porteña.'
     })
 
-    events = [e_1,e_2,e_3,e_4,e_5]
+    events = [e_1,e_2,e_3]
     events_ids = events.pluck(:id)
 
     events_ids.each do |event_id|
