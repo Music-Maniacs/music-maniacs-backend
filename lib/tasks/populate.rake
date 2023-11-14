@@ -1336,8 +1336,8 @@ namespace :populate do
         rating: (rand(3..5)),
         description: producer,
         user_id: User.order("RANDOM()").first.id,
-        event_id: roger_event.id,
-        reviewable_id: roger_event.producer.id,
+        event_id: Event.where.not(id: roger_event.id).order("RANDOM()").first.id,
+        reviewable_id: df_producer.id,
         reviewable_type: "Producer"
       })
     end
@@ -1347,7 +1347,7 @@ namespace :populate do
         rating: (rand(3..5)),
         description: artist,
         user_id: User.order("RANDOM()").first.id,
-        event_id: Event.order("RANDOM()").first.id,
+        event_id: Event.where.not(id: roger_event.id).order("RANDOM()").first.id,
         reviewable_id: roger_event.artist.id,
         reviewable_type: "Artist"
       })
