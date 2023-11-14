@@ -11,7 +11,6 @@ namespace :populate do
     Rake::Task['populate:edit_created_at'].execute
     Rake::Task['populate:likes'].execute
     Rake::Task['populate:update_role_and_trus_levels_permissions'].execute
-    
   end
 
   desc 'Populate db with permissions'
@@ -127,18 +126,34 @@ namespace :populate do
       { email: 'correo20@example.com', username: 'PatriciaFernandez', full_name: 'Patricia Fernández' }
 ]
 
-
-    users_to_create.each do |user_data|
+    users_to_create.each_with_index do |user_data, index|
       next if User.find_by(email: user_data[:email]) || User.find_by(username: user_data[:username])
 
-      User.create(
+      index += 1
+      # Profile Image
+      profile_image = Image.new(image_type: 'profile')
+      profile_image_filename = "user#{index}.jpg"
+      profile_image_content_type = 'image/jpg'
+      profile_path = Rails.root.join('MockData', 'Imagenes', 'Usuarios', profile_image_filename)
+      profile_image.file.attach(filename: profile_image_filename, io: File.open(profile_path), content_type: profile_image_content_type)
+
+      # Cover Image
+      cover_image = Image.new(image_type: 'cover')
+      cover_image_filename = "portada#{index}.jpg"
+      cover_image_content_type = 'image/jpg'
+      cover_path = Rails.root.join('MockData', 'Imagenes', 'PortadaUsuario', cover_image_filename)
+      cover_image.file.attach(filename: cover_image_filename, io: File.open(cover_path), content_type: cover_image_content_type)
+
+      User.create!(
         email: user_data[:email],
         username: user_data[:username],
         full_name: user_data[:full_name],
         password: 'password123',
         password_confirmation: 'password123',
         role_id: TrustLevel.default_trust_level,
-        confirmed_at: Time.now
+        confirmed_at: Time.now,
+        profile_image:,
+        cover_image:
       )
     end
   end
@@ -244,9 +259,15 @@ namespace :populate do
     ].each do |artist|
       next if Artist.find_by(name: artist[:name]).present?
 
-        Artist.create({ name: artist[:name],
-                        nationality: artist[:nationality],
-                        description: artist[:description] })
+        filename = "#{artist[:name]}.jpg"
+        path = Rails.root.join('MockData', 'Imagenes', 'Artistas', filename)
+        content_type = 'image/jpg'
+        image = new_image(path, filename, content_type)
+  
+        Artist.create!({ name: artist[:name],
+                         nationality: artist[:nationality],
+                         description: artist[:description],
+                         image: })
      end
 
      [
@@ -382,10 +403,20 @@ namespace :populate do
       }
       ].each do |producer|
        next if Producer.find_by(name: producer[:name]).present?
- 
-       Producer.create({ name: producer[:name],
-                         nationality: producer[:nationality],
-                         description: producer[:description] })
+
+       producer = Producer.new({ name: producer[:name],
+                                 nationality: producer[:nationality],
+                                 description: producer[:description]})
+
+      filename = "#{producer[:name]}.jpg"
+      path = Rails.root.join('MockData', 'Imagenes', 'Productoras', filename)
+       if File.exist?(path)
+          content_type = 'image/jpg'
+          image = new_image(path, filename, content_type)
+         producer.image = image
+       end
+
+       producer.save!
       end
 
 
@@ -654,7 +685,7 @@ namespace :populate do
             province: "Mendoza",
           }
         )
-        
+
         venue19 = Venue.create(
           name: "Espacio Trapiche",
           description: "Espacio Trapiche es una bodega en Mendoza que a menudo organiza eventos relacionados con el vino, como degustaciones y festivales.",
@@ -669,7 +700,7 @@ namespace :populate do
             province: "Mendoza",
           }
         )
-        
+
         venue20 = Venue.create(
           name: "Museo Fundacional",
           description: "El Museo Fundacional es un museo en Mendoza que presenta la historia y la cultura de la ciudad, además de albergar eventos y exposiciones.",
@@ -684,6 +715,16 @@ namespace :populate do
             province: "Mendoza",
           }
         )
+
+        Venue.all.each do |venue|
+          filename = "#{venue.name}.png"
+          path = Rails.root.join('MockData', 'Imagenes', 'EspaciosDeEventos', filename)
+          next unless File.exist?(path)
+
+          content_type = 'image/png'
+          image = new_image(path, filename, content_type)
+          venue.update!(image:)
+        end
 
         [
           {
@@ -1088,5 +1129,11 @@ namespace :populate do
       random_date = 6.months.ago + rand(6.months)
       record.update(created_at: random_date)
     end
+  end
+
+  def new_image(path, filename, content_type)
+    image = Image.new
+    image.file.attach(io: File.open(path), filename: filename, content_type: content_type)
+    image
   end
 end
