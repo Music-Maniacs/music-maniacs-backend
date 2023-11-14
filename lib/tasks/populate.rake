@@ -1123,6 +1123,64 @@ namespace :populate do
 
   desc "events_to_show pasados y futuros"
   task events_to_show: :environment do
+    
+    comments = ["Espero que no se cancele por la lluvia.",
+                "Estaba intentando comprar las entradas pero se agotaron.",
+                "¡Buen trabajo gente, logramos llenar el estadio con 70,000 fans!",
+                "Me emocionó el beso que Taylor le dió a su novio Travis Kelce.",
+                "Me apena no haber podido llegar por un atraso con mi vuelo que tuvo que ser reprogramado. Afortunadamente pude cambiar mi entrada para el concierto del 12."
+                ]
+
+    reviews_venue = ["El estadio de River Plate se convirtió en el escenario perfecto para el deslumbrante espectáculo de Taylor Swift. La acústica del lugar permitió que la música llenara cada rincón, creando una experiencia única para los fanáticos que abarrotaron las gradas.",
+                        "El estadio de River Plate demostró ser la elección ideal para recibir a una estrella del calibre de Taylor Swift. La infraestructura y el diseño del lugar garantizaron la comodidad de los asistentes y la grandiosidad del evento. Un lugar emblemático para una noche inolvidable.",
+                        "River Plate brilló con luz propia al albergar el concierto de Taylor Swift. La disposición del escenario, la accesibilidad y la atención al detalle mostraron por qué este estadio es la elección principal para eventos de esta magnitud en Argentina.",
+                        "El estadio de River Plate se vistió de gala para recibir a Taylor Swift, y la majestuosidad del lugar no pasó desapercibida. Desde la entrada hasta los asientos, todo estaba cuidadosamente preparado para una experiencia única en la vida.",
+                        "River Plate demostró ser más que un estadio; fue el alma de la noche de Taylor Swift en Argentina. La energía que emana de este lugar icónico se combinó perfectamente con el talento de la artista, creando una simbiosis única que resonará en la memoria de los asistentes."
+                       ]
+    
+    reviews_artist = ["Taylor Swift deslumbró al público argentino con una actuación que superó todas las expectativas. Su conexión con la audiencia, combinada con su talento innegable, creó una experiencia mágica que perdurará en el tiempo.",
+                      "La presentación de Taylor Swift en Argentina fue un espectáculo digno de recordar. Su presencia en el escenario, la calidad vocal y la selección de canciones fueron simplemente perfectas. Una noche que demostró por qué es una de las artistas más destacadas de nuestra era.",
+                      "Taylor Swift no solo cantó, sino que contó historias que resonaron en el corazón de cada espectador. Su habilidad para conectar con la audiencia elevó el concierto a una experiencia emotiva e inolvidable.",
+                      "La actuación de Taylor Swift fue un torbellino de emociones. Desde las baladas más íntimas hasta los éxitos más enérgicos, cada momento fue capturado con maestría. Una artista completa que dejó una marca imborrable en el público argentino.",
+                      "Taylor Swift iluminó el estadio de River Plate con su carisma y talento. Su entrega en el escenario y la interacción con los fanáticos crearon una atmósfera de celebración. Una noche en la que Taylor no solo interpretó canciones, sino que compartió su arte de manera auténtica y conmovedora."
+                    ]
+    
+    reviews_producer_taylor = ["Universal Music Group hizo historia al traer a Taylor Swift a Argentina. La organización del evento fue impecable, desde la venta de boletos hasta la producción del espectáculo. Un hito que quedará grabado en la memoria de los fanáticos argentinos.",
+                     "La elección de Universal Music Group para traer a Taylor Swift fue brillante. La productora no solo cumplió con las expectativas, sino que superó cualquier estándar conocido. La logística, la atención al detalle y la experiencia general fueron de primer nivel.",
+                     "Universal Music Group demostró una vez más por qué es líder en la industria. La coordinación para el concierto de Taylor Swift en el estadio de River Plate fue excepcional. Una noche mágica gracias a la visión y ejecución de esta destacada productora.",
+                     "Desde la promoción hasta la ejecución del evento, Universal Music Group brilló con luz propia. La anticipación creada en torno al concierto de Taylor Swift fue magistral, y la productora no defraudó. Un espectáculo que quedará marcado como uno de los mejores.",
+                     "El trabajo de Universal Music Group en el concierto de Taylor Swift fue sublime. La forma en que manejaron la seguridad, la logística y la experiencia general del público fue excepcional. Una noche inolvidable gracias a la maestría de esta destacada productora.",
+                    ]
+    reviews_df_entertainment = [
+              "DF Entertainment llevó a Taylor Swift a Argentina y lo hizo de manera espectacular. Desde la organización hasta la producción del evento, todo fue impecable. Un hito memorable para los fanáticos argentinos.",
+              "La elección de DF Entertainment para traer a Taylor Swift fue excepcional. Cumplieron y superaron todas las expectativas, desde la venta de boletos hasta la ejecución del espectáculo. ¡Una experiencia inolvidable!",
+              "DF Entertainment demostró ser líder en la industria con el concierto de Taylor Swift en el estadio de River Plate. La coordinación y atención al detalle fueron de primer nivel, creando una noche mágica para los fanáticos.",
+              "Desde la promoción hasta el evento en sí, DF Entertainment brilló. La anticipación generada para el concierto de Taylor Swift fue impresionante, y la productora no decepcionó. Un espectáculo que quedará grabado en la historia.",
+              "El trabajo de DF Entertainment en el concierto de Taylor Swift fue sublime. La forma en que manejaron la seguridad, la logística y la experiencia del público fue excepcional. Una noche inolvidable gracias a la maestría de esta destacada productora.",
+              "DF Entertainment trajo a Beyoncé y dejó a todos sin aliento. Desde la planificación hasta la ejecución, la productora demostró su excelencia. Un evento que quedará en la memoria de todos los asistentes.",
+              "La elección de DF Entertainment para organizar el concierto de Beyoncé fue acertada. La atención al detalle y la calidad de la producción fueron extraordinarias. ¡Una noche inigualable gracias a esta increíble productora!",
+              "DF Entertainment se destacó nuevamente con el evento de Beyoncé. La coordinación y logística fueron impecables, creando una experiencia única para los fanáticos. ¡Una noche llena de magia y talento!",
+              "Desde la promoción hasta el último acorde, DF Entertainment hizo un trabajo excepcional con el concierto de Beyoncé. La anticipación y la emoción fueron inigualables. ¡Una productora que siempre supera las expectativas!",
+              "El trabajo de DF Entertainment en el concierto de Beyoncé fue simplemente impresionante. La forma en que manejaron cada detalle contribuyó a una noche extraordinaria. ¡Gracias por otra experiencia inolvidable!",
+              "DF Entertainment trajo a Ed Sheeran y creó una experiencia única. La organización y la producción del evento fueron impecables. Una noche que quedará grabada en la historia de los conciertos en Argentina.",
+              "La elección de DF Entertainment para traer a Ed Sheeran fue brillante. Cumplieron y superaron las expectativas en todos los aspectos, desde la venta de boletos hasta la calidad del espectáculo. ¡Una productora de primer nivel!",
+              "DF Entertainment se destacó con el concierto de Ed Sheeran. La coordinación y la atención al detalle fueron excepcionales, creando una conexión especial entre el artista y el público. ¡Una noche mágica gracias a esta destacada productora!",
+              "Desde la promoción hasta el último acorde, DF Entertainment demostró su excelencia con el concierto de Ed Sheeran. La anticipación y la emoción fueron incomparables. ¡Una productora que sabe cómo hacer que cada evento sea inolvidable!",
+              "El trabajo de DF Entertainment en el concierto de Ed Sheeran fue simplemente asombroso. La forma en que llevaron a cabo cada aspecto del evento contribuyó a una experiencia extraordinaria. ¡Gracias por otra noche inolvidable!"
+              ]
+
+    reviews_roger_waters = [
+              "La presentación de Roger Waters fue simplemente espectacular. Su habilidad para transmitir emociones a través de la música es incomparable. Una experiencia que superó todas las expectativas.",
+              "Asistir al concierto de Roger Waters fue como sumergirse en un mundo de sonidos y visuales increíbles. La fusión de música y mensaje fue impactante. ¡Una noche que siempre recordaré!",
+              "Roger Waters sabe cómo cautivar a su audiencia. El concierto fue una montaña rusa de emociones, desde momentos introspectivos hasta explosiones de energía. Un verdadero viaje musical.",
+              "El talento y la creatividad de Roger Waters se manifestaron en cada canción. Fue más que un concierto; fue una experiencia artística completa. ¡Increíble en todos los sentidos!",
+              "El concierto de Roger Waters fue una obra maestra en movimiento. Desde los clásicos de Pink Floyd hasta sus nuevas creaciones, cada nota resonó con una potencia inigualable. ¡Simplemente asombroso!",
+              "La música de Roger Waters tiene el poder de transportarte a otro universo. Su interpretación en vivo es un regalo para los amantes de la música. Una noche inolvidable gracias a este icono del rock.",
+              "El show de Roger Waters fue un viaje sensorial. La combinación de música, luces y efectos visuales creó una experiencia única. Un concierto que dejó una huella imborrable en mi memoria.",
+              "Roger Waters en vivo es simplemente impresionante. Su presencia en el escenario y la conexión con la audiencia son incomparables. Una leyenda que sigue brillando con cada actuación.",
+              "Asistir al concierto de Roger Waters fue como presenciar la historia viva del rock. Cada canción resonó con nostalgia y emoción. ¡Una noche que nunca olvidaré!",
+              "Roger Waters no solo ofreció un concierto, sino una experiencia emotiva y trascendental. Su habilidad para transmitir mensajes a través de la música es única. ¡Gracias por una noche inolvidable!"
+            ]
 
     # Generos Musicales asociados
     pop_genre = Genre.find_by(name: "Pop")
@@ -1150,25 +1208,91 @@ namespace :populate do
     roger_artist.update(genre_ids: [rock_genre.id])
    
     # Eventos
-    Event.create({
-          name: 'Gira mundial ‘The Eras Tour’ de Taylor Swift',
-          datetime: ("2023-11-09T19:00:00.000Z"),
-          artist_id: taylor_artist.id,
-          producer_id: universal_producer.id,
-          venue_id: venue_river.id,
-          description: "Taylor Swift se presenta en el estadio River Plate de Buenos Aires, Argentina, como parte de su gira mundial “The Eras Tour” . Durante su presentación, Taylor Swift interpreta canciones de su último álbum “Midnights” y algunos de sus éxitos anteriores . Además, hace un guiño a su romance con Travis Kelce, ala cerrada de los Kansas City Chiefs, cambiando la letra de su canción “Karma”.",
-          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/list/taylor%20swift"}]
-          } )
+    taylor_event = Event.create({
+                          name: 'Gira mundial ‘The Eras Tour’ de Taylor Swift',
+                          datetime: ("2023-11-09T19:00:00.000Z"),
+                          artist_id: taylor_artist.id,
+                          producer_id: universal_producer.id,
+                          venue_id: venue_river.id,
+                          description: "Taylor Swift se presenta en el estadio River Plate de Buenos Aires, Argentina, como parte de su gira mundial “The Eras Tour” . Durante su presentación, Taylor Swift interpreta canciones de su último álbum “Midnights” y algunos de sus éxitos anteriores . Además, hace un guiño a su romance con Travis Kelce, ala cerrada de los Kansas City Chiefs, cambiando la letra de su canción “Karma”.",
+                          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/list/taylor%20swift"}]
+                          } )
   
-    Event.create({
-          name: 'Roger Waters en Argentina',
-          datetime: ("2023-11-21T21:00:00.000Z"),
-          artist_id: roger_artist.id,
-          producer_id: df_producer.id,
-          venue_id: venue_river.id,
-          description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
-          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
-          })
+    roger_event = Event.create({
+                        name: 'Roger Waters en Argentina',
+                        datetime: ("2023-11-21T21:00:00.000Z"),
+                        artist_id: roger_artist.id,
+                        producer_id: df_producer.id,
+                        venue_id: venue_river.id,
+                        description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
+                        links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
+                        })
+
+
+    # asignacion de comentarios y reviews 
+    comments.each do |comment|
+      Comment.create!(
+        body: comment,
+        user_id: User.order("RANDOM()").first.id, # Asigna un usuario aleatorio
+        event_id: taylor_event.id
+      )
+    end
+
+    reviews_producer_taylor.each do |producer|
+      Review.find_or_create_by({
+        rating: (rand(3..5)),
+        description: producer,
+        user_id: User.order("RANDOM()").first.id,
+        event_id: taylor_event.id,
+        reviewable_id: taylor_event.producer.id,
+        reviewable_type: "Producer"
+      })
+    end
+
+    reviews_artist.each do |artist|
+      Review.find_or_create_by({
+        rating: (rand(3..5)),
+        description: artist,
+        user_id: User.order("RANDOM()").first.id,
+        event_id: taylor_event.id,
+        reviewable_id: taylor_event.artist.id,
+        reviewable_type: "Artist"
+      })
+    end
+
+    reviews_venue.each do |venue|
+      Review.find_or_create_by({
+        rating: (rand(3..5)),
+        description: venue,
+        user_id: User.order("RANDOM()").first.id,
+        event_id: taylor_event.id,
+        reviewable_id: taylor_event.venue.id,
+        reviewable_type: "Venue"
+      })
+    end
+
+    reviews_df_entertainment.each do |producer|
+      Review.find_or_create_by({
+        rating: (rand(3..5)),
+        description: producer,
+        user_id: User.order("RANDOM()").first.id,
+        event_id: roger_event.id,
+        reviewable_id: roger_event.producer.id,
+        reviewable_type: "Producer"
+      })
+    end
+
+    reviews_roger_waters.each do |artist|
+      Review.find_or_create_by({
+        rating: (rand(3..5)),
+        description: artist,
+        user_id: User.order("RANDOM()").first.id,
+        event_id: Event.order("RANDOM()").first.id,
+        reviewable_id: roger_event.artist.id,
+        reviewable_type: "Artist"
+      })
+    end
+
   end
   
   # Esta función actualiza el atributo created_at para un conjunto de registros
