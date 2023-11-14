@@ -1262,6 +1262,14 @@ namespace :populate do
                           description: "Taylor Swift se presenta en el estadio River Plate de Buenos Aires, Argentina, como parte de su gira mundial “The Eras Tour” . Durante su presentación, Taylor Swift interpreta canciones de su último álbum “Midnights” y algunos de sus éxitos anteriores . Además, hace un guiño a su romance con Travis Kelce, ala cerrada de los Kansas City Chiefs, cambiando la letra de su canción “Karma”.",
                           links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/list/taylor%20swift"}]
                           } )
+
+    filename = "taylor.jpg"
+    path = Rails.root.join('MockData', 'Imagenes', 'Evento Taylor Swift', filename)
+    next unless File.exist?(path)
+
+    content_type = 'image/jpg'
+    image = new_image(path, filename, content_type)
+    taylor_event.update!(image: image)
   
 
     roger_event = Event.create({
@@ -1273,6 +1281,13 @@ namespace :populate do
                         description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
                         links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
                         })
+    filename = "Roger Waters en Argentina.jpg"
+    path = Rails.root.join('MockData', 'Imagenes', 'Evento Roger Waters en Argentina', filename)
+    next unless File.exist?(path)
+
+    content_type = 'image/jpg'
+    image = new_image(path, filename, content_type)
+    roger_event.update!(image: image)
 
     # asignacion de comentarios y reviews 
     comments.each do |comment|
