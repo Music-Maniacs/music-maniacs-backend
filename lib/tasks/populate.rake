@@ -10,7 +10,8 @@ namespace :populate do
     Rake::Task['populate:populate_artists_producers_venues_events'].execute
     Rake::Task['populate:edit_created_at'].execute
     Rake::Task['populate:likes'].execute
-    Rake::Task['populate:update_role_and_trus_levels_permissions'].execute
+    Rake::Task['populate:update_role_and_trust_levels_permissions'].execute
+    Rake::Task['populate:events_to_show'].execute
   end
 
   desc 'Populate db with permissions'
@@ -71,6 +72,7 @@ namespace :populate do
     Genre.find_or_create_by(name: "Metal")
     Genre.find_or_create_by(name: "Punk")
     Genre.find_or_create_by(name: "Indie")
+    Genre.find_or_create_by(name: "Reguetón")
   end
 
   desc "Populate Thresholds"
@@ -242,6 +244,11 @@ namespace :populate do
         description: 'Los Pericos es una banda argentina de reggae y ska, una de las más influyentes en América Latina en su género.'
       },
       {
+        name: 'Taylor Swift',
+        nationality: 'Estados Unidos',
+        description: "Taylor Swift, nacida el 13 de diciembre de 1989 en Reading, Pensilvania, es una influyente cantante, compositora y actriz estadounidense. Comenzó su carrera en la música country antes de ampliar su estilo hacia el pop, indie folk y rock alternativo. Reconocida por sus letras personales y emotivas, Swift ha ganado numerosos premios, incluyendo múltiples Grammys, y ha establecido récords en la industria musical. Su impacto va más allá de la música, abarcando la moda, la actuación y el activismo en temas como los derechos de autor y la igualdad de género. Con una carrera versátil y exitosa, Taylor Swift se ha convertido en una de las artistas más destacadas de la escena musical global."
+      },
+      {
         name: 'Divididos',
         nationality: 'Argentina',
         description: 'Divididos es una banda argentina de rock, formada por Ricardo Mollo, Diego Arnedo y Catriel Ciavarella. Han sido pioneros en la mezcla de géneros musicales.'
@@ -256,6 +263,11 @@ namespace :populate do
         nationality: 'Argentina',
         description: 'Illya Kuryaki and the Valderramas, también conocidos como IKV, es un dúo musical argentino de rap y funk.'
       },
+      {
+        name: 'Roger Waters',
+        nationality: 'Reino Unido',
+        description: 'Roger Waters es músico y compositor británico, cofundador de la banda Pink Floyd, considerada una de las más influyentes en la historia de la música moderna.'
+      }
     ].each do |artist|
       next if Artist.find_by(name: artist[:name]).present?
 
@@ -308,8 +320,9 @@ namespace :populate do
       },
       {
         name: 'Universal Music Group',
-        nationality: 'Francia',
-        description: 'Universal Music Group es una de las principales compañías discográficas y de entretenimiento en el mundo. Tiene una amplia presencia internacional y representa a artistas de diversos géneros musicales.'
+        nationality: 'Estados Unidos de América',
+        description: 'Universal Music Group es una de las principales compañías discográficas y de entretenimiento en el mundo. Tiene una amplia presencia internacional y representa a artistas de diversos géneros musicales.',
+        links_attributes: [{"title":"Página de la productora","url":"https://www.universalmusic.com/"}]
       },
       {
         name: 'Warner Music Group',
@@ -400,6 +413,12 @@ namespace :populate do
         name: 'Nuclear Blast',
         nationality: 'Alemania',
         description: 'Nuclear Blast es un sello discográfico alemán especializado en música metal. Ha trabajado con bandas de diversos subgéneros del metal, incluyendo Dimmu Borgir, Slayer y Nightwish.'
+      },
+      {
+        name: 'DF Entertainment',
+        nationality: 'Argentina',
+        description: "DF Entertainment es la empresa líder de entretenimiento en vivo en Argentina. Fundada por Diego Finkelstein, quien cuenta con más de 20 años de trayectoria dentro de la industria, la productora presentó el año pasado shows como Coldplay, Harry Styles, Dua Lipa, Rosalía, Maroon 5,  C. Tangana, Guns N' Roses, Kiss, Metallica, Maneskin, Demi Lovato, entre muchos otros.",
+        links_attributes: [{"title":"Página de la productora","url":"https://dfentertainment.com/"}]
       }
       ].each do |producer|
        next if Producer.find_by(name: producer[:name]).present?
@@ -716,15 +735,30 @@ namespace :populate do
           }
         )
 
-        Venue.all.each do |venue|
-          filename = "#{venue.name}.png"
-          path = Rails.root.join('MockData', 'Imagenes', 'EspaciosDeEventos', filename)
-          next unless File.exist?(path)
+        venue_river = Venue.create(
+          name: "Estadio River Plate",
+          description: "El Estadio Monumental es un recinto deportivo ubicado en la intersección de las avenidas Figueroa Alcorta y Udaondo del barrio de Belgrano, Buenos Aires, Argentina. Es propiedad del Club Atlético River Plate y fue inaugurado el 26 de mayo de 1938 por el presidente Antonio Vespucio Liberti, quien decidió su construcción. El estadio cuenta con una capacidad de 84,567 espectadores después de las remodelaciones concluidas en 2023. Es el estadio de fútbol con mayor capacidad de Argentina y de América. Además, es el recinto donde Argentina disputa sus partidos de local. El estadio ha sido sede de varios eventos trascendentes, como la final de la Copa Mundial de la FIFA 1978, cuatro finales de la Copa América (1946, 1959, 1987 y 2011), y finales de la Copa Libertadores, la Copa Sudamericana y la Recopa Sudamericana.",
+          location_attributes: {
+            zip_code: "C1428",
+            street: "Avenida Presidente Figueroa Alcorta",
+            city: "Comuna 13",
+            latitude: "-34.54529950000001",
+            longitude: "-58.4497634",
+            number: "7597",
+            country: "Argentina",
+            province: "Buenos Aires",
+          },
+          links_attributes: [{"title":"Página del Club","url":"https://www.cariverplate.com.ar/"}] )
 
-          content_type = 'image/png'
-          image = new_image(path, filename, content_type)
-          venue.update!(image:)
-        end
+          Venue.all.each do |venue|
+            filename = "#{venue.name}.png"
+            path = Rails.root.join('MockData', 'Imagenes', 'EspaciosDeEventos', filename)
+            next unless File.exist?(path)
+  
+            content_type = 'image/png'
+            image = new_image(path, filename, content_type)
+            venue.update!(image:)
+          end
 
         [
           {
@@ -808,7 +842,7 @@ namespace :populate do
             description: 'Sumérgete en el mundo épico del metal sinfónico con un concierto lleno de poder y melodía.'
           },
           {
-            name: 'Noche de R&B Sensual',
+            name: 'Noche de R&B',
             datetime: (DateTime.now + rand(1..6).months).to_s,
             artist_id: Artist.order("RANDOM()").first.id,
             producer_id: Producer.order("RANDOM()").first.id,
@@ -1069,11 +1103,14 @@ namespace :populate do
   end
 
   desc "Update permissions in roles"
-  task update_role_and_trus_levels_permissions: :environment do 
+  task update_role_and_trust_levels_permissions: :environment do 
     
     # Buscar el rol por nombre
     admin_role = Role.find_by(name: "admin")
     moderator_role = Role.find_by(name: "moderator")
+    l1_trust_level = Role.find_by(name: "level_1")
+    l2_trust_level = Role.find_by(name: "level_2")
+    l3_trust_level = Role.find_by(name: "level_3")
 
 
     videos_permission = Permission.where(subject_class: "VideosController").pluck(:id)
@@ -1093,7 +1130,7 @@ namespace :populate do
     venues_permission_update = Permission.where(subject_class: "VenuesController", action: "update").pluck(:id)
 
     comments_permission_l1 = Permission.where(subject_class: "CommentsController", action: "create").pluck(:id)
-    create_permission_l2 = Permission.where(action: "create").pluck(:id) # cambiar
+    create_permission_l2 = Permission.where(action: "create").where.not("subject_class LIKE ?", "%Admin%").pluck(:id)
     report_permission_l2 = Permission.where(action: "report").pluck(:id)
     videos_permission_l2 = Permission.where(subject_class: "VideosController", action: "create").pluck(:id)
     update_persmissions_l3 = artist_permission_update +
@@ -1113,14 +1150,67 @@ namespace :populate do
                             producer_permission +
                             reports_controller_permission
     level_1_permissions = comments_permission_l1
-    level_2_permissions = level_1_permissions + report_permission_l2 + videos_permission_l2
+    level_2_permissions = level_1_permissions + report_permission_l2 + videos_permission_l2 + create_permission_l2
     level_3_permissions = level_2_permissions + update_persmissions_l3
 
 
     # Actualizar los permission_ids
     admin_role.update(permission_ids: admin_permissions) if admin_role.present?
     moderator_role.update(permission_ids: moderator_permissions) if moderator_role.present?
-    
+
+    l1_trust_level.update(permission_ids:level_1_permissions) if l1_trust_level.present?
+    l2_trust_level.update(permission_ids:level_2_permissions) if l2_trust_level.present?
+    l3_trust_level.update(permission_ids:level_3_permissions) if l3_trust_level.present?
+  end
+
+  desc "events_to_show pasados y futuros"
+  task events_to_show: :environment do
+
+    # Generos Musicales asociados
+    pop_genre = Genre.find_by(name: "Pop")
+    country_genre = Genre.find_by(name: "Country")
+    rock_genre = Genre.find_by(name: "Rock")
+    hiphop_genre = Genre.find_by(name: "Hip Hop")
+    rb_genre = Genre.find_by(name: "R&B")
+    metal_genre = Genre.find_by(name: "Metal")
+    salsa_genre = Genre.find_by(name: "Salsa")
+    reggaeton_genre = Genre.find_by(name: "Reguetón")
+
+    # Productoras
+    df_producer = Producer.find_by( name: 'DF Entertainment')
+    df_producer.update( genre_ids: [pop_genre.id, rock_genre.id, hiphop_genre.id, rb_genre.id, metal_genre.id, salsa_genre.id, reggaeton_genre.id] )
+    universal_producer = Producer.find_by( name: 'Universal Music Group')
+    universal_producer.update({ genre_ids: [pop_genre.id, rock_genre.id, hiphop_genre.id, rb_genre.id]} )
+   
+   # Espacios de eventos
+    venue_river = Venue.find_by( name: "Estadio River Plate" )
+
+    # Artistas
+    taylor_artist = Artist.find_by(name: 'Taylor Swift')
+    taylor_artist.update(genre_ids: [pop_genre.id,country_genre.id])
+    roger_artist = Artist.find_by(name: 'Roger Waters')
+    roger_artist.update(genre_ids: [rock_genre.id])
+   
+    # Eventos
+    Event.create({
+          name: 'Gira mundial ‘The Eras Tour’ de Taylor Swift',
+          datetime: ("2023-11-09T19:00:00.000Z"),
+          artist_id: taylor_artist.id,
+          producer_id: universal_producer.id,
+          venue_id: venue_river.id,
+          description: "Taylor Swift se presenta en el estadio River Plate de Buenos Aires, Argentina, como parte de su gira mundial “The Eras Tour” . Durante su presentación, Taylor Swift interpreta canciones de su último álbum “Midnights” y algunos de sus éxitos anteriores . Además, hace un guiño a su romance con Travis Kelce, ala cerrada de los Kansas City Chiefs, cambiando la letra de su canción “Karma”.",
+          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/list/taylor%20swift"}]
+          } )
+  
+    Event.create({
+          name: 'Roger Waters en Argentina',
+          datetime: ("2023-11-21T21:00:00.000Z"),
+          artist_id: roger_artist.id,
+          producer_id: df_producer.id,
+          venue_id: venue_river.id,
+          description: "“This Is Not a Drill” se plantea como un show altamente conceptual de principio a fin, donde canciones provenientes de The Wall, The Dark Side of the Moon (que acaba de cumplir 50 años), Animals y Wish You Were Here confluyen con los temas solistas más recientes del artista incluyendo su lanzamiento The Bar.",
+          links_attributes: [{"title":"Entradas","url":"https://www.allaccess.com.ar/event/roger-waters"}]
+          })
   end
   
   # Esta función actualiza el atributo created_at para un conjunto de registros
