@@ -133,20 +133,28 @@ namespace :populate do
 
       index += 1
       # Profile Image
-      profile_image = Image.new(image_type: 'profile')
+      profile_image = nil
       profile_image_filename = "user#{index}.jpg"
       profile_image_content_type = 'image/jpg'
       profile_path = Rails.root.join('MockData', 'Imagenes', 'Usuarios', profile_image_filename)
-      profile_image.file.attach(filename: profile_image_filename, io: File.open(profile_path), content_type: profile_image_content_type)
+      
+      if File.exist?(profile_path)
+        profile_image = Image.new(image_type: 'profile')
+        profile_image.file.attach(filename: profile_image_filename, io: File.open(profile_path), content_type: profile_image_content_type)
+      end
 
       # Cover Image
-      cover_image = Image.new(image_type: 'cover')
       cover_image_filename = "portada#{index}.jpg"
       cover_image_content_type = 'image/jpg'
       cover_path = Rails.root.join('MockData', 'Imagenes', 'PortadaUsuario', cover_image_filename)
-      cover_image.file.attach(filename: cover_image_filename, io: File.open(cover_path), content_type: cover_image_content_type)
+      cover_image = nil
 
-      User.create!(
+      if File.exist?(cover_path)
+        cover_image = Image.new(image_type: 'cover')
+        cover_image.file.attach(filename: cover_image_filename, io: File.open(cover_path), content_type: cover_image_content_type)
+      end
+
+      args = {
         email: user_data[:email],
         username: user_data[:username],
         full_name: user_data[:full_name],
@@ -156,7 +164,12 @@ namespace :populate do
         confirmed_at: Time.now,
         profile_image:,
         cover_image:
-      )
+      }
+
+      args.merge!(profile_image: profile_image) if profile_image.present?
+      args.merge!(cover_image: cover_image) if cover_image.present?
+
+      User.create!(args)
     end
   end
 
@@ -275,13 +288,16 @@ namespace :populate do
 
         filename = "#{artist[:name]}.jpg"
         path = Rails.root.join('MockData', 'Imagenes', 'Artistas', filename)
-        content_type = 'image/jpg'
-        image = new_image(path, filename, content_type)
+        image = nil
+
+        if File.exist?(path)
+          content_type = 'image/jpg'
+          image = new_image(path, filename, content_type)
+        end
   
-        Artist.create!({ name: artist[:name],
-                         nationality: artist[:nationality],
-                         description: artist[:description],
-                         image: })
+        args = { name: artist[:name], nationality: artist[:nationality], description: artist[:description] }
+        args.merge!(image: image) if image.present?
+        Artist.create!(args)
      end
 
      [
