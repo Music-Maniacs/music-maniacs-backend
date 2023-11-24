@@ -11,7 +11,7 @@ digitalocean:
   endpoint: https://music-maniacs-multimedia.nyc3.digitaloceanspaces.com
   access_key_id: <%= Rails.application.credentials.dig(:digitalocean, :access_key) %>
   secret_access_key: <%= Rails.application.credentials.dig(:digitalocean, :secret) %>
-  bucket: music-maniacs-multimedia
+  bucket: music-maniacs-multimedia.nyc3.digitaloceanspaces.com
   region: nyc3
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)

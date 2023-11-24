@@ -22,7 +22,6 @@ class Image < Multimedia
       img.format('webp')
 
       # Guarda la imagen en formato WebP
-      file.purge # Elimina la imagen original
       file.attach(io: StringIO.new(img.to_blob), filename: 'image.webp', content_type: 'image/webp')
     end
   end
