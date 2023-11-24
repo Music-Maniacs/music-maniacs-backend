@@ -4,7 +4,6 @@ class User < ApplicationRecord
   # DEVISE CONFIGURATION
   ##############################################################################
   devise :database_authenticatable,
-         :confirmable,
          :validatable,
          :registerable,
          :recoverable,
