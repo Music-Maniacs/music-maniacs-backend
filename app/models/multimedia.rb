@@ -17,6 +17,6 @@ class Multimedia < ApplicationRecord
   end
 
   def full_url
-    file.url
+    Rails.application.routes.url_helpers.url_for(file)
   end
 end
