@@ -33,9 +33,9 @@ class Event < ApplicationRecord
   ##############################################################################
   # CALLBACKS
   ##############################################################################
-  after_commit :notify_profiles_followers, on: :create
-  after_commit :notify_changes_to_followers, on: :update
-  after_commit :notify_destroy_to_followers, on: :destroy
+  # after_commit :notify_profiles_followers, on: :create
+  # after_commit :notify_changes_to_followers, on: :update
+  # after_commit :notify_destroy_to_followers, on: :destroy
   before_create :set_popularity_score
   before_update :set_popularity_score, if: :will_save_change_to_views_count?
   before_update :update_reviews, if: proc { |event| event.artist_id_changed? || event.venue_id_changed? || event.producer_id_changed? }
