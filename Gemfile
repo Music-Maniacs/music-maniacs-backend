@@ -62,6 +62,9 @@ gem 'mini_magick'
 
 gem "aws-sdk-s3", require: false
 
+gem 'active_musicbrainz', path: '/home/xeitor/github_projects/active_musicbrainz'
+
+# gem 'music_brainz_on_rails', path: '/home/xeitor/music_brainz_on_rails'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'byebug'

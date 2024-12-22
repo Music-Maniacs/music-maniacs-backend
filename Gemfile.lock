@@ -1,3 +1,9 @@
+PATH
+  remote: /home/xeitor/github_projects/active_musicbrainz
+  specs:
+    active_musicbrainz (0.3.2)
+      activerecord
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -272,6 +278,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_musicbrainz!
   active_storage_validations
   aws-sdk-s3
   backup

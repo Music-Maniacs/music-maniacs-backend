@@ -29,6 +29,8 @@ module MusicManiacsBackend
     # config.active_record.use_yaml_unsafe_load
     # config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time]
 
+    config.autoload_paths << Rails.root.join('lib')
+
     ActiveRecord::Base.time_zone_aware_types = [:datetime]
   end
 end
