@@ -15,9 +15,13 @@ class VideosController < ApplicationController
   def create
     event = Event.find(params[:id])
     video = event.videos.build(video_params)
-
-    video.file.attach(params[:video]) # Asigna el archivo cargado a la instancia de Video
     video.user = current_user
+
+    signed_id = params[:signed_id]
+
+    # Find the blob by signed_id
+    blob = ActiveStorage::Blob.find_signed(signed_id)
+    video.file.attach(blob)
 
     if video.save
       render json: video.as_json(VIDEO_TO_SHOW), status: :ok
