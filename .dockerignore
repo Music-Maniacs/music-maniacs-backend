@@ -1,0 +1,11 @@
+.git
+.gitignore
+.byebug_history
+tmp/
+log/
+storage/*
+!storage/.keep
+test/
+.bundle/
+Dockerfile
+.dockerignore

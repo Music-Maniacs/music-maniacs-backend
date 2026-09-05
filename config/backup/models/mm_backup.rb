@@ -12,11 +12,11 @@
 Backup::Model.new(:mm_backup, 'Description for mm_backup') do
   # PostgreSQL [Database]
   database PostgreSQL do |db|
-    db.name           = 'music_maniacs_backend_development'
-    db.username       = 'docker'
-    db.password       = 'docker'
-    db.host           = 'localhost'
-    db.port           = 5432
+    db.name           = ENV.fetch('DB_NAME')
+    db.username       = ENV.fetch('DB_USER')
+    db.password       = ENV.fetch('DB_PASSWORD')
+    db.host           = ENV.fetch('DB_HOST')
+    db.port           = ENV.fetch('DB_PORT').to_i
     # db.pg_dump_path   = '/usr/bin/pg_dump'
     # db.socket         = '/tmp'
     # db.skip_tables        = ['users', 'active_storage_blobs', 'versions']
@@ -27,7 +27,7 @@ Backup::Model.new(:mm_backup, 'Description for mm_backup') do
   # Local (Copy) [Storage]
   #
   store_with Local do |local|
-    local.path       = '~/backups/'
+    local.path       = ENV.fetch('BACKUP_STORE_PATH')
     local.keep       = 7 # mantiene 7 copias de seguridad
   end
 
