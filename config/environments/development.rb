@@ -75,8 +75,21 @@ Rails.application.configure do
     end
   end
 
-  # Email service configuration
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # URL and Email service configuration
+  api_host_env = ENV.fetch("API_HOST", "http://localhost:3000")
+  begin
+    api_uri = URI.parse(api_host_env)
+    default_url_opts = {
+      host: api_uri.host || api_host_env,
+      protocol: api_uri.scheme || "http",
+      port: (api_uri.port == 80 || api_uri.port == 443 ? nil : api_uri.port)
+    }
+  rescue URI::InvalidURIError
+    default_url_opts = { host: api_host_env }
+  end
+
+  config.action_mailer.default_url_options = default_url_opts
+  routes.default_url_options = default_url_opts
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
 end

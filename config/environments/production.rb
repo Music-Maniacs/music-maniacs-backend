@@ -97,5 +97,19 @@ Rails.application.configure do
     end
   end
 
-  config.action_mailer.default_url_options = { host: 'https://music-maniacs.com', port: 443 }
+  # URL and Email service configuration
+  api_host_env = ENV.fetch("API_HOST", "https://api-musicmaniacs.triptisoft.com")
+  begin
+    api_uri = URI.parse(api_host_env)
+    default_url_opts = {
+      host: api_uri.host || api_host_env,
+      protocol: api_uri.scheme || "https",
+      port: (api_uri.port == 80 || api_uri.port == 443 ? nil : api_uri.port)
+    }
+  rescue URI::InvalidURIError
+    default_url_opts = { host: api_host_env }
+  end
+
+  config.action_mailer.default_url_options = default_url_opts
+  routes.default_url_options = default_url_opts
 end
