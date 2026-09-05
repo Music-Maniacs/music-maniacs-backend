@@ -1,7 +1,7 @@
 # Load the Rails application.
 require_relative "application"
 
-REACT_HOST = ENV['REACT_HOST'] || 'http://localhost:3001'
+REACT_HOST = ENV.fetch('REACT_HOST')
 
 # Initialize the Rails application.
 Rails.application.initialize!

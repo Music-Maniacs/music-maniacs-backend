@@ -30,3 +30,8 @@
 
 .byebug_history
 /MockData
+
+# Ignore .env files
+.env
+.env.*
+!.env.example

@@ -10,14 +10,40 @@
 # View the Wiki/Documentation at https://github.com/meskyanichi/backup/wiki
 # View the issue log at https://github.com/meskyanichi/backup/issues
 
+ENV['THOR_SILENCE_DEPRECATION'] ||= '1'
+
+require 'yaml'
+require 'backup'
+
+require 'psych'
+
+class Psych::ClassLoader::Restricted
+  alias_method :orig_find, :find rescue nil
+  def find(klassname)
+    if klassname == 'Backup::Package' || klassname.start_with?('Backup::')
+      super(klassname)
+    else
+      orig_find(klassname)
+    end
+  end
+end
+
+begin
+  require 'dotenv'
+  Dotenv.load(File.expand_path('../../.env', __dir__))
+rescue LoadError
+  # Dotenv not loaded
+end
+
 ##
 # Utilities
 #
 # If you need to use a utility other than the one Backup detects,
 # or a utility can not be found in your $PATH.
 #
-Backup::Utilities.configure do
-  pg_dump '/usr/bin/pg_dump' # Debe apuntar a la ruta dentro del contenedor
+::Backup::Utilities.configure do
+  pg_dump_path = ENV['PG_DUMP_PATH'] || `which pg_dump 2>/dev/null`.strip
+  pg_dump pg_dump_path.empty? ? '/usr/bin/pg_dump' : pg_dump_path
 end
 
 ##

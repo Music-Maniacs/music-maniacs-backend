@@ -62,6 +62,19 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+  # Allow requests from custom hosts defined in environment variables (comma-separated)
+  if ENV["ALLOWED_HOSTS"].present?
+    ENV["ALLOWED_HOSTS"].split(",").map(&:strip).each do |host|
+      next if host.blank?
+      if host == "*"
+        config.hosts.clear
+        break
+      else
+        config.hosts << host
+      end
+    end
+  end
+
   # Email service configuration
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :letter_opener

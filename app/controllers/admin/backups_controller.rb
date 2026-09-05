@@ -2,11 +2,14 @@ class Admin::BackupsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_action
 
-  BACKUP_DIR = File.expand_path('~/backups/mm_backup').freeze
-  MULTIMEDIA_DIR = File.expand_path('./storage').freeze
-  CONTAINER_NAME = 'docker_services-db-1'.freeze
-  USER_DB = 'docker'.freeze
-  DB = 'music_maniacs_backend_development'.freeze
+  BACKUP_DIR = File.expand_path(ENV.fetch('BACKUP_DIR')).freeze
+  MULTIMEDIA_DIR = File.expand_path(ENV.fetch('MULTIMEDIA_DIR')).freeze
+  CONTAINER_NAME = ENV.fetch('DB_CONTAINER_NAME').freeze
+  USER_DB = ENV.fetch('DB_USER').freeze
+  DB = ENV.fetch('DB_NAME').freeze
+  DB_HOST = ENV.fetch('DB_HOST').freeze
+  DB_PORT = ENV.fetch('DB_PORT').freeze
+  DB_PASSWORD = ENV.fetch('DB_PASSWORD').freeze
 
   def index
     dir = Dir.glob("#{BACKUP_DIR}/*")
@@ -29,18 +32,28 @@ class Admin::BackupsController < ApplicationController
 
   def restore_backup
     selected_backup = params[:id]
-    backup_file_path = "#{BACKUP_DIR}/#{selected_backup}/mm_backup/databases/PostgreSQL.sql"
     tar_file_path = "#{BACKUP_DIR}/#{selected_backup}"
+    backup_file_path = "#{BACKUP_DIR}/#{selected_backup}/mm_backup/databases/PostgreSQL.sql"
     path_multimedia = "#{BACKUP_DIR}/#{selected_backup}/multimedia*"
+
+    # Descomprime el paquete de backup
+    system("cd #{tar_file_path} && tar -xf mm_backup.tar")
+
+    unless File.exist?(backup_file_path)
+      render json: { error: 'No se encontró el archivo de base de datos en el backup seleccionado' }, status: :not_found
+      return
+    end
 
     # Limpiar la base de datos antes de restaurar el backup
     clean_database
 
     # Ruta para restaurar la base de datos desde el archivo PostgreSQL.sql
-    restore_command = "docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} < #{backup_file_path}"
+    restore_command = if psql_available?
+                        "PGPASSWORD='#{DB_PASSWORD}' psql -h #{DB_HOST} -p #{DB_PORT} -U #{USER_DB} -d #{DB} < #{backup_file_path}"
+                      else
+                        "docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} < #{backup_file_path}"
+                      end
 
-    # Descomprime y restaura
-    system("cd #{tar_file_path} && tar -xf mm_backup.tar") # descomprime
     system(restore_command) # restaura la db
 
     matching_files = Dir.glob(path_multimedia)
@@ -65,7 +78,8 @@ class Admin::BackupsController < ApplicationController
   end
 
   def create
-    system('backup perform -t mm_backup -c ./config/backup/config.rb')
+    backup_cmd = system('which backup > /dev/null 2>&1') ? 'backup' : 'bundle exec backup'
+    system("#{backup_cmd} perform -t mm_backup -c ./config/backup/config.rb")
     dir = Dir.glob("#{BACKUP_DIR}/*")
     latest_folder = dir.max_by { |folder| File.ctime(folder) }
 
@@ -90,8 +104,16 @@ class Admin::BackupsController < ApplicationController
   private
 
   def clean_database
-    clean_database_command = "docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
+    clean_database_command = if psql_available?
+                               "PGPASSWORD='#{DB_PASSWORD}' psql -h #{DB_HOST} -p #{DB_PORT} -U #{USER_DB} -d #{DB} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
+                             else
+                               "docker exec -i #{CONTAINER_NAME} psql -U #{USER_DB} -d #{DB} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
+                             end
     system(clean_database_command) # limpia la db
+  end
+
+  def psql_available?
+    system('which psql > /dev/null 2>&1')
   end
 
   def extract_date_from_filename(filename)

@@ -84,5 +84,18 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Allow requests from custom hosts defined in environment variables (comma-separated)
+  if ENV["ALLOWED_HOSTS"].present?
+    ENV["ALLOWED_HOSTS"].split(",").map(&:strip).each do |host|
+      next if host.blank?
+      if host == "*"
+        config.hosts.clear
+        break
+      else
+        config.hosts << host
+      end
+    end
+  end
+
   config.action_mailer.default_url_options = { host: 'https://music-maniacs.com', port: 443 }
 end
